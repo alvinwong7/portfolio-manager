@@ -32,7 +32,7 @@ const Navigation = () => (
    <Switch>
      <Route exact path='/' component={Home}></Route>
      <Route exact path='/stocks' component={Stocks}></Route>
-     <Route exact path='/stocks/new'> <NewStockForm /></Route>
+     <Route exact path='/stocks/NewStockForm'> <NewStockForm /> </Route>
      <Route exact path='/contact' component={Contact}></Route>
    </Switch>
  );
