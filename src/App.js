@@ -1,12 +1,18 @@
 import React from 'react';
 import logo from './logo.svg';
-import {Home} from "./home.js";
+import {Home} from "./components/home.js";
+import {Clock} from "./components/Clock.js"
+import {Stocks} from "./components/Stocks.js"
+import {Contact} from "./components/Contact.js"
+import {NewStockForm} from "./components/NewStockForm.js"
+
 import './App.css';
 import { NavLink, Switch, Route } from 'react-router-dom';
 
 const App = () => (
   <div className='app'>
     <h1>HRDM Portfolio Management System</h1>
+    <Clock />
     <Navigation />
     <Main />
   </div>
@@ -26,22 +32,9 @@ const Navigation = () => (
    <Switch>
      <Route exact path='/' component={Home}></Route>
      <Route exact path='/stocks' component={Stocks}></Route>
+     <Route exact path='/stocks/new'> <NewStockForm /></Route>
      <Route exact path='/contact' component={Contact}></Route>
    </Switch>
  );
 
-const Stocks = () => (
-  <div className='stocks'>
-    <h1>Stocks</h1>
-    <p> Stock1: </p>
-    <p> Stock2: </p>
-  </div>
-);
-
-const Contact = () => (
-  <div className='contact'>
-    <h1>Contact Us</h1>
-    <p>You can reach the HRDM team via email: <strong>hello@example.com</strong></p>
-  </div>
-);
 export default App;
