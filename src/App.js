@@ -1,22 +1,35 @@
 import React from 'react';
 import logo from './logo.svg';
 import {Home} from "./components/home.js";
-import {Clock} from "./components/Clock.js"
-import {Stocks} from "./components/Stocks.js"
-import {Contact} from "./components/Contact.js"
-import {NewStockForm} from "./components/NewStockForm.js"
+import {Clock} from "./components/Clock.js";
+import {Stocks} from "./components/Stocks.js";
+import {Contact} from "./components/Contact.js";
+import {NewStockForm} from "./components/NewStockForm.js";
+import {ams} from "./components/AMS.js";
 
 import './App.css';
 import { NavLink, Switch, Route } from 'react-router-dom';
 
-const App = () => (
-  <div className='app'>
-    <h1>HRDM Portfolio Management System</h1>
-    <Clock />
-    <Navigation />
-    <Main />
-  </div>
-);
+class App extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            AMS: ams
+        }
+    }
+
+    render(){
+        return(
+        <div className='app'>
+          <h1>HRDM Portfolio Management System</h1>
+          <Clock />
+          <Navigation />
+          <Main />
+        </div>
+        )
+        }
+
+    }
 
 const Navigation = () => (
   <nav>

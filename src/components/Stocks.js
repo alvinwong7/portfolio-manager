@@ -3,10 +3,10 @@ import { NavLink, Switch, Route } from 'react-router-dom';
 
 const Stocks = () => (
   <div className='stocks'>
-  <li><NavLink exact activeClassName="current" to='/stocks/NewStockForm'>Add Stock</NavLink></li>
+  <li><NavLink exact activeClassName="current" to='/NewStockForm'></NavLink></li>
     <h1>Stocks</h1>
     <p> Stock1: </p>
-    <p> Stock2: </p>
+    <p> Stock2: Im making changes </p>
   </div>
 );
 
