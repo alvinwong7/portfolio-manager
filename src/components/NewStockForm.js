@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 class NewStockForm extends React.Component {
   render() {
     return (
