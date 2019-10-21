@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import {Home} from "./components/home.js";
 import {Clock} from "./components/Clock.js";
 import {Stocks} from "./components/Stocks.js";

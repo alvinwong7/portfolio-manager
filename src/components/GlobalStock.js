@@ -4,7 +4,7 @@ import alphavantage from 'alphavantage';
 class GlobalStock extends React.Component {
   constructor(symbol_request) {
     super();
-    
+
     this.state = {
       symbol : symbol_request,
       open : '',
@@ -22,7 +22,7 @@ class GlobalStock extends React.Component {
   componentDidMount() {
     this.getStockInfo().data.quote(this.state.symbol).then(result => {
       var stockCopy = Object.assign({}, this.result);
-      this.setState({ 
+      this.setState({
         symbol: result['Global Quote']['01. symbol'],
         open : result['Global Quote']['02. open'],
         high: result['Global Quote']['03. high'],
@@ -34,6 +34,7 @@ class GlobalStock extends React.Component {
         change: result['Global Quote']['09. change'],
         change_percent: result['Global Quote']['10. change percent'],
       })
+      console.log(this.state);
     })
   }
 
@@ -44,8 +45,8 @@ class GlobalStock extends React.Component {
 
   getUpdate() {
     this.getStockInfo().data.quote(this.state.symbol).then(result => {
-      var stockCopy = Object.assign({}, this.result);
-      this.setState({ 
+    var stockCopy = Object.assign({}, this.result);
+      this.setState({
         symbol: result['Global Quote']['01. symbol'],
         open : result['Global Quote']['02. open'],
         high: result['Global Quote']['03. high'],
@@ -57,6 +58,7 @@ class GlobalStock extends React.Component {
         change: result['Global Quote']['09. change'],
         change_percent: result['Global Quote']['10. change percent'],
       })
+      console.log(this.state);
     })
   }
 
@@ -101,11 +103,13 @@ class GlobalStock extends React.Component {
   }
 
   render() {
+    //console.log(this.state);
     return (
       // {stock['Global Quote']['01. symbol']}
       <div className='help'>
-        Stock Name: {this.state.symbol}
-        Price: {this.state.price}
+        <p> Stock Name: {this.state.symbol} </p>
+        <p> Price: {this.state.price} </p>
+        <p> Open Price: {this.state.open} </p>
       </div>
     );
   }

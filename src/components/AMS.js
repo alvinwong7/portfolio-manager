@@ -1,5 +1,5 @@
 import React from 'react';
-import {Stock} from "./Stock";
+import {GlobalStock} from "./GlobalStock";
 
 // Initializing a class definition
 
@@ -7,24 +7,30 @@ class AMS extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            Stock1: new Stock("Stock1", "STK1", 100 , 3.24),
-            Stock2: new Stock("Stock1", "STK2", 43 , 4.27),
-            Stock3: new Stock("Stock1", "STK3", 270 , 1.29),
-            Stock4: new Stock("Stock1", "STK4", 70 , 2.20),
+            Stock1: new GlobalStock('TLS'),
+            Stock2: new GlobalStock('S32'),
+            Stock3: new GlobalStock('BHP'),
+            Stock4: new GlobalStock("MSFT"),
         }
     }
+
     testPrint(){
         return "text form inside the AMS"
     }
+
     renderStocks(){
         return (
         <div>
-        <p> {this.state.Stock1.render()} </p>
-        <p> {this.state.Stock2.render()} </p>
-        <p> {this.state.Stock3.render()} </p>
-        <p> {this.state.Stock4.render()} </p>
+        {this.state.Stock1.render()}
+        {this.state.Stock2.render()}
+        {this.state.Stock3.render()}
+        {this.state.Stock4.render()}
         </div>
     );
+    }
+
+    updateStocks(){
+        this.state.Stock1.getUpdate()
     }
 }
 
