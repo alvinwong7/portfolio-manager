@@ -37,4 +37,6 @@ WEEK 06:
 
 I mostly focused on setting up the UI elements on the webapp.
 I refactored the component code such that they are more consistent 
-and started integrating bootstrap into UI elements.
+and started integrating bootstrap into UI elements. I changed the API 
+stock class to be callable from other components and automatically display 
+in a table format.
