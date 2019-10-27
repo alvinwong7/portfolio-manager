@@ -1,4 +1,5 @@
 import React from 'react';
+import {Stock} from "./Stock";
 import { NavLink, Switch, Route } from 'react-router-dom';
 
 const Stocks = () => (
@@ -7,6 +8,7 @@ const Stocks = () => (
     <h1>Stocks</h1>
     <p> Stock1: </p>
     <p> Stock2: </p>
+    <Stock />
   </div>
 );
 
