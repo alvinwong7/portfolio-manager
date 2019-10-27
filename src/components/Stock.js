@@ -7,17 +7,17 @@ class Stock extends React.Component{
         super(props);
 
         this.state = {
-            Name: '?',
-            Open: '?',
-            Close: '?',
-            High: '?',
-            Low: '?',
+            Name: props.name,
+            Open: '...',
+            Close: '...',
+            High: '...',
+            Low: '...',
         };
 
         // Access stock data from AlphaVantage API (5 calls per minute)
-        const stockName = "MSFT";
+        //const stockName = "MSFT";
         const key = 'W6WD0B30SYK3T2QI';    
-        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + stockName +
+        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + props.name +
                     '&apikey=' + key;
 
         axios
@@ -34,6 +34,8 @@ class Stock extends React.Component{
                 let close = TimeSeries[today]['4. close'];
                 let high = TimeSeries[today]['2. high'];
                 let low = TimeSeries[today]['3. low'];
+
+                // Collect historical stock data for plotting
 
                 this.setState({
                     Name: name,
