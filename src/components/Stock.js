@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import { Table } from 'react-bootstrap'
+
 class Stock extends React.Component{
 
     constructor(props){
@@ -15,9 +17,8 @@ class Stock extends React.Component{
         };
 
         // Access stock data from AlphaVantage API (5 calls per minute)
-        const stockName = "MSFT";
         const key = 'W6WD0B30SYK3T2QI';    
-        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + stockName +
+        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + props.stockName +
                     '&apikey=' + key;
 
         axios
@@ -51,23 +52,13 @@ class Stock extends React.Component{
 
     render(){
         return(
-            <div>
-                <div className = "name">
-                    {this.state.Name}
-                </div>
-                <div className = "open">
-                    Open = ${this.state.Open}
-                </div>
-                <div className = "close">
-                    Close = ${this.state.Close}
-                </div>
-                <div className = "high">
-                    High = ${this.state.High}
-                </div>
-                <div className = "low">
-                    Low = ${this.state.Low}
-                </div>
-            </div>
+            <tr>
+                <td>{this.state.Name}</td>
+                <td>{this.state.Open}</td>
+                <td>{this.state.Close}</td>
+                <td>{this.state.High}</td>
+                <td>{this.state.Low}</td>
+            </tr>
         );
     }
 
