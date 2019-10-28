@@ -17,7 +17,7 @@ class Stock extends React.Component{
         };
 
         // Access stock data from AlphaVantage API (5 calls per minute)
-        const key = 'W6WD0B30SYK3T2QI';    
+        const key = 'W6WD0B30SYK3T2QI';
         const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + props.stockName +
                     '&apikey=' + key;
 

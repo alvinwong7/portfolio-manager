@@ -1,15 +1,17 @@
 import React from 'react'
-import { Stock } from './Stock'
+//import { Stock } from './Stock'
 import { StockTable } from './StockTable'
 
-import { NavLink, Switch, Route } from 'react-router-dom'
+//import { NavLink, Switch, Route } from 'react-router-dom'
+import { NewStockForm } from './NewStockForm'
 
 class Stocks extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      stocks : ['MSFT', 'AMZN', 'GOOGL'],
+      stocks : ['MSFT']//, 'AMZN', 'GOOGL'],
     }
+
   }
 
   render() {
@@ -17,9 +19,20 @@ class Stocks extends React.Component {
     return (
       <div className='stocks'>
         <StockTable stocks={this.state.stocks}/>
+        < NewStockForm />
       </div>
     );
   }
+
+  addStock(stock){
+      this.setState(state => {
+        const stocks = state.stocks.concat(stock);
+        return {
+          stocks
+        };
+      });
+  }
+
 }
 
 export { Stocks };
