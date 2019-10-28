@@ -5,6 +5,25 @@ import { Link } from 'react-router-dom'
 import { Navbar, Nav, Form, FormControl, Button, NavItem } from "react-bootstrap"
 
 class Navigation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchText : "",
+        }
+    }
+
+    handleSearchInput = event => {
+        this.setState({
+            searchText : event.target.value
+        })
+    }
+
+    handleSearchSubmit = () => {
+        if (this.state.searchText) {
+            
+        }
+    }
+
     render() {
         return(
         <div>
@@ -22,7 +41,10 @@ class Navigation extends React.Component {
                 <Nav.Link to="/login">Login</Nav.Link>
                 </Nav>
                 <Form inline>
-                <FormControl type="text" placeholder="Stock Search" className="mr-sm-2" />
+                <FormControl 
+                    type="text" 
+                    placeholder="Stock Search" 
+                    className="mr-sm-2" />
                 <Button variant="outline-info">Search</Button>
                 </Form>
             </Navbar.Collapse>

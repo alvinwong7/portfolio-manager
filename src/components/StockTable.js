@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stock } from './Stock'
+import { GeneralStockRow } from './GeneralStockRow'
 
 import { Table } from 'react-bootstrap'
 
@@ -17,7 +17,7 @@ export default class StockTable extends React.Component {
 
         let children = []
         for (let i = 0; i < this.state.stocks.length; i++) {
-            children.push(<Stock stockName={this.state.stocks[i]}/>)
+            children.push(<GeneralStockRow stockName={this.state.stocks[i]}/>)
         }
         table.push(children)
         return table
