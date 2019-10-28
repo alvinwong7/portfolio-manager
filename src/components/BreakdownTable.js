@@ -3,7 +3,7 @@ import { GeneralStockRow } from './GeneralStockRow'
 
 import { Table } from 'react-bootstrap'
 
-export default class StockTable extends React.Component {
+export default class BreakdownTable extends React.Component {
     constructor(props) {
         super(props);
         
@@ -41,4 +41,4 @@ export default class StockTable extends React.Component {
     }
 }
 
-export { StockTable }
+export { BreakdownTable }
