@@ -1,4 +1,5 @@
 import React from 'react'
+import { PortfolioOverview } from './PortfolioOverview'
 
 class PortfolioPage extends React.Component {
     constructor(props) {
@@ -7,7 +8,11 @@ class PortfolioPage extends React.Component {
 
     render() {
         return (
-            
+            <div>
+                <h1>My Portfolio</h1>
+            </div>
         );
     }
 }
+
+export { PortfolioPage }

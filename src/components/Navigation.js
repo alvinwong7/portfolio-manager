@@ -1,6 +1,7 @@
 import React from 'react'
 import { Clock } from './Clock'
 
+
 import { Link } from 'react-router-dom'
 import { Navbar, Nav, Form, FormControl, Button, NavItem } from "react-bootstrap"
 
@@ -32,6 +33,15 @@ class Navigation extends React.Component {
             <Navbar.Collapse>
                 <Nav className="mr-auto">
                 <Navbar.Text><Clock /></Navbar.Text>
+                <NavItem eventkey={1} href="/myportfolio">
+                    <Nav.Link as={Link} to="/myportfolio">Portfolio</Nav.Link>
+                </NavItem>
+                <NavItem eventkey={1} href="/builder">
+                    <Nav.Link as={Link} to="/builder">Builder</Nav.Link>
+                </NavItem>
+                <NavItem eventkey={1} href="/watchlist">
+                    <Nav.Link as={Link} to="/watchlist">Watch List</Nav.Link>
+                </NavItem>
                 <NavItem eventkey={1} href="/stocks">
                     <Nav.Link as={Link} to="/stocks">Stocks</Nav.Link>
                 </NavItem>
@@ -49,6 +59,7 @@ class Navigation extends React.Component {
                 </Form>
             </Navbar.Collapse>
             </Navbar>
+            <br />
             <br />
             <br />
         </div>
