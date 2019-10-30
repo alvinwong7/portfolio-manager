@@ -16,9 +16,14 @@ class StockSummary extends React.Component {
             changePercent: '?',
         };
 
+        this.getInfo = this.getInfo.bind(this);
+        this.getInfo();
+    }
+
+    getInfo(){
         // Access stock data from AlphaVantage API (5 calls per minute)
-        const key = 'W6WD0B30SYK3T2QI';    
-        const url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + props.stockName +
+        const key = 'W6WD0B30SYK3T2QI';
+        const url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + this.props.stockName +
                     '&apikey=' + key;
 
         axios
@@ -42,10 +47,28 @@ class StockSummary extends React.Component {
                 });
             })
             .catch( error => {
+
+                this.setState({
+                    name: 'Invalid Code',
+                    price: 'X',
+                    open: 'X',
+                    high: 'X',
+                    low: 'X',
+                    volume: 'X',
+                    change: 'X',
+                    changePercent: 'X',
+                });
                 console.log(error);
             })
 
     }
+
+    componentDidUpdate(prevProps){
+        if (this.props.stockName !== prevProps.stockName) {
+            this.getInfo()
+        }
+    }
+
 
     render(){
         return(
@@ -62,20 +85,7 @@ class StockSummary extends React.Component {
         );
     }
 
-    /*constructor(props) {
-        this.state = {
-            stock : props.stockName
-        }
-    }
-    
-    render() {
-        return(
-            <div>
-                <h1>{this.state.stock}</h1>
-                <StockTable stocks={this.state.stock}/>
-            </div>
-        )
-    }*/
+
 }
 
 export { StockSummary }

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import equal from 'fast-deep-equal'
 import { StockDetail } from './StockDetail'
 
 // Stock page
@@ -11,18 +11,13 @@ class StockPage extends React.Component {
         }
     }
 
-    componentDidMount(){
-        this.state = {
-            stockName : this.props.match.params.stockName,
+    static getDerivedStateFromProps(props, state){
 
+        return {
+            stockName : props.match.params.stockName,
         }
-        alert(this.props.match.params.stockName);
     }
 
-    componentWillUnmount(){
-        this.state = {}
-        alert(this.props.match.params.stockName);
-    }
     render() {
         return(
             <div>
