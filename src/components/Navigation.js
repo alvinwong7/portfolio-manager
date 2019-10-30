@@ -21,9 +21,9 @@ class Navigation extends React.Component {
                 </NavItem>
                 <Nav.Link to="/login">Login</Nav.Link>
                 </Nav>
-                <Form inline>
-                <FormControl type="text" placeholder="Stock Search" className="mr-sm-2" />
-                <Button variant="outline-info">Search</Button>
+                <Form inline onSubmit={ (e) => this.handleSubmit(e)}>
+                <FormControl type="text" placeholder="Stock Search" name="searchTerm" className="mr-sm-2" />
+                <Button variant="outline-info" type = "submit">Search</Button>
                 </Form>
             </Navbar.Collapse>
             </Navbar>
@@ -31,6 +31,17 @@ class Navigation extends React.Component {
             <br />
         </div>
         );
+    }
+
+    handleSubmit(event){
+        try{
+            const searchTerm = event.target.elements.namedItem("searchTerm").value;
+            //alert("searchterm = "+ searchTerm);
+            
+
+        } catch(err){
+            alert(err);
+        }
     }
 }
 
