@@ -1,6 +1,6 @@
 import React from 'react'
 import { Home } from './Home'
-import { Stocks } from './Stocks'
+import  Stocks  from './Stocks'
 import { Contact } from './Contact'
 import { NewStockForm } from './NewStockForm'
 

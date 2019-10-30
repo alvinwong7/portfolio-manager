@@ -6,18 +6,14 @@ import { Table } from 'react-bootstrap'
 export default class StockTable extends React.Component {
     constructor(props) {
         super(props);
-        
-        this.state = {
-            stocks: props.stocks,
-        }
     }
 
     createTable = () => {
         let table = []
 
         let children = []
-        for (let i = 0; i < this.state.stocks.length; i++) {
-            children.push(<Stock stockName={this.state.stocks[i]}/>)
+        for (let i = 0; i < this.props.stocks.length; i++) {
+            children.push(<Stock stockName={this.props.stocks[i]}/>)
         }
         table.push(children)
         return table

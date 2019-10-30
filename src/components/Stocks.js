@@ -8,6 +8,7 @@ import { NewStockForm } from './NewStockForm'
 class Stocks extends React.Component {
   constructor(props) {
     super(props)
+    this.addStock = this.addStock.bind(this);
     this.state = {
       stocks : ['MSFT']//, 'AMZN', 'GOOGL'],
     }
@@ -19,20 +20,25 @@ class Stocks extends React.Component {
     return (
       <div className='stocks'>
         <StockTable stocks={this.state.stocks}/>
-        < NewStockForm />
+        <NewStockForm addStock ={this.addStock} />
       </div>
     );
   }
 
   addStock(stock){
+      try{
       this.setState(state => {
         const stocks = state.stocks.concat(stock);
         return {
           stocks
         };
       });
-  }
+      } catch(err){
+          alert(err);
+      }
+      alert("added "+ stock);
+    }
 
 }
 
-export { Stocks };
+export default Stocks;
