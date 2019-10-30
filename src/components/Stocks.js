@@ -36,7 +36,7 @@ class Stocks extends React.Component {
       } catch(err){
           alert(err);
       }
-      alert("added "+ stock);
+      //alert("added "+ stock);
     }
 
 }

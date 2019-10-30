@@ -60,7 +60,7 @@ class NewStockForm extends React.Component {
           const price = event.target.elements.namedItem("price").value;
 
           //testing colection
-          alert("adding " + assetType +": " + code +" with " + units +" units @ $"+ price +" purchased on "+ date);
+          //alert("adding " + assetType +": " + code +" with " + units +" units @ $"+ price +" purchased on "+ date);
 
           //Add New stock
           this.props.addStock(code);
