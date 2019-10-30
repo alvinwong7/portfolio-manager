@@ -1,7 +1,7 @@
 import React from 'react'
 import { Clock } from './Clock'
 
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { Navbar, Nav, Form, FormControl, Button, NavItem } from "react-bootstrap"
 
 class Navigation extends React.Component {
@@ -44,9 +44,11 @@ class Navigation extends React.Component {
 
     handleSubmit(event){
         try{
-            const searchTerm = event.target.elements.namedItem("searchTerm").value;
-            alert("searchterm = "+ searchTerm);
-
+            event.preventDefault();
+            const searchTerm = event.target.elements.namedItem("searchTerm").value.toUpperCase();
+            //alert("searchterm = "+ searchTerm);
+            this.props.history.push("/stock/"+searchTerm);
+            event.target.reset();
 
         } catch(err){
             alert(err);
@@ -54,4 +56,4 @@ class Navigation extends React.Component {
     }
 }
 
-export { Navigation };
+export default withRouter(Navigation);

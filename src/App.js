@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import { Navigation } from "./components/Navigation.js"
+import  Navigation from "./components/Navigation.js"
 import { Routes } from "./components/Routes.js"
 
 import './App.css';
