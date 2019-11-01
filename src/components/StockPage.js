@@ -1,5 +1,4 @@
 import React from 'react'
-import equal from 'fast-deep-equal'
 import { StockDetail } from './StockDetail'
 
 // Stock page

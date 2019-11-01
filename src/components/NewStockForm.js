@@ -1,12 +1,7 @@
 import React from 'react';
-import  Stocks from './Stocks';
-import { Form, FormControl, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
 class NewStockForm extends React.Component {
-
-    constructor(props){
-        super(props);
-    }
 
   render() {
     return (

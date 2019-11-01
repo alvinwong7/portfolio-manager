@@ -7,7 +7,7 @@ import { Table } from 'react-bootstrap'
 export default class BreakdownTable extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             stocks: props.stocks,
         }
@@ -28,11 +28,13 @@ export default class BreakdownTable extends React.Component {
         return (
             <Table>
                 <thead>
+                    <tr>
                     <th>Code</th>
                     <th>Open</th>
                     <th>Close</th>
                     <th>High</th>
                     <th>Low</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {this.createTable()}
