@@ -40,4 +40,4 @@ const LoginHandler = (props) => {
 };
 
 
-export default withRouter(LoginHandler) 
+export default withRouter(LoginHandler)
