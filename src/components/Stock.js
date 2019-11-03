@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import Plot from 'react-plotly.js';
+import './Stock.css';
 
 class Stock extends React.Component{
 
@@ -7,17 +9,22 @@ class Stock extends React.Component{
         super(props);
 
         this.state = {
-            Name: props.name,
-            Open: '...',
+            Name:  props.name,
+            Open:  '...',
             Close: '...',
-            High: '...',
-            Low: '...',
+            High:  '...',
+            Low:   '...',
+            HistDate: [],
+            HistHigh: [],
+            HistLow: [],
         };
 
         // Access stock data from AlphaVantage API (5 calls per minute)
         //const stockName = "MSFT";
-        const key = 'W6WD0B30SYK3T2QI';    
-        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + props.name +
+        const key1 = 'W6WD0B30SYK3T2QI';
+        const key2 = '8ITU7LH4G30XUCNF';
+        const key = key2;
+        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=' + props.name +
                     '&apikey=' + key;
 
         axios
@@ -28,22 +35,31 @@ class Stock extends React.Component{
                 let name = response.data['Meta Data']['2. Symbol'];
 
                 // Collect stock price data
-                let TimeSeries = response.data['Time Series (Daily)']
+                let TimeSeries = response.data['Monthly Time Series']
                 let today = Object.keys(TimeSeries)[0];
-                let open = TimeSeries[today]['1. open'];
-                let close = TimeSeries[today]['4. close'];
-                let high = TimeSeries[today]['2. high'];
-                let low = TimeSeries[today]['3. low'];
-
-                // Collect historical stock data for plotting
 
                 this.setState({
-                    Name: name,
-                    Open: open,
-                    Close: close,
-                    High: high,
-                    Low: low,
+                    Name:  name,
+                    Open:  TimeSeries[today]['1. open'],
+                    Close: TimeSeries[today]['4. close'],
+                    High:  TimeSeries[today]['2. high'],
+                    Low:   TimeSeries[today]['3. low'],
                 });
+
+                // Collect historical stock data over previous three years
+                for (var i = 0; i < 36 && i < Object.keys(TimeSeries).length; i++){
+
+                    let date = Object.keys(TimeSeries)[i];
+                    let high = parseFloat(TimeSeries[date]['2. high']);
+                    let low = parseFloat(TimeSeries[date]['3. low']);
+
+                    this.setState({
+                        HistDate: this.state.HistDate.concat(date),
+                        HistHigh: this.state.HistHigh.concat(high),
+                        HistLow: this.state.HistLow.concat(low),
+                    })
+                }
+
             })
             .catch( error => {
                 console.log(error);
@@ -52,23 +68,75 @@ class Stock extends React.Component{
     }
 
     render(){
+
+        let header = [
+            'Open',
+            'High',
+            'Low',
+            'Close'
+        ];
+        let body = [
+            this.state.Open,
+            this.state.High,
+            this.state.Low,
+            this.state.Close
+        ];
+
         return(
             <div>
-                <div className = "name">
+
+                <stockName className = "name">
                     {this.state.Name}
-                </div>
-                <div className = "open">
-                    Open = ${this.state.Open}
-                </div>
-                <div className = "close">
-                    Close = ${this.state.Close}
-                </div>
-                <div className = "high">
-                    High = ${this.state.High}
-                </div>
-                <div className = "low">
-                    Low = ${this.state.Low}
-                </div>
+                </stockName>
+
+                <br/>
+                <br/>
+
+                <table>
+                    <tr>
+                        <th>Open</th>
+                        <th>High</th>
+                        <th>Low</th>
+                        <th>Close</th>
+                    </tr>
+                    <tr>
+                        <td>${this.state.Open}</td>
+                        <td>${this.state.High}</td>
+                        <td>${this.state.Low}</td>
+                        <td>${this.state.Close}</td>
+                    </tr>
+                </table>
+
+                <br/>
+
+                <Plot
+                    data={[
+                        {
+                            x: this.state.HistDate,
+                            y: this.state.HistHigh,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'High ($)',
+                            marker: {color: 'green'},
+                        },
+                        {
+                            x: this.state.HistDate,
+                            y: this.state.HistLow,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Low ($)',
+                            marker: {color: 'red'},
+                        },
+                    ]}
+                    layout={
+                        {
+                            width: 800,
+                            height: 450,
+                            title: 'Three Year Stock Prices',
+                        }
+                    }
+                />
+
             </div>
         );
     }

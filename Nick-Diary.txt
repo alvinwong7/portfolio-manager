@@ -38,3 +38,9 @@ WEEK 06:
 - After some technical difficulties, I succeeded in calling data from the
 API and allowing the React components to update with live information. This
 provides a stepping stone for many other features.
+
+WEEK 07:
+
+- This week I implemented a graphing feature from the PlotLy library to show
+the historical high and low price for a particular stock over the previous
+three years.
