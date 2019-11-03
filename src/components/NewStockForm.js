@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Button, Row, Col } from "react-bootstrap";
+import UserData from './UserData'
 
 class NewStockForm extends React.Component {
 
@@ -59,6 +60,10 @@ class NewStockForm extends React.Component {
 
           //Add New stock
           this.props.addStock(code);
+
+          const U = new UserData();
+          U.addStock(assetType, code, units, date, price);
+
           event.target.reset();
       }
       catch(err){
