@@ -20,12 +20,11 @@ class Stock extends React.Component{
         };
 
         // Access stock data from AlphaVantage API (5 calls per minute)
-        //const stockName = "MSFT";
         const key1 = 'W6WD0B30SYK3T2QI';
         const key2 = '8ITU7LH4G30XUCNF';
         const key = key2;
-        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=' + props.name +
-                    '&apikey=' + key;
+        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol='
+                    + props.name + '&apikey=' + key;
 
         axios
             .get(url)
@@ -53,6 +52,7 @@ class Stock extends React.Component{
                     let high = parseFloat(TimeSeries[date]['2. high']);
                     let low = parseFloat(TimeSeries[date]['3. low']);
 
+                    // Append historical high and low prices
                     this.setState({
                         HistDate: this.state.HistDate.concat(date),
                         HistHigh: this.state.HistHigh.concat(high),
@@ -68,20 +68,6 @@ class Stock extends React.Component{
     }
 
     render(){
-
-        let header = [
-            'Open',
-            'High',
-            'Low',
-            'Close'
-        ];
-        let body = [
-            this.state.Open,
-            this.state.High,
-            this.state.Low,
-            this.state.Close
-        ];
-
         return(
             <div>
 
