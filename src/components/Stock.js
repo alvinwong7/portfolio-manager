@@ -24,7 +24,7 @@ class Stock extends React.Component{
         const key1 = 'W6WD0B30SYK3T2QI';
         const key2 = '8ITU7LH4G30XUCNF';
         const key = key2;
-        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=' + props.name +
+        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=' + props.name +
                     '&apikey=' + key;
 
         axios
@@ -35,7 +35,7 @@ class Stock extends React.Component{
                 let name = response.data['Meta Data']['2. Symbol'];
 
                 // Collect stock price data
-                let TimeSeries = response.data['Monthly Time Series']
+                let TimeSeries = response.data['Time Series (Daily)']
                 let today = Object.keys(TimeSeries)[0];
 
                 this.setState({
@@ -47,7 +47,7 @@ class Stock extends React.Component{
                 });
 
                 // Collect historical stock data over previous three years
-                for (var i = 0; i < 36 && i < Object.keys(TimeSeries).length; i++){
+                for (var i = 0; i < 3*365 && i < Object.keys(TimeSeries).length; i++){
 
                     let date = Object.keys(TimeSeries)[i];
                     let high = parseFloat(TimeSeries[date]['2. high']);
@@ -132,7 +132,7 @@ class Stock extends React.Component{
                         {
                             width: 800,
                             height: 450,
-                            title: 'Three Year Stock Prices',
+                            title: 'Price History',
                         }
                     }
                 />
