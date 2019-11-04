@@ -4,8 +4,6 @@ import { Stock } from './Stock'
 
 class Stocks extends React.Component {
 
-    //<li><NavLink exact activeClassName="current" to='/stocks/NewStockForm'>Add Stock</NavLink></li>
-
     render() {
         return (
             <div className='stocks'>
@@ -15,4 +13,4 @@ class Stocks extends React.Component {
     }
 }
 
-export { Stocks };
+export default Stocks;

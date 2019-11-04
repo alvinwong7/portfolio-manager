@@ -1,0 +1,100 @@
+COMP3900 Diary
+T3 2019
+Matthew Scott
+z5061795
+
+Week 1:
+    In week 1 we formed the start of a group, including Nic and Alvin and 2 others
+    I had to email Lecture as to why no demonstrator was present and to ask that
+    the possible projects could be posted on webcms as without them we could not begin work
+    But still we started Brainstorming anyway and produced the following ideas:
+    Natural language processing -> control file system
+        •	Delete, move copy ect
+    metadata consolidation website
+        •	Like webjet
+    Job hunting helper
+        •	Looks for changes in company websites for job openings
+        •	Sends notification
+    Natural language processing the handbook for requires
+
+Week 2:
+    We had to cut the initial group of 5 to be a group of 3 so the other 2 could form a group of 4
+    I lead the team to complete an MCDA (Multi Criteria Decision Analysis) to
+    decide which project to do
+    We decided on project 6 - Stock Website
+    Each of us then started investigating defeat sites and API's
+    I looked in Yahoo Finance
+    We also Brainstormed additional features
+    Possible extension
+        •	Addition of bitcoin/gold tracking
+        •	Night mode
+        •	Leaderboard
+        •	Risk
+        •	Diversity graph/calculation
+
+    But we can't do much on the proposal as the groups-project matches havn't been confirmed
+
+Week 3:
+    Was sick for the Lab on Monday but we're finally confirmed to be working on
+    the stock website project.
+    So we Discussed who is doing what for the proposal, I was going to be covering
+    the Illustrations, Infrastructure and Team Roles
+
+    On Friday we had a split group meeting on Friday to refine what we were doing in the proposal
+
+    Saturday Night I completed a MCDA for system architecture systems settling on
+    a standard Client Server architecture and added it and my other bits to the proposal
+
+Week 4:
+    This week we focused on submitting the proposal with each other reading and editing the work
+    Afterwards we settled on using React for the front end and Alphavantage as the
+    API to call
+
+Week 5:
+    As the others were wroking on calling the API I focused on setting up the base
+    Website. This involved following and combining multiple online tutorials as well
+    as learing Javascript and React at the same time. After some work I pushed
+    understood the basics of such react one-page websites and pushed a working
+    Scafold to git for the others to add to
+
+Week 6:
+    As Alvin couldn't get the stock component to display its information, I spent
+    most of my time of the project trying to get it to work.
+    I still do not know exactly what the problem was but it seemed as though even
+    though the stock.render() method was called. The element was not mounted and threw
+    and error when this.setState() was run.
+    I tried updating all dependencies in case there was an error as well as
+    attempting to forcing the element to be mounted in different ways.
+
+    In the end Nic figured out a way around it by re writing the Alvins work using
+    a different module.
+
+Week 7:
+Week 7:
+    During this week I was first allocated implementing the form to add stocks to be tracked.
+    This task was made complicated due to a lack of experience integrating html forms with react
+    and specifically react bootstrap. however after much tooling around the form correct collect
+    the imputed data.
+
+    Next involved connecting it to the existing display component "stocks". Comming form an OOD
+    background I assumed I could just import the class and call a static add method
+    This was however very wrong and it took awhile to learn how to pass props down from
+    the parent class and store state there.
+
+    After that I set about implementing dynamic routing for the saerch bar. This had me learning
+    about how history is handled and about wrapping a compoenet with "withRouter"
+    to allow it to push new addressing onto the history and thus page.
+
+    Next I looked at the remining functionality and decided to tackle adding some form of
+    Users and long term state to the system.
+    After learning that JS could not write and read files as compared to a python server,
+    I read and started to implement storing a user state inside cookies. This implementation
+    benifits form maintaining state even if the user closes the connection and connects later
+    as long as ots with the standard cookie lifespan (14 days).
+
+    There are still some difficulties in handling the data but i added functionality of loging in.
+    This includes restricting the access of non-logged in users via checking state and
+    pushing the login page if need be.
+
+    Still to do is setup a basic python server to store the USer files as well as manage
+    and manipulate the data at runtime using JS.
