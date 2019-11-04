@@ -46,9 +46,6 @@ class Navigation extends React.Component {
             <NavItem eventkey={1} href="/watchlist">
                 <Nav.Link as={Link} to="/watchlist">Watch List</Nav.Link>
             </NavItem>
-            <NavItem eventkey={1} href="/stocks">
-                <Nav.Link as={Link} to="/stocks">Stocks</Nav.Link>
-            </NavItem>
             <NavItem eventkey={1} href="/contact">
                 <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
             </NavItem>

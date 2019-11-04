@@ -12,7 +12,7 @@ class PortfolioOverview extends React.Component {
     super(props)
     this.addStock = this.addStock.bind(this);
     this.state = {
-      stocks : ['MSFT']//, 'AMZN', 'GOOGL'],
+      stocks : ['MSFT', 'AMZN', 'GOOGL'],
     }
 
   }
