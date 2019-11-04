@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-
+import { getSessionCookie } from "./Session";
 import { PortfolioOverview } from './PortfolioOverview'
 import { PortfolioStockTable } from './PortfolioStockTable'
 import StockForm from './StockForm'
@@ -8,11 +8,27 @@ import StockForm from './StockForm'
 class PortfolioPage extends React.Component {
   constructor(props) {
     super(props)
-    let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120', 'weight' : '50.00' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120', 'weight' : '50.00' } }
-    
+
+    //getting the stocks form state in cookie
+    let stocks = getSessionCookie()["stocks"]
+
+    //convetring to Dict
+    var stockDict = {};
+    if(stocks){
+        stocks.forEach(makeDict);
+    }
+    function makeDict(value, index, array) {
+        stockDict[value["code"]] = value
+    }
+    //console.log(stockDict)
+    let stock = stockDict
+
+    //let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120', 'weight' : '50.00' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120', 'weight' : '50.00' } }
+    //let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120' } }
+
     this.calcWeight = this.calcWeight.bind(this);
     stock = this.calcWeight(stock);
-    console.log(stock)
+    //console.log(stock)
     this.state = {
       loaded : false,
       userStocks : stock,
@@ -44,7 +60,7 @@ class PortfolioPage extends React.Component {
         let stockName = key
         let url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + stockName +
                   '&apikey=' + apiKey;
-        console.log(url)
+        //console.log(url)
         axios
           .get(url)
           .then( response => {

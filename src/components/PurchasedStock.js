@@ -1,4 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { Nav } from "react-bootstrap"
+
 
 // Rows for portfolio table stock summary
 class PurchasedStock extends React.Component {
@@ -19,7 +22,9 @@ class PurchasedStock extends React.Component {
     render() {
         return (
             <tr>
-                <td>{this.state.name}</td>
+                <td><Nav>
+                <Nav.Link as={Link} to={"/stock/"+this.state.name}>{this.state.name}</Nav.Link>
+                </Nav></td>
                 <td>{this.state.price}</td>
                 <td>{this.state.profit}</td>
                 <td>{this.state.units}</td>

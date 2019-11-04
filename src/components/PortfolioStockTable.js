@@ -19,9 +19,9 @@ class PortfolioStockTable extends React.Component {
 
         let stocks = this.state.userStocks
 
-        
+
         Object.keys(stocks).forEach(function(key) {
-            children.push(<PurchasedStock userStocks={stocks[key]} name={key}/>)
+            children.push(<PurchasedStock userStocks={stocks[key]} key={key} name={key}/>)
         });
         table.push(children)
         return table

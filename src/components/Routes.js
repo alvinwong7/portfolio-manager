@@ -19,14 +19,14 @@ const Routes = (props) => {
     useDeepCompareEffect( () => {
 
         setSession(getSessionCookie());
-        console.log("getting session Cookie with s= "+ JSON.stringify(session));
+        //console.log("getting session Cookie with s= "+ JSON.stringify(session));
         },
         [session]
     );
 
     const forceSessionUpdate = () => {
         setSession(getSessionCookie());
-        console.log("FORCED:getting session Cookie with s= "+ JSON.stringify(session));
+        //console.log("FORCED:getting session Cookie with s= "+ JSON.stringify(session));
         return ;
     }
 

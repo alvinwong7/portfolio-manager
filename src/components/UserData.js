@@ -3,7 +3,7 @@ import { SessionContext, getSessionCookie, setSessionCookie } from "./Session";
 
 export function addStock(assetType, code, units, date, price ){
         try{
-          const stock = [assetType, code, units, date, price];
+          const stock = {"assetType": assetType,"code": code,"units": units,"date": date,"buyPrice": price};
           var session = getSessionCookie()
           if(session["stocks"] == undefined){
               session["stocks"] = [stock]

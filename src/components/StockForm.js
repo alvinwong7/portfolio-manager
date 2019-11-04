@@ -5,7 +5,7 @@ import { Button, Collapse } from 'react-bootstrap'
 
 export default function StockForm(props) {
   const [open, setOpen] = useState(false);
-  
+
   function addStock(stock) {
     try{
     this.setState(state => {
@@ -32,7 +32,7 @@ export default function StockForm(props) {
     <Collapse in={open}>
       <div id="example-collapse-text">
         <br />
-        <NewStockForm addStock ={this.addStock} />
+        <NewStockForm addStock ={addStock} />
       </div>
     </Collapse>
     <br/>
