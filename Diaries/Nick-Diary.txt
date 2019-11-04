@@ -1,0 +1,46 @@
+WEEK 01:
+
+- Team formation and brainstorming of initial project ideas,
+including a file management system and personal financial assistant.
+
+WEEK 02:
+
+- We selected project 6 as our initial choice and then project 2 as
+our secondary choice. We chose project 6 after completing a decision
+matrix, where we collectively rated each project on various factors
+such as its difficulty and our level of interest. Furthermore, Alvin's
+experience with investing and my previous work experience at CommBank
+provided a strong case for choosing project 6.
+
+WEEK 03:
+
+- In week 3, we met to clarify the fundamental user stories. I decided
+to write these for the proposal, given that I had experience working at
+CommBank in a Business Analyst role and had written stories for real
+industry products.
+
+WEEK 04:
+
+- Submission of the proposal and clarification of the technology stack.
+We decided to use a React front end and the AlphaVantage API. I researched
+this API with Alvin and we both decided that it offered a usable feature
+set with reasonable performance.
+
+WEEK 05:
+
+- Duirng week 5, I completed a React tutorial and assigned basic
+responsibilities on the Trello board. Alvin will handle UI mostly, as he has
+some familiarity with bootstrap. Matt and I will work on calling the API
+to populate data on the webpage.
+
+WEEK 06:
+
+- After some technical difficulties, I succeeded in calling data from the
+API and allowing the React components to update with live information. This
+provides a stepping stone for many other features.
+
+WEEK 07:
+
+- This week I implemented a graphing feature from the PlotLy library to show
+the historical high and low price for a particular stock over the previous
+three years.

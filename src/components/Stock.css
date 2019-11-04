@@ -1,0 +1,12 @@
+stockName {
+    font-size: 30px;
+}
+
+table, th, td {
+    border: 1px Solid WhiteSmoke;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+}
