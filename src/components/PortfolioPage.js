@@ -10,6 +10,7 @@ class PortfolioPage extends React.Component {
         return (
             <div>
                 <h1>My Portfolio</h1>
+                <PortfolioOverview />
             </div>
         );
     }

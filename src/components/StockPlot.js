@@ -5,50 +5,33 @@ import './Stock.css';
 
 import { Table } from 'react-bootstrap'
 
-class Stock extends React.Component{
+class StockPlot extends React.Component{
 
     constructor(props){
         super(props);
 
         this.state = {
-            Name:  props.name,
-            Open:  '...',
-            Close: '...',
-            High:  '...',
-            Low:   '...',
+            Name: props.stockName,
+            Period: props.years,
             HistDate: [],
             HistHigh: [],
             HistLow: [],
         };
 
+
         // Access stock data from AlphaVantage API (5 calls per minute)
-        const key1 = 'W6WD0B30SYK3T2QI';
-        const key2 = '8ITU7LH4G30XUCNF';
-        const key = key2;
+        const key = '8ITU7LH4G30XUCNF';
         const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol='
-                    + props.name + '&apikey=' + key;
+                    + this.state.Name + '&apikey=' + key;
 
         axios
             .get(url)
             .then( response => {
 
-                // Collect stock identifying information
-                let name = response.data['Meta Data']['2. Symbol'];
-
-                // Collect stock price data
                 let TimeSeries = response.data['Time Series (Daily)']
-                let today = Object.keys(TimeSeries)[0];
-
-                this.setState({
-                    Name:  name,
-                    Open:  TimeSeries[today]['1. open'],
-                    Close: TimeSeries[today]['4. close'],
-                    High:  TimeSeries[today]['2. high'],
-                    Low:   TimeSeries[today]['3. low'],
-                });
 
                 // Collect historical stock data over previous three years
-                for (var i = 0; i < 3*365 && i < Object.keys(TimeSeries).length; i++){
+                for (var i = 0; i < this.state.Period*365 && i < Object.keys(TimeSeries).length; i++){
 
                     let date = Object.keys(TimeSeries)[i];
                     let high = parseFloat(TimeSeries[date]['2. high']);
@@ -66,35 +49,13 @@ class Stock extends React.Component{
             .catch( error => {
                 console.log(error);
             })
-
+        
     }
+
 
     render(){
         return(
             <div>
-
-                <stockName className = "name">
-                    {this.state.Name}
-                </stockName>
-
-                <br/>
-                <br/>
-
-                <table>
-                    <tr>
-                        <th>Open</th>
-                        <th>High</th>
-                        <th>Low</th>
-                        <th>Close</th>
-                    </tr>
-                    <tr>
-                        <td>${this.state.Open}</td>
-                        <td>${this.state.High}</td>
-                        <td>${this.state.Low}</td>
-                        <td>${this.state.Close}</td>
-                    </tr>
-                </table>
-
                 <br/>
 
                 <Plot
@@ -118,7 +79,7 @@ class Stock extends React.Component{
                     ]}
                     layout={
                         {
-                            width: 800,
+                            width: 900,
                             height: 450,
                             title: 'Price History',
                         }
@@ -131,4 +92,4 @@ class Stock extends React.Component{
 
 }
 
-export { Stock };
+export { StockPlot }
