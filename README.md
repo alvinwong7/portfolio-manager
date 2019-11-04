@@ -4,9 +4,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### 'npm install'
 
+## Setup the Virtualenv
+
+### 'virtualenv Env'
+
 ## Next Start the Virtualenv:
 
-###'./Env/Scripts/activate'
+### './Env/Scripts/activate'
 
 ## and then Install required python packages
 
