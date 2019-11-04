@@ -40,3 +40,9 @@ I refactored the component code such that they are more consistent
 and started integrating bootstrap into UI elements. I changed the API 
 stock class to be callable from other components and automatically display 
 in a table format.  
+
+WEEK 07:
+
+I set up each page according to our UI discussion on Monday. I created a 
+table drop down for user watchlists and created the Portfolio page with the 
+overview and table component.
