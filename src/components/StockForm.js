@@ -1,10 +1,24 @@
 import React, { useState } from 'react'
-import { StockTable } from './StockTable'
+import { NewStockForm } from './NewStockForm'
 
 import { Button, Collapse } from 'react-bootstrap'
 
-export default function WatchList(props) {
+export default function StockForm(props) {
   const [open, setOpen] = useState(false);
+  
+  function addStock(stock) {
+    try{
+    this.setState(state => {
+      const stocks = state.stocks.concat(stock);
+      return {
+        stocks
+      };
+    });
+    } catch(err){
+        alert(err);
+    }
+    //alert("added "+ stock);
+  }
 
   return (
     <>
@@ -13,12 +27,12 @@ export default function WatchList(props) {
       aria-controls="example-collapse-text"
       aria-expanded={open}
     >
-      {props.name}
+      Add stock
     </Button>
     <Collapse in={open}>
       <div id="example-collapse-text">
         <br />
-      <StockTable stocks={props.watchlist}/>
+        <NewStockForm addStock ={this.addStock} />
       </div>
     </Collapse>
     <br/>
