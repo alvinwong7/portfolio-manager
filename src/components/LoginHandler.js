@@ -7,6 +7,7 @@ import { SessionContext, getSessionCookie, setSessionCookie } from "./Session";
 
 const LoginHandler = (props) => {
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const handleSubmit = async e => {
     e.preventDefault();
@@ -29,9 +30,19 @@ const LoginHandler = (props) => {
       <b> Login </b> <br />
         <input
           type="username"
+          required = {true}
           placeholder="Enter Username"
           value={username}
           onChange={e => setUsername(e.target.value)}
+        />
+        <br/>
+        <b> Password </b> <br />
+        <input
+          type="password"
+          required = {true}
+          placeholder="Enter Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
         />
         <input type="submit" value="Login" />
       </form>

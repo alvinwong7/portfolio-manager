@@ -4,7 +4,7 @@ import * as Cookies from "js-cookie";
 export const setSessionCookie = (session: any): void => {
   Cookies.remove("session");
   Cookies.set("session", session, { expires: 14 });
-  alert("setting session Cookie");
+  //alert("setting session Cookie");
 };
 
 export const getSessionCookie: any = () => {

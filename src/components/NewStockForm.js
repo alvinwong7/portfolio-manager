@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button, Row, Col } from "react-bootstrap";
-//import UserData from './UserData'
+import UserData from './UserData'
 
 class NewStockForm extends React.Component {
 
