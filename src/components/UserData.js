@@ -18,6 +18,15 @@ export function addStock(assetType, code, units, date, price ){
 
     }
 
-export function removeStock(){
+export function deleteStock(code){
+
+    var session = getSessionCookie();
+    let index = session["stocks"].findIndex(item => item["code"] == code);
+    if(index != -1){
+        session["stocks"].splice(index,1);
+        setSessionCookie(JSON.stringify(session));
+        console.log(session)
+    }
+
 
 }

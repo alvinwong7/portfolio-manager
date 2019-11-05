@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Nav } from "react-bootstrap"
+import { Nav, Button } from "react-bootstrap"
+import { deleteStock } from './UserData'
 
 
 // Rows for portfolio table stock summary
@@ -19,6 +20,23 @@ class PurchasedStock extends React.Component {
         }
     }
 
+    static getDerivedStateFromProps(props, state){
+        return {
+            name : props.name,
+            price : props.userStocks['price'],
+            profit : props.userStocks['profits/loss'],
+            units : props.userStocks['units'],
+            changePercent : props.userStocks['changePercent'],
+            value : props.userStocks['value'],
+            weight : props.userStocks['weight'],
+        }
+    }
+
+    handleClick(){
+        deleteStock(this.state.name)
+        this.props.updateSession()
+    }
+
     render() {
         return (
             <tr>
@@ -31,6 +49,7 @@ class PurchasedStock extends React.Component {
                 <td>{this.state.changePercent}</td>
                 <td>{this.state.value}</td>
                 <td>{this.state.weight}</td>
+                <td> <Button variant="danger" onClick={this.handleClick.bind(this)}>Delete</Button></td>
             </tr>
         )
     }

@@ -76,11 +76,7 @@ class StockSummary extends React.Component {
     render(){
         return(
             <tr>
-                <td>
-                <Nav>
-                <Nav.Link as={Link} to={"/stock/"+this.state.name}>{this.state.name}</Nav.Link>
-                </Nav>
-                </td>
+                <td>{this.state.name}</td>
                 <td>{this.state.price}</td>
                 <td>{this.state.change}</td>
                 <td>{this.state.changePercent}</td>

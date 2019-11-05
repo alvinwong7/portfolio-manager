@@ -1,1 +1,1 @@
-{"username":"B","password":"B"}
+{"username":"B","password":"B","stocks":[{"assetType":"Stock","code":"GOOGL","units":"1","date":"2019-08-08","buyPrice":"1200"},{"assetType":"Stock","code":"MSFT","units":"20","date":"2019-10-30","buyPrice":"200"}]}

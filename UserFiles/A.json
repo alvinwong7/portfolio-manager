@@ -1,1 +1,1 @@
-{"username":"A","password":"B","stocks":[{"assetType":"Stock","code":"TLS","units":"20","date":"2019-11-01","buyPrice":"200"},{"assetType":"Stock","code":"MSFT","units":"20","date":"2019-10-10","buyPrice":"120"},{"assetType":"Stock","code":"GOOGL","units":"20","date":"2018-01-05","buyPrice":"200"}]}
+{"username":"A","password":"B","stocks":[{"assetType":"Stock","code":"GOOGL","units":"20","date":"2019-10-29","buyPrice":"200"},{"assetType":"Stock","code":"ORCL","units":"20","date":"2019-10-31","buyPrice":"200"}]}

@@ -6,6 +6,8 @@ import { PortfolioStockTable } from './PortfolioStockTable'
 import StockForm from './StockForm'
 
 class PortfolioPage extends React.Component {
+    _update = false
+
   constructor(props) {
     super(props)
 
@@ -23,15 +25,24 @@ class PortfolioPage extends React.Component {
     //console.log(stockDict)
     let stock = stockDict
 
-    //let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120', 'weight' : '50.00' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120', 'weight' : '50.00' } }
+    //let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120', 'weight' : '50.00' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120', 'weight' : '50.00' }, 'AMZN' : { 'buyPrice' : '50', 'units' : '120', 'weight' : '50.00' } }
     //let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120' } }
+
+    this.updateSession = this.updateSession.bind(this)
 
     this.calcWeight = this.calcWeight.bind(this);
     stock = this.calcWeight(stock);
     //console.log(stock)
     this.state = {
-      loaded : false,
+      loaded : true,
       userStocks : stock,
+      session: stocks,
+    }
+
+    if(stockDict == {}){
+        this.setState({
+            loaded: true
+        });
     }
 
     this.getInfo = this.getInfo.bind(this);
@@ -121,21 +132,52 @@ class PortfolioPage extends React.Component {
       });
     }
 
+    updateSession(){
+
+        let stocks = getSessionCookie()["stocks"]
+
+        //convetring to Dict
+        var stockDict = {};
+        if(stocks){
+            stocks.forEach(makeDict);
+        }
+        function makeDict(value, index, array) {
+            stockDict[value["code"]] = value
+        }
+        //console.log(stockDict)
+        let stock = stockDict
+        stock = this.calcWeight(stock);
+
+        this.setState({
+             userStocks :  stock,
+        },
+        )
+        this._update = true
+        //this.getInfo();
+        //alert("request to update userStocks")
+    }
+
+
   render() {
     if (this.state.loaded != true) {
       return (
         <div />
       )
     }
+    if(this._update == true){
+        this._update = false
+        this.getInfo();
+    }
     return (
       <div>
         <h1>My Portfolio</h1>
         <PortfolioOverview userStocks={this.state.userStocks}/>
-        <PortfolioStockTable userStocks={this.state.userStocks}/>
-        <StockForm />
+        <PortfolioStockTable userStocks={this.state.userStocks} updateSession = {this.updateSession}/>
+        <StockForm updateSession = {this.updateSession} />
       </div>
     );
   }
+
 
 }
 

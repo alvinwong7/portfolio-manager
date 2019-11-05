@@ -4,6 +4,12 @@ import { addStock } from './UserData'
 
 class NewStockForm extends React.Component {
 
+    constructor(props){
+        super(props)
+
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
   render() {
     return (
      <Form id ="addStockForm" name = "addStockForm" onSubmit={ (e) => this.handleSubmit(e)}>
@@ -43,10 +49,10 @@ class NewStockForm extends React.Component {
     );
   }
 
-  handleSubmit(event){
+  handleSubmit = (event) => {
       try{
           event.preventDefault();
-
+          let component = this
 
           //Collecting Inputs
           const assetType = event.target.elements.namedItem("assetType").value;
@@ -62,6 +68,9 @@ class NewStockForm extends React.Component {
           //this.props.addStock(code);
           addStock(assetType, code, units, date, price);
           event.target.reset();
+
+          //console.log(component)
+          component.props.updateSession()
       }
       catch(err){
           alert(err);

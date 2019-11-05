@@ -13,8 +13,8 @@ class PortfolioOverview extends React.Component {
 
   evalNetworth() {
     let value = 0
-    let stocks = this.state.userStocks
-    Object.keys(this.state.userStocks).forEach(function(key) {
+    let stocks = this.props.userStocks
+    Object.keys(this.props.userStocks).forEach(function(key) {
       value += parseFloat(stocks[key]['value'])
     });
     this.setState({
@@ -24,6 +24,10 @@ class PortfolioOverview extends React.Component {
 
   componentDidMount() {
     this.evalNetworth()
+  }
+
+  componentWillReceiveProps(nextProps){
+      this.evalNetworth()
   }
 
   render() {
