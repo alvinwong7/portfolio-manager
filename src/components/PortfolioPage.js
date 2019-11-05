@@ -11,14 +11,17 @@ class PortfolioPage extends React.Component {
         // this.addStock = this.addStock.bind(this);
         let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120', 'weight' : '50.00' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120', 'weight' : '50.00' } }
         
+        Object.keys(stock).forEach(function(key) {
+            stock[key]['loaded'] = false
+        })
         this.calcWeight = this.calcWeight.bind(this);
         stock = this.calcWeight(stock);
         console.log(stock)
         this.state = {
-            loaded : false,
             userStocks : stock,
         }
 
+        this.checkLoaded = this.checkLoaded.bind(this);
         this.getInfo = this.getInfo.bind(this);
         this.getInfo();
     }
@@ -71,16 +74,12 @@ class PortfolioPage extends React.Component {
                     stocks[stockName]['volume'] = volume
                     stocks[stockName]['change'] = change
                     stocks[stockName]['changePercent'] = changePercent
+                    stocks[stockName]['loaded'] = true
 
                     component.setState({
                         userStocks : stocks,
                     });
-                    let names = Object.keys(stocks);
-                    if (stockName == names[names.length-1]) {
-                        component.setState({
-                            loaded : true,
-                        })
-                    }
+
                 })
                 .catch( error => {
                     stocks[stockName]['profits/loss'] = 'X'
@@ -91,23 +90,30 @@ class PortfolioPage extends React.Component {
                     stocks[stockName]['volume'] = 'X'
                     stocks[stockName]['change'] = 'X'
                     stocks[stockName]['changePercent'] = 'X'
+                    stocks[stockName]['loaded'] = true
 
                     component.setState({
                         userStocks : stocks,
                     });
-                    let names = Object.keys(stocks);
-                    if (stockName == names[names.length-1]) {
-                        component.setState({
-                            loaded : true,
-                        })
-                    }
                     console.log(error);
                 })
         });
     }
 
+    checkLoaded = () => {
+        let ret = true
+        let stocks = this.state.userStocks
+        Object.keys(stocks).forEach(function(key) {
+            if (stocks[key]['loaded'] == false) {
+                ret = false
+            }
+        })
+        return ret
+    }
+
     render() {
-        if (this.state.loaded != true) {
+        if (!this.checkLoaded()) {
+            console.log(this.state.userStocks)
             return (
                 <div />
             )
