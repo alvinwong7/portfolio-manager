@@ -16,8 +16,8 @@ class WatchListPage extends React.Component {
         let children = []
         let wl = this.state.watchlists
         Object.keys(wl).forEach(function(key) {
-            console.log(wl[key])
-            children.push(<WatchList name={key} watchlist={wl[key]}/>)
+            //console.log(wl[key])
+            children.push(<WatchList name={key} key = {key} watchlist={wl[key]}/>)
         });
         table.push(children)
         return table

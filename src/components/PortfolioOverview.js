@@ -1,43 +1,45 @@
 import React from 'react'
-import { Card } from 'react-bootstrap'
+//import { Stock } from './Stock'
+import { StockTable } from './StockTable'
+
+//import { NavLink, Switch, Route } from 'react-router-dom'
+import { NewStockForm } from './NewStockForm'
+
 
 // Top level component of portfolio page
 class PortfolioOverview extends React.Component {
-  constructor(props) {
+    constructor(props) {
     super(props)
+    this.addStock = this.addStock.bind(this);
     this.state = {
-      userStocks : this.props.userStocks,
-      networth : '0',
+      stocks : ['MSFT', 'AMZN', 'GOOGL'],
     }
-  }
 
-  evalNetworth() {
-    let value = 0
-    let stocks = this.state.userStocks
-    Object.keys(this.state.userStocks).forEach(function(key) {
-      value += parseFloat(stocks[key]['value'])
-    });
-    this.setState({
-      networth : value.toString()
-    })
-  }
-
-  componentDidMount() {
-    this.evalNetworth()
   }
 
   render() {
+    // <li><NavLink exact activeClassName="current" to="/stocks/NewStockForm">Add Stock</NavLink></li>
     return (
-      <Card>
-      <Card.Header>Personal Portfolio Performance</Card.Header>
-      <Card.Body>
-        <Card.Text>
-        {this.state.networth}
-        </Card.Text>
-      </Card.Body>
-      </Card>
-    )
+      <div className='stocks'>
+        <StockTable stocks={this.state.stocks}/>
+        <NewStockForm addStock ={this.addStock} />
+      </div>
+    );
   }
+
+  addStock(stock){
+      try{
+      this.setState(state => {
+        const stocks = state.stocks.concat(stock);
+        return {
+          stocks
+        };
+      });
+      } catch(err){
+          alert(err);
+      }
+      //alert("added "+ stock);
+    }
 }
 
-export { PortfolioOverview }
+export{ PortfolioOverview }

@@ -22,7 +22,6 @@ export default function WatchList(props) {
           </div>
         </Collapse>
         <br/>
-        <br/>
 
         </>
     )
