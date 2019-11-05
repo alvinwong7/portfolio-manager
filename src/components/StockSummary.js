@@ -1,8 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
-import { Nav,} from "react-bootstrap"
-
 
 class StockSummary extends React.Component {
     constructor(props){
@@ -52,7 +49,7 @@ class StockSummary extends React.Component {
             .catch( error => {
 
                 this.setState({
-                    name: this.props.stockName,
+                    name: 'Invalid Code',
                     price: 'X',
                     open: 'X',
                     high: 'X',
@@ -76,11 +73,7 @@ class StockSummary extends React.Component {
     render(){
         return(
             <tr>
-                <td>
-                <Nav>
-                <Nav.Link as={Link} to={"/stock/"+this.state.name}>{this.state.name}</Nav.Link>
-                </Nav>
-                </td>
+                <td>{this.state.name}</td>
                 <td>{this.state.price}</td>
                 <td>{this.state.change}</td>
                 <td>{this.state.changePercent}</td>

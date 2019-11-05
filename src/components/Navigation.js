@@ -1,35 +1,11 @@
-import React from 'react';
-
+import React from 'react'
 import { Clock } from './Clock'
 
 import { Link, withRouter } from 'react-router-dom'
 import { Navbar, Nav, Form, FormControl, Button, NavItem } from "react-bootstrap"
-import { getSessionCookie } from './Session.js'
 
 class Navigation extends React.Component {
     render() {
-
-        const session = getSessionCookie();
-        if (session.username === undefined) {
-            return(
-            <div>
-            <Navbar bg="dark" variant="dark" fixed="top">
-            <Navbar.Brand as={Link} to="/">HRDM</Navbar.Brand>
-            <Navbar.Collapse>
-                <Nav className="mr-auto">
-                <Navbar.Text><Clock /></Navbar.Text>
-                <NavItem eventkey={1} href="/login">
-                    <Nav.Link as={Link} to="/login">Login</Nav.Link>
-                </NavItem>
-                </Nav>
-                </Navbar.Collapse>
-                </Navbar>
-                <br />
-                <br />
-            </div>
-            );
-        }
-
         return(
         <div>
         <Navbar bg="dark" variant="dark" fixed="top">
@@ -46,16 +22,17 @@ class Navigation extends React.Component {
             <NavItem eventkey={1} href="/watchlist">
                 <Nav.Link as={Link} to="/watchlist">Watch List</Nav.Link>
             </NavItem>
+            <NavItem eventkey={1} href="/stocks">
+                <Nav.Link as={Link} to="/stocks">Stocks</Nav.Link>
+            </NavItem>
             <NavItem eventkey={1} href="/contact">
                 <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
             </NavItem>
-            <NavItem eventkey={1} href="/logout">
-                <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
-            </NavItem>
+            <Nav.Link to="/login">Login</Nav.Link>
             </Nav>
                 <Form inline onSubmit={ (e) => this.handleSubmit(e)}>
-                    <FormControl type="text" placeholder="Stock Search" name="searchTerm" className="mr-sm-2" />
-                    <Button variant="outline-info" type = "submit">Search</Button>
+                <FormControl type="text" placeholder="Stock Search" name="searchTerm" className="mr-sm-2" />
+                <Button variant="outline-info" type = "submit">Search</Button>
                 </Form>
             </Navbar.Collapse>
             </Navbar>

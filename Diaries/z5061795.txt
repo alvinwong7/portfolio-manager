@@ -70,30 +70,3 @@ Week 6:
     a different module.
 
 Week 7:
-    During this week I was first allocated implementing the form to add stocks to be tracked.
-    This task was made complicated due to a lack of experience integrating html forms with react
-    and specifically react bootstrap. however after much tooling around the form correct collect
-    the imputed data.
-
-    Next involved connecting it to the existing display component "stocks". Coming form an OOD
-    background I assumed I could just import the class and call a static add method
-    This was however very wrong and it took awhile to learn how to pass props down from
-    the parent class and store state there.
-
-    After that I set about implementing dynamic routing for the search bar. This had me learning
-    about how history is handled and about wrapping a component with "withRouter"
-    to allow it to push new addressing onto the history and thus page.
-
-    Next I looked at the remining functionality and decided to tackle adding some form of
-    Users and long term state to the system.
-    After learning that JS could not write and read files as compared to a python server,
-    I read and started to implement storing a user state inside cookies. This implementation
-    benefits form maintaining state even if the user closes the connection and connects later
-    as long as ots with the standard cookie lifespan (14 days).
-
-    There are still some difficulties in handling the data but i added functionality of loging in.
-    This includes restricting the access of non-logged in users via checking state and
-    pushing the login page if need be.
-
-    Still to do is setup a basic python server to store the User files as well as manage
-    and manipulate the data at runtime using JS.
