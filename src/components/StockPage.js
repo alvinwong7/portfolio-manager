@@ -1,6 +1,6 @@
 import React from 'react'
+import equal from 'fast-deep-equal'
 import { StockDetail } from './StockDetail'
-import { StockPlot } from './StockPlot'
 
 // Stock page
 class StockPage extends React.Component {
@@ -23,7 +23,6 @@ class StockPage extends React.Component {
             <div>
                 <h1>{this.state.stockName}</h1>
                 <StockDetail stockName={[this.state.stockName]}/>
-                <StockPlot stockName={this.state.stockName} years={3}/>
             </div>
         )
     }

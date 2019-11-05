@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from './logo.svg';
 import  Navigation from "./components/Navigation.js"
 import { Routes } from "./components/Routes.js"
 
@@ -13,7 +14,7 @@ class App extends React.Component {
     return (
       <div className='app'>
         <Navigation />
-        <Routes history = {this.props.history}/>
+        <Routes />
       </div>
     );
   }
