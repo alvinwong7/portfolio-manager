@@ -18,7 +18,6 @@ export default function StockForm(props) {
     <Collapse in={open}>
       <div id="example-collapse-text">
         <br />
-        <NewStockForm addStock ={this.addStock} />
       </div>
     </Collapse>
     <br/>
