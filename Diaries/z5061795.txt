@@ -1,4 +1,4 @@
-COMP3900 Diary
+﻿COMP3900 Diary
 T3 2019
 Matthew Scott
 z5061795
@@ -70,31 +70,47 @@ Week 6:
     a different module.
 
 Week 7:
-Week 7:
     During this week I was first allocated implementing the form to add stocks to be tracked.
     This task was made complicated due to a lack of experience integrating html forms with react
     and specifically react bootstrap. however after much tooling around the form correct collect
     the imputed data.
 
-    Next involved connecting it to the existing display component "stocks". Comming form an OOD
+    Next involved connecting it to the existing display component "stocks". Coming form an OOD
     background I assumed I could just import the class and call a static add method
     This was however very wrong and it took awhile to learn how to pass props down from
     the parent class and store state there.
 
-    After that I set about implementing dynamic routing for the saerch bar. This had me learning
-    about how history is handled and about wrapping a compoenet with "withRouter"
+    After that I set about implementing dynamic routing for the search bar. This had me learning
+    about how history is handled and about wrapping a component with "withRouter"
     to allow it to push new addressing onto the history and thus page.
 
     Next I looked at the remining functionality and decided to tackle adding some form of
     Users and long term state to the system.
     After learning that JS could not write and read files as compared to a python server,
     I read and started to implement storing a user state inside cookies. This implementation
-    benifits form maintaining state even if the user closes the connection and connects later
-    as long as ots with the standard cookie lifespan (14 days).
+    benefits form maintaining state even if the user closes the connection and connects later
+    as long as its within the standard cookie lifespan (14 days).
 
-    There are still some difficulties in handling the data but i added functionality of loging in.
+    There are still some difficulties in handling the data but I added functionality of logging in.
     This includes restricting the access of non-logged in users via checking state and
     pushing the login page if need be.
 
-    Still to do is setup a basic python server to store the USer files as well as manage
+    Still to do is setup a basic python server to store the User files as well as manage
     and manipulate the data at runtime using JS.
+
+Week 8:
+    This week I first set up and ran a simple python server using flask and flask-restful
+    to provide and store login information. This information is stored being runtimes via
+    flat files containing JSON strings.
+
+    The main server requests to login with provided login info and sends that to the python Server.
+    This server check the login information an either replys with the session info or an error msg.
+    If successful the session info is stored into a cookie.
+
+    I then changes the portfolio overview to use the stored session information as its source of truth.
+    I had some troubles integrating this due to the components reliance on state. As state in react
+    is only changes by the setState() function which is not immediate and can cause strange bugs.
+
+    Unfortunately, some of this work was done twice as Alvin also connected the add stock
+    from to the overview state but this was superseded by the state management systems i
+    have introduced.
