@@ -1,0 +1,18 @@
+{
+    "username":"C",
+    "password":"C",
+    "stocks":[
+        {"assetType":"Stock","code":"ORCL","units":"20","date":"2019-10-31","buyPrice":"200"},
+        {"assetType":"Stock","code":"TLS","units":"20","date":"2019-10-29","buyPrice":"200"}
+    ],
+    "portfolios": {
+        "one":[
+            {"assetType":"Stock","code":"ORCL","units":"20","date":"2019-10-31","buyPrice":"200"},
+            {"assetType":"Stock","code":"TLS","units":"20","date":"2019-10-29","buyPrice":"200"}
+        ],
+        "two":[
+            {"assetType":"Stock","code":"MSFT","units":"20","date":"2019-10-31","buyPrice":"200"},
+            {"assetType":"Stock","code":"GOOGL","units":"20","date":"2019-10-29","buyPrice":"200"}
+        ]
+    }
+}
