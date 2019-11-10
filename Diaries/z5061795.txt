@@ -1,4 +1,4 @@
-COMP3900 Diary
+﻿COMP3900 Diary
 T3 2019
 Matthew Scott
 z5061795
@@ -89,11 +89,28 @@ Week 7:
     After learning that JS could not write and read files as compared to a python server,
     I read and started to implement storing a user state inside cookies. This implementation
     benefits form maintaining state even if the user closes the connection and connects later
-    as long as ots with the standard cookie lifespan (14 days).
+    as long as its within the standard cookie lifespan (14 days).
 
-    There are still some difficulties in handling the data but i added functionality of loging in.
+    There are still some difficulties in handling the data but I added functionality of logging in.
     This includes restricting the access of non-logged in users via checking state and
     pushing the login page if need be.
 
     Still to do is setup a basic python server to store the User files as well as manage
     and manipulate the data at runtime using JS.
+
+Week 8:
+    This week I first set up and ran a simple python server using flask and flask-restful
+    to provide and store login information. This information is stored being runtimes via
+    flat files containing JSON strings.
+
+    The main server requests to login with provided login info and sends that to the python Server.
+    This server check the login information an either replys with the session info or an error msg.
+    If successful the session info is stored into a cookie.
+
+    I then changes the portfolio overview to use the stored session information as its source of truth.
+    I had some troubles integrating this due to the components reliance on state. As state in react
+    is only changes by the setState() function which is not immediate and can cause strange bugs.
+
+    Unfortunately, some of this work was done twice as Alvin also connected the add stock
+    from to the overview state but this was superseded by the state management systems i
+    have introduced.
