@@ -8,14 +8,14 @@ class StockPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            stockName : props.match.params.stockName,
+            stockName: props.match.params.stockName,
         }
     }
 
     static getDerivedStateFromProps(props, state){
 
         return {
-            stockName : props.match.params.stockName,
+            stockName: props.match.params.stockName,
         }
     }
 
