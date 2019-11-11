@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { addStock } from './UserData'
+import { addPortfolioStock } from './UserData'
 
 class NewStockForm extends React.Component {
 
@@ -42,6 +42,7 @@ class NewStockForm extends React.Component {
              <Form.Control name="price" required={true} type ="number" step=".01" placeholder = "Enter Price Here" />
          </Col>
      </Row>
+     <br />
      <Button variant="primary" type = "submit" >
      Submit
      </Button>
@@ -66,7 +67,7 @@ class NewStockForm extends React.Component {
 
           //Add New stock
           //this.props.addStock(code);
-          addStock(assetType, code, units, date, price);
+          addPortfolioStock(component.props.portfolioName, assetType, code, units, date, price);
           event.target.reset();
 
           //console.log(component)
