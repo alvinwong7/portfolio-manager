@@ -12,7 +12,14 @@ class PortfolioPage extends React.Component {
     super(props)
 
     //getting the stocks form state in cookie
-    let stocks = getSessionCookie()["stocks"]
+    let stocks = []
+    let name = 'My Portfolio'
+    if (props.match.params.portfolioName != undefined) {
+      stocks = getSessionCookie()["portfolios"][props.match.params.portfolioName]
+      name = props.match.params.portfolioName
+    } else {
+      stocks = getSessionCookie()["portfolios"]["default"]
+    }
 
     //convetring to Dict
     var stockDict = {};
@@ -37,6 +44,7 @@ class PortfolioPage extends React.Component {
       loaded : true,
       userStocks : stock,
       session: stocks,
+      portfolioName : name
     }
 
     if(stockDict == {}){
@@ -61,6 +69,8 @@ class PortfolioPage extends React.Component {
 
     return stock
   }
+
+
 
   getInfo = () => {
     // Access stock data from AlphaVantage API (5 calls per minute)
@@ -157,6 +167,8 @@ class PortfolioPage extends React.Component {
       //alert("request to update userStocks")
   }
 
+  
+
 
   render() {
     if (this.state.loaded != true) {
@@ -170,10 +182,11 @@ class PortfolioPage extends React.Component {
     }
     return (
       <div>
-        <h1>My Portfolio</h1>
+        <h1>{this.state.portfolioName}</h1>
         <PortfolioOverview userStocks={this.state.userStocks}/>
-        <PortfolioStockTable userStocks={this.state.userStocks} updateSession = {this.updateSession}/>
-        <StockForm updateSession = {this.updateSession} />
+        <br/>
+        <PortfolioStockTable userStocks={this.state.userStocks} portfolioName={this.state.portfolioName} updateSession = {this.updateSession}/>
+        <StockForm updateSession = {this.updateSession} portfolioName = {this.state.portfolioName} />
       </div>
     );
   }

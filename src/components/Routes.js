@@ -54,6 +54,7 @@ const ProtectedHandler = ({ history }) => {
       <Route exact path="/" component={PortfolioPage}/>
       <Route path="/logout" component={LogoutHandler} />
       <Route path="/myportfolio" component={PortfolioPage}/>
+      <Route path="/builder/:portfolioName" component={PortfolioPage}/>
       <Route path="/builder" component={PortfolioBuilderPage}/>
       <Route path="/watchlist" component={WatchListPage}/>
       <Route path="/stocks" component={Stocks}/>

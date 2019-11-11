@@ -1,5 +1,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Nav, Button } from "react-bootstrap"
 import axios from 'axios'
 
 class PortfolioCard extends React.Component {
@@ -52,7 +54,9 @@ class PortfolioCard extends React.Component {
         return (
             <Card>
                 <Card.Body>
-                    <Card.Title>{this.state.name}</Card.Title>
+                    <Card.Title><Nav>
+                <Nav.Link as={Link} to={"/builder/"+this.state.name}>{this.state.name}</Nav.Link>
+                </Nav></Card.Title>
                     <Card.Text>
                         ${this.state.networth.toFixed(2).toString()} : ${this.state.change.toFixed(2).toString()} : {changePercent.toFixed(2).toString()}%
                     </Card.Text>

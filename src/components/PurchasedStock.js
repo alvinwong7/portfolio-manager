@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Nav, Button } from "react-bootstrap"
-import { deleteStock } from './UserData'
+import { deletePortfolioStock } from './UserData'
 
 
 // Rows for portfolio table stock summary
@@ -33,7 +33,7 @@ class PurchasedStock extends React.Component {
     }
 
     handleClick(){
-        deleteStock(this.state.name)
+        deletePortfolioStock(this.props.portfolioName, this.state.name)
         this.props.updateSession()
     }
 
