@@ -23,7 +23,6 @@ class PortfolioCard extends React.Component {
         const apiKey = 'W6WD0B30SYK3T2QI'
         for (let i = 0; i < stocks.length; i++) {
             let stockName = stocks[i]['code']
-            console.log(stockName)
             let url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + stockName +
                         '&apikey=' + apiKey;
             axios
@@ -32,7 +31,6 @@ class PortfolioCard extends React.Component {
                 // Collect stock identifying information
                 let data = response.data['Global Quote']
                 // Collect stock price data
-                console.log(data)
                 let price = parseFloat(data['05. price'])
                 let stockChange = parseFloat(data['09. change'])
                 let c = this.state.change
@@ -61,7 +59,7 @@ class PortfolioCard extends React.Component {
 
     handleClick() {
         deletePortfolio(this.state.name)
-        this.props.updateSession()
+        this.props.updateSession(this.state.name)
     }
 
     render() {

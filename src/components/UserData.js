@@ -49,6 +49,7 @@ export function deletePortfolio(portfolioName) {
         var session = getSessionCookie()
         delete session['portfolios'][portfolioName]
         setSessionCookie(JSON.stringify(session))
+        console.log(session)
     } catch(err) {
         alert(err)
     }

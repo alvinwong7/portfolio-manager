@@ -26,7 +26,7 @@ class PortfolioBuilderPage extends React.Component {
         let component = this
         Object.keys(portfolios).forEach(function(key) {
             if (key != 'default')
-                children.push(<PortfolioCard name={key} stocks={portfolios[key]} updateSession={component.updateSession}/>)
+                children.push(<div><PortfolioCard name={key} stocks={portfolios[key]} updateSession={component.updateSession}/><br/></div>)
         });
     
         cards.push(children)
@@ -35,6 +35,7 @@ class PortfolioBuilderPage extends React.Component {
 
     updateSession = () => {
         let portfolios = getSessionCookie()["portfolios"]
+        console.log(portfolios)
         this.setState({
             userPortfolios : portfolios
         })
