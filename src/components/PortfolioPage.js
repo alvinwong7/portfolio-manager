@@ -38,7 +38,7 @@ class PortfolioPage extends React.Component {
     this.updateSession = this.updateSession.bind(this)
 
     this.calcWeight = this.calcWeight.bind(this);
-    stock = this.calcWeight(stock);
+    
     //console.log(stock)
     this.state = {
       loaded : true,
@@ -46,6 +46,8 @@ class PortfolioPage extends React.Component {
       session: stocks,
       portfolioName : name
     }
+
+    stock = this.calcWeight(stock);
 
     if(stockDict == {}){
         this.setState({
@@ -64,7 +66,7 @@ class PortfolioPage extends React.Component {
     })
 
     Object.keys(stock).forEach(function(key) {
-      stock[key]['weight'] = (100*(parseFloat(stock[key]['units'])/sum)).toFixed(2).toString()
+      stock[key]['weight'] = (100*(parseFloat(stock[key]['value'])/sum)).toFixed(2).toString()
     })
 
     return stock
@@ -142,9 +144,9 @@ class PortfolioPage extends React.Component {
     });
   }
 
-  updateSession(){
+  updateSession(portfolioName){
 
-      let stocks = getSessionCookie()["stocks"]
+      let stocks = getSessionCookie()['portfolios'][portfolioName]
 
       //convetring to Dict
       var stockDict = {};
@@ -156,12 +158,12 @@ class PortfolioPage extends React.Component {
       }
       //console.log(stockDict)
       let stock = stockDict
-      stock = this.calcWeight(stock);
+      
 
       this.setState({
             userStocks :  stock,
-      },
-      )
+      })
+      stock = this.calcWeight(stock);
       this._update = true
       //this.getInfo();
       //alert("request to update userStocks")

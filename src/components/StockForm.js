@@ -19,7 +19,7 @@ export default function StockForm(props) {
     <Collapse in={open} component = {this} >
       <div id="example-collapse-text">
         <br />
-        <NewStockForm updateSession = {props.updateSession}  />
+        <NewStockForm updateSession = {props.updateSession} portfolioName={props.portfolioName}/>
       </div>
     </Collapse>
     <br/>

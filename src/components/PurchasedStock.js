@@ -34,7 +34,7 @@ class PurchasedStock extends React.Component {
 
     handleClick(){
         deletePortfolioStock(this.props.portfolioName, this.state.name)
-        this.props.updateSession()
+        this.props.updateSession(this.props.portfolioName)
     }
 
     render() {

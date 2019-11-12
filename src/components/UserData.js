@@ -27,33 +27,53 @@ export function deleteStock(code){
     }
 }*/
 
-export function addPortfolio(portfolioName) {
+export function addPortfolio(portfolioName, basePortfolio) {
     try {
         var session = getSessionCookie()
-        session["portfolios"][portfolioName] = []
+        if (portfolioName in session['portfolios']) {
+            alert("You cannot add a portfolio which shares a name with an existing portfolio")
+        }
+        session['portfolios'][portfolioName] = []
+        if (basePortfolio != 'None') {
+            session['portfolios'][portfolioName] = session['portfolios'][basePortfolio]
+        }
         setSessionCookie(JSON.stringify(session))
+        console.log(session)
     } catch (err) {
         alert(err)
     }
 }
 
-export function addPortfolioStock(portfolioName, assetType, code, units, date, price) {
+export function deletePortfolio(portfolioName) {
     try {
-        const stock = {"assetType": assetType,"code": code,"units": units,"date": date,"buyPrice": price};
         var session = getSessionCookie()
-        session["portfolios"][portfolioName] = session["portfolios"][portfolioName].concat([stock])
-        console.log(session)
+        delete session['portfolios'][portfolioName]
         setSessionCookie(JSON.stringify(session))
     } catch(err) {
         alert(err)
     }
 }
 
+export function addPortfolioStock(portfolioName, assetType, code, units, date, price) {
+    //try {
+        const stock = {"assetType": assetType,"code": code,"units": units,"date": date,"buyPrice": price};
+        var session = getSessionCookie()
+        let array = session['portfolios'][portfolioName]
+        console.log(array)
+        console.log(session)
+        array[array.length] = stock
+        session['portfolios'][portfolioName] = array
+        setSessionCookie(JSON.stringify(session))
+    /*} catch(err) {
+        alert(err)
+    }*/
+}
+
 export function deletePortfolioStock(portfolioName, code) {
     var session = getSessionCookie()
     let index = session['portfolios'][portfolioName].findIndex(item => item['code'] == code)
     if (index != -1) {
-        session['stocks'].splice(index,1)
+        session['portfolios'][portfolioName].splice(index,1)
         setSessionCookie(JSON.stringify(session))
     }
 }

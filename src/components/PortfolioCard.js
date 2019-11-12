@@ -1,8 +1,11 @@
 import React from 'react'
+import axios from 'axios'
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Nav, Button } from "react-bootstrap"
-import axios from 'axios'
+
+import { deletePortfolio } from './UserData'
+
 
 class PortfolioCard extends React.Component {
     constructor(props) {
@@ -10,7 +13,7 @@ class PortfolioCard extends React.Component {
         this.state = {
             name : this.props.name,
             networth : 0,
-            change : 0,
+            change : '$0.00',
             changePercent : 0,
         }
     }
@@ -33,12 +36,21 @@ class PortfolioCard extends React.Component {
                 let price = parseFloat(data['05. price'])
                 let stockChange = parseFloat(data['09. change'])
                 let c = this.state.change
-                let n = this.state.networth
                 c += stockChange * parseFloat(stocks[i]['units'])
+                let n = this.state.networth
+                let nstr = ''
+                let neg = '-$'
+                let pos = '$'
+                if (c < 0) {
+                    c = -1 * c
+                    nstr = neg.concat(c.toFixed(2).toString())
+                } else {
+                    nstr = pos.concat(c.toFixed(2).toString())
+                }
                 n += price * parseFloat(stocks[i]['units'])
                 this.setState({
                     networth : n,
-                    change : c
+                    change : nstr
                 })
                 })
                 .catch( error => {
@@ -47,9 +59,13 @@ class PortfolioCard extends React.Component {
         }
     }
 
+    handleClick() {
+        deletePortfolio(this.state.name)
+        this.props.updateSession()
+    }
+
     render() {
         this.evalNetworth(this.props.stocks)
-        console.log(this.state)
         let changePercent = 100 * this.state.change / (this.state.networth - this.state.change)
         return (
             <Card>
@@ -58,9 +74,12 @@ class PortfolioCard extends React.Component {
                 <Nav.Link as={Link} to={"/builder/"+this.state.name}>{this.state.name}</Nav.Link>
                 </Nav></Card.Title>
                     <Card.Text>
-                        ${this.state.networth.toFixed(2).toString()} : ${this.state.change.toFixed(2).toString()} : {changePercent.toFixed(2).toString()}%
+                        ${this.state.networth.toFixed(2).toString()} : {this.state.change} : {changePercent.toFixed(2).toString()}%
                     </Card.Text>
                 </Card.Body>
+                <Card.Footer>
+                <Button variant="danger" onClick={this.handleClick.bind(this)}>Delete</Button>
+                </Card.Footer>
             </Card>
         );
     }

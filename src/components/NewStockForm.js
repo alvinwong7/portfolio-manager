@@ -51,7 +51,7 @@ class NewStockForm extends React.Component {
   }
 
   handleSubmit = (event) => {
-      try{
+      //try{
           event.preventDefault();
           let component = this
 
@@ -71,11 +71,11 @@ class NewStockForm extends React.Component {
           event.target.reset();
 
           //console.log(component)
-          component.props.updateSession()
-      }
+          component.props.updateSession(component.props.portfolioName)
+      /*}
       catch(err){
           alert(err);
-      }
+      }*/
   }
 }
 

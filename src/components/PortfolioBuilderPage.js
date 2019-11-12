@@ -4,6 +4,7 @@ import { CardDeck } from 'react-bootstrap'
 import { getSessionCookie } from './Session'
 
 import { PortfolioCard } from './PortfolioCard'
+import { NewPortfolioForm } from './NewPortfolioForm'
 
 class PortfolioBuilderPage extends React.Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class PortfolioBuilderPage extends React.Component {
             userPortfolios : portfolios,
             loaded : false
         }
+        this.updateSession = this.updateSession.bind(this)
     }
 
     createCards = () => {
@@ -21,18 +23,30 @@ class PortfolioBuilderPage extends React.Component {
         let children = []
 
         let portfolios = this.state.userPortfolios
+        let component = this
         Object.keys(portfolios).forEach(function(key) {
-            children.push(<PortfolioCard name={key} stocks={portfolios[key]}/>)
+            if (key != 'default')
+                children.push(<PortfolioCard name={key} stocks={portfolios[key]} updateSession={component.updateSession}/>)
         });
     
         cards.push(children)
         return cards
     }
 
+    updateSession = () => {
+        let portfolios = getSessionCookie()["portfolios"]
+        this.setState({
+            userPortfolios : portfolios
+        })
+    }
+
     render() {
         return (
             <div>
                 <h1>Portfolio Builder</h1>
+                <NewPortfolioForm updateSession={this.updateSession}/>
+                <br/>
+                <br/>
                 <CardDeck>
                     {this.createCards()}
                 </CardDeck>
