@@ -32,19 +32,26 @@
                 "units": "20",
                 "date": "2019-10-29",
                 "buyPrice": "200"
-            }
-        ],
-        "three": [
+            },
             {
                 "assetType": "Stock",
-                "code": "MSFT",
+                "code": "A",
+                "units": "20",
+                "date": "2019-11-01",
+                "buyPrice": "200"
+            }
+        ],
+        "two": [
+            {
+                "assetType": "Stock",
+                "code": "AMZN",
                 "units": "20",
                 "date": "2019-10-31",
                 "buyPrice": "200"
             },
             {
                 "assetType": "Stock",
-                "code": "GOOGL",
+                "code": "MSFT",
                 "units": "20",
                 "date": "2019-10-29",
                 "buyPrice": "200"

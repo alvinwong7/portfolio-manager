@@ -57,6 +57,7 @@ export function deletePortfolio(portfolioName) {
 export function addPortfolioStock(portfolioName, assetType, code, units, date, price) {
     //try {
         const stock = {"assetType": assetType,"code": code,"units": units,"date": date,"buyPrice": price};
+        console.log(portfolioName)
         var session = getSessionCookie()
         let array = session['portfolios'][portfolioName]
         console.log(array)

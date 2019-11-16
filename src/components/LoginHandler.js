@@ -1,9 +1,12 @@
 import React, { useState} from "react";
 import { createBrowserHistory } from "history";
 import Cookies from "js-cookie";
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import { SessionContext, getSessionCookie, setSessionCookie } from "./Session";
 import axios from 'axios'
+import { Nav, Form, Button } from "react-bootstrap"
+import NewUser from './NewUser'
+
 
 const LoginHandler = (props) => {
   const [username, setUsername] = useState("");
@@ -46,9 +49,9 @@ const LoginHandler = (props) => {
 
   return (
     <div style={{ marginTop: "1rem" }}>
-      <form onSubmit={handleSubmit}>
-      <b> Login </b> <br />
-        <input
+      <Form onSubmit={handleSubmit}>
+      <b> Username </b> <br />
+        <Form.Control
           type="username"
           required = {true}
           placeholder="Enter Username"
@@ -57,16 +60,19 @@ const LoginHandler = (props) => {
         />
         <br/>
         <b> Password </b> <br />
-        <input
+        <Form.Control
           type="password"
           required = {true}
           placeholder="Enter Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <input type="submit" value="Login" />
-      </form>
+        <Button type="submit" >Login</Button>
+      </Form>
       <font  color="red">{errorMsg}</font>
+    <Nav>
+    <Nav.Link as={Link} to={"/NewUser"}>Create New User</Nav.Link>
+    </Nav>
     </div>
   );
 };
