@@ -18,7 +18,10 @@ class PortfolioPage extends React.Component {
       stocks = getSessionCookie()["portfolios"][props.match.params.portfolioName]
       name = props.match.params.portfolioName
     } else {
-      stocks = getSessionCookie()["portfolios"]["default"]
+      stocks = getSessionCookie()["portfolios"]
+      if(stocks){
+          stocks = stocks["default"]
+      }
     }
 
     //convetring to Dict
@@ -38,7 +41,7 @@ class PortfolioPage extends React.Component {
     this.updateSession = this.updateSession.bind(this)
 
     this.calcWeight = this.calcWeight.bind(this);
-    
+
     //console.log(stock)
     this.state = {
       loaded : true,
@@ -158,7 +161,7 @@ class PortfolioPage extends React.Component {
       }
       //console.log(stockDict)
       let stock = stockDict
-      
+
 
       this.setState({
             userStocks :  stock,
@@ -169,7 +172,7 @@ class PortfolioPage extends React.Component {
       //alert("request to update userStocks")
   }
 
-  
+
 
 
   render() {

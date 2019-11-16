@@ -46,7 +46,7 @@ class Logout(Resource):
 
         #else return json info
         with open(filePath, "w+") as f:
-            f.write(data)
+            f.write(json.dumps(jsonData, indent = 4))
             return ({"msg":"Success"});
 
 class AddUser(Resource):
