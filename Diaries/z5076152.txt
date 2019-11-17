@@ -60,5 +60,8 @@ Matt and I linked the portfolio builder to a portfolio page. I changed the
 portfolio page to be more general such that it can only accept a portfolio name 
 and display that portfolio. I added the adding and removing of portfolios in the 
 portfolio builder. I fixed issues with adding and removing stocks on the portfolio 
-page not updating the page.
+page not updating the page. However, there is an issue where removing stock does not 
+remove the correct portfolio component whilst still functioning correctly which I spent 
+most of my week trying to debug.
 
+I also refactored the portfolio builder page to use less api calls.

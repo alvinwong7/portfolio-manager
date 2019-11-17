@@ -1,10 +1,9 @@
 import React from 'react'
-import axios from 'axios'
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { Nav, Button } from "react-bootstrap"
+import { Nav, Button, ButtonToolbar } from "react-bootstrap"
 
-import { deletePortfolio } from './UserData'
+import { deletePortfolio, addPortfolio } from './UserData'
 
 
 class PortfolioCard extends React.Component {
@@ -12,71 +11,63 @@ class PortfolioCard extends React.Component {
         super(props)
         this.state = {
             name : this.props.name,
-            networth : 0,
-            change : '$0.00',
-            changePercent : 0,
-        }
-    }
-
-    evalNetworth = (stocks) => {
-        // Access stock data from AlphaVantage API (5 calls per minute)
-        const apiKey = 'W6WD0B30SYK3T2QI'
-        for (let i = 0; i < stocks.length; i++) {
-            let stockName = stocks[i]['code']
-            let url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + stockName +
-                        '&apikey=' + apiKey;
-            axios
-                .get(url)
-                .then( response => {
-                // Collect stock identifying information
-                let data = response.data['Global Quote']
-                // Collect stock price data
-                let price = parseFloat(data['05. price'])
-                let stockChange = parseFloat(data['09. change'])
-                let c = this.state.change
-                c += stockChange * parseFloat(stocks[i]['units'])
-                let n = this.state.networth
-                let nstr = ''
-                let neg = '-$'
-                let pos = '$'
-                if (c < 0) {
-                    c = -1 * c
-                    nstr = neg.concat(c.toFixed(2).toString())
-                } else {
-                    nstr = pos.concat(c.toFixed(2).toString())
-                }
-                n += price * parseFloat(stocks[i]['units'])
-                this.setState({
-                    networth : n,
-                    change : nstr
-                })
-                })
-                .catch( error => {
-                console.log(error);
-            })
+            networth : this.props.networth,
+            change : this.props.change,
+            edit : false
         }
     }
 
     handleClick() {
         deletePortfolio(this.state.name)
-        this.props.updateSession(this.state.name)
+        this.props.updateSession(this.state.name, 'nothing', 'delete')
     }
 
+    /*handleClickEdit() {
+        this.setState({
+            edit : true
+        })
+    }
+
+    handleEdit() {
+        try {
+            this.props.updateSession(this.state.name, 'nothing', 'check')
+            addPortfolio()
+        } catch(err) {
+            alert(err)
+        }
+    }*/
+
     render() {
-        this.evalNetworth(this.props.stocks)
-        let changePercent = 100 * this.state.change / (this.state.networth - this.state.change)
+        let changePercent = 0.00
+        if (this.state.networth - this.state.change != 0) {
+            changePercent = 100 * this.state.change / (this.state.networth - this.state.change)
+        }
+
+        /*let title
+        if (this.state.edit) {
+            title = <Form><Form.Control name="newPortfolioName" type="text" placeholder={this.state.name} onKeyPress={this.handleEdit.bind(this)}/></Form>
+        } else {
+            title = <Nav><Nav.Link as={Link} to={"/builder/"+this.state.name}>{this.state.name}</Nav.Link></Nav>
+        }*/
+
         return (
             <Card>
                 <Card.Body>
-                    <Card.Title><Nav>
-                <Nav.Link as={Link} to={"/builder/"+this.state.name}>{this.state.name}</Nav.Link>
-                </Nav></Card.Title>
+                    <Card.Title>
+                    <Nav><Nav.Link as={Link} to={"/builder/"+this.state.name}>{this.state.name}</Nav.Link></Nav>
+                    </Card.Title>
                     <Card.Text>
-                        ${this.state.networth.toFixed(2).toString()} : {this.state.change} : {changePercent.toFixed(2).toString()}%
+                        Networth: ${this.state.networth.toFixed(2).toString()}
+                        <br/>
+                        Change: {this.state.change >= 0 ? " $" + this.state.change.toFixed(2).toString() : "-$" + (-this.state.change).toFixed(2).toString()}
+                        <br/>
+                        Change (%): {changePercent.toFixed(2).toString()}%
                     </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                <Button variant="danger" onClick={this.handleClick.bind(this)}>Delete</Button>
+                    <ButtonToolbar>
+                    <Button variant="outline-danger" onClick={this.handleClick.bind(this)} block>Delete</Button>
+                    </ButtonToolbar>
                 </Card.Footer>
             </Card>
         );

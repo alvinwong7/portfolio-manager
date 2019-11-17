@@ -55,7 +55,7 @@ class NewPortfolioForm extends React.Component {
 
             addPortfolio(portfolioName, basePortfolio)
             event.target.reset()
-            component.props.updateSession()
+            component.props.updateSession(portfolioName, basePortfolio, 'add')
         } catch(err) {
             alert(err);
         }

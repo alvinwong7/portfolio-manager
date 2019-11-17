@@ -27,7 +27,6 @@ const Routes = (props) => {
     const forceSessionUpdate = () => {
         setSession(getSessionCookie());
         //console.log("FORCED:getting session Cookie with s= "+ JSON.stringify(session));
-        return ;
     }
 
     return (

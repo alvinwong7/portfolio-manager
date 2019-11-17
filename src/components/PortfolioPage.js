@@ -144,11 +144,11 @@ class PortfolioPage extends React.Component {
     });
   }
 
-  updateSession(portfolioName){
+  updateSession(name) {
 
-      let stocks = getSessionCookie()['portfolios'][portfolioName]
+      let stocks = getSessionCookie()['portfolios'][name]
 
-      //convetring to Dict
+      //converting to Dict
       var stockDict = {};
       if(stocks){
           stocks.forEach(makeDict);
@@ -156,21 +156,17 @@ class PortfolioPage extends React.Component {
       function makeDict(value, index, array) {
           stockDict[value["code"]] = value
       }
-      //console.log(stockDict)
       let stock = stockDict
-      
 
       this.setState({
             userStocks :  stock,
+            portfolioName : name
       })
       stock = this.calcWeight(stock);
       this._update = true
-      //this.getInfo();
+      // this.getInfo();
       //alert("request to update userStocks")
   }
-
-  
-
 
   render() {
     if (this.state.loaded != true) {
@@ -192,8 +188,6 @@ class PortfolioPage extends React.Component {
       </div>
     );
   }
-
-
 }
 
 export { PortfolioPage }
