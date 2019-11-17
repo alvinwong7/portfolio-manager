@@ -11,6 +11,7 @@ import  LogoutHandler from './LogoutHandler'
 import { Switch, Route } from 'react-router-dom'
 import { SessionContext, getSessionCookie } from "./Session";
 import useDeepCompareEffect from 'use-deep-compare-effect'
+import NewUser from './NewUser'
 
 
 const Routes = (props) => {
@@ -34,6 +35,7 @@ const Routes = (props) => {
       <Switch>
             <Route exact path="/login" render={() => <LoginHandler  history = {props.history} forceSessionUpdate={forceSessionUpdate} />}/>
             <Route exact path="/logout" render={() => <LogoutHandler  history = {props.history} forceSessionUpdate={forceSessionUpdate} />}/>
+            <Route exact path="/NewUser" render={() => <NewUser  history = {props.history} forceSessionUpdate={forceSessionUpdate} />}/>
             <Route path="*" component={ProtectedHandler} />
         </Switch>
     </SessionContext.Provider>

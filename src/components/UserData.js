@@ -1,5 +1,4 @@
-import React from 'react'
-import { SessionContext, getSessionCookie, setSessionCookie } from "./Session";
+import { getSessionCookie, setSessionCookie } from "./Session";
 
 /*export function addStock(assetType, code, units, date, price){
     try{
@@ -58,6 +57,7 @@ export function deletePortfolio(portfolioName) {
 export function addPortfolioStock(portfolioName, assetType, code, units, date, price) {
     //try {
         const stock = {"assetType": assetType,"code": code,"units": units,"date": date,"buyPrice": price};
+        console.log(portfolioName)
         var session = getSessionCookie()
         let array = session['portfolios'][portfolioName]
         console.log(array)
@@ -79,6 +79,61 @@ export function deletePortfolioStock(portfolioName, code) {
     }
 }
 
+export function addWatchlistStock(watchlistName, code) {
+    //try {
+        var session = getSessionCookie()
+        let array = session['watchlists'][watchlistName]
+        //console.log(array)
+        //console.log(session)
+        array[array.length] = code
+        session['watchlists'][watchlistName] = array
+        setSessionCookie(JSON.stringify(session))
+    /*} catch(err) {
+        alert(err)
+    }*/
+}
+
+export function deleteWatchlistStock(watchlistName, code) {
+    var session = getSessionCookie()
+    let index = session['watchlists'][watchlistName].findIndex((stock) =>stock == code)
+    if (index != -1) {
+        session['watchlists'][watchlistName].splice(index,1)
+        setSessionCookie(JSON.stringify(session))
+    } else {
+        console.log("unable to find and del Watchliststock")
+    }
+}
+
+export function addWatchlist(watchlistName) {
+    try {
+        var session = getSessionCookie()
+
+        if(!session['watchlists']){
+            session['watchlists'] = {}
+        }
+
+        if (watchlistName in session['watchlists']) {
+            alert("You cannot add a watchlist which shares a name with an existing watchlist")
+        }
+
+        session['watchlists'][watchlistName] = []
+        setSessionCookie(JSON.stringify(session))
+        console.log(session)
+    } catch (err) {
+        alert(err)
+    }
+}
+
+export function deleteWatchlist(watchlistName) {
+    try {
+        var session = getSessionCookie()
+        delete session['watchlists'][watchlistName]
+        setSessionCookie(JSON.stringify(session))
+        console.log(session)
+    } catch(err) {
+        alert(err)
+    }
+}
 /*export function addPortfolio(assetType, code, units, date, price) {
     try {
         var session = getSessionCookie()

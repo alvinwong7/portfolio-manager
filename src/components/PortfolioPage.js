@@ -13,12 +13,17 @@ class PortfolioPage extends React.Component {
 
     //getting the stocks form state in cookie
     let stocks = []
-    let name = 'My Portfolio'
+    let titleName = 'My Portfolio'
+    let name = 'default'
     if (props.match.params.portfolioName != undefined) {
       stocks = getSessionCookie()["portfolios"][props.match.params.portfolioName]
-      name = props.match.params.portfolioName
+      titleName = props.match.params.portfolioName
+      name = titleName
     } else {
-      stocks = getSessionCookie()["portfolios"]["default"]
+      stocks = getSessionCookie()["portfolios"]
+      if(stocks){
+          stocks = stocks["default"]
+      }
     }
 
     //convetring to Dict
@@ -38,13 +43,14 @@ class PortfolioPage extends React.Component {
     this.updateSession = this.updateSession.bind(this)
 
     this.calcWeight = this.calcWeight.bind(this);
-    
+
     //console.log(stock)
     this.state = {
       loaded : true,
       userStocks : stock,
       session: stocks,
-      portfolioName : name
+      portfolioName : name,
+      titleName :titleName
     }
 
     stock = this.calcWeight(stock);
@@ -180,7 +186,7 @@ class PortfolioPage extends React.Component {
     }
     return (
       <div>
-        <h1>{this.state.portfolioName}</h1>
+        <h1>{this.state.titleName}</h1>
         <PortfolioOverview userStocks={this.state.userStocks}/>
         <br/>
         <PortfolioStockTable userStocks={this.state.userStocks} portfolioName={this.state.portfolioName} updateSession = {this.updateSession}/>
