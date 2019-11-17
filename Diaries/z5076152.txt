@@ -60,13 +60,14 @@ Matt and I linked the portfolio builder to a portfolio page. I refactored the
 portfolio page to be more general such that it can only accept a portfolio name 
 and display that portfolio.
 
-I implemented the adding and removing of portfolios in the portfolio builder. 
-I spent most of my time fixing an issue where removing stock does not remove 
-the correct portfolio component but the correct portfolio is removed. This 
-issue has been resolved.
+I implemented the adding, removing and renaming of portfolios in the portfolio 
+builder. I spent most of my time fixing an issue where removing stock does not 
+remove the correct portfolio component but the correct portfolio is removed. \
+This issue has been resolved.
 
 I fixed an issue where redirecting to the same portfolio page component would 
 not update the page.
 
 I also refactored the portfolio builder page to use less api calls and 
 implemented a moving average filter on the stock graph to show a trendline.
+

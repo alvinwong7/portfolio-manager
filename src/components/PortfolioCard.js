@@ -1,7 +1,6 @@
 import React from 'react'
-import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { Nav, Button, ButtonToolbar } from "react-bootstrap"
+import { Nav, Button, ButtonToolbar, Card, Form } from "react-bootstrap"
 
 import { deletePortfolio, addPortfolio } from './UserData'
 
@@ -22,26 +21,34 @@ class PortfolioCard extends React.Component {
         this.props.updateSession(this.state.name, 'nothing', 'delete')
     }
 
-    /*handleClickEdit() {
+    handleClickEdit() {
         this.setState({
-            edit : true
+            edit : !this.state.edit
         })
     }
 
-    handleEdit() {
+    handleEdit = (event) => {
         try {
-            this.props.updateSession(this.state.name, 'nothing', 'check')
-            addPortfolio()
+            event.preventDefault();
+            const newName = event.target.elements.namedItem("newPortfolioName").value
+            if (!this.props.checkExists(newName)) {
+                this.props.updateSession(this.state.name, newName, 'rename')
+                addPortfolio(newName, this.state.name)
+                deletePortfolio(this.state.name)
+            } else {
+                alert("You cannot rename the portfolio to one that already exists")
+            }
         } catch(err) {
             alert(err)
         }
-    }*/
+    }
     
     componentWillReceiveProps(nextProps) {
         this.setState({
             name : nextProps.name,
             networth : nextProps.networth,
             change : nextProps.change,
+            edit : false
         })
     }
 
@@ -51,18 +58,18 @@ class PortfolioCard extends React.Component {
             changePercent = 100 * this.state.change / (this.state.networth - this.state.change)
         }
 
-        /*let title
+        let title
         if (this.state.edit) {
-            title = <Form><Form.Control name="newPortfolioName" type="text" placeholder={this.state.name} onKeyPress={this.handleEdit.bind(this)}/></Form>
+            title = <Form onSubmit={ (e) => this.handleEdit(e)}><Form.Control name="newPortfolioName" type="text" placeholder={this.state.name}/></Form>
         } else {
             title = <Nav><Nav.Link as={Link} to={"/builder/"+this.state.name}>{this.state.name}</Nav.Link></Nav>
-        }*/
+        }
 
         return (
             <Card>
                 <Card.Body>
                     <Card.Title>
-                    <Nav><Nav.Link as={Link} to={"/builder/"+this.state.name}>{this.state.name}</Nav.Link></Nav>
+                    {title}
                     </Card.Title>
                     <Card.Text>
                         Networth: ${this.state.networth.toFixed(2).toString()}
@@ -74,6 +81,7 @@ class PortfolioCard extends React.Component {
                 </Card.Body>
                 <Card.Footer>
                     <ButtonToolbar>
+                    <Button variant="outline-success" onClick={this.handleClickEdit.bind(this)} block>Edit</Button>
                     <Button variant="outline-danger" onClick={this.handleClick.bind(this)} block>Delete</Button>
                     </ButtonToolbar>
                 </Card.Footer>

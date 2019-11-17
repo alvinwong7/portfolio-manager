@@ -26,6 +26,7 @@ class PortfolioBuilderPage extends React.Component {
             portfolioInfo : tmp
         }
         this.updateSession = this.updateSession.bind(this)
+        this.checkExists = this.checkExists.bind(this)
         this.evalNetworth = this.evalNetworth.bind(this)
         this.updated = this.updated.bind(this)
 
@@ -89,10 +90,12 @@ class PortfolioBuilderPage extends React.Component {
         let component = this
         Object.keys(portfolios).forEach(function(key) {
             if (key != 'default') {
-                children.push(<div><PortfolioCard name={key} 
+                children.push(<div style={{"width" : 235}}><PortfolioCard name={key} 
                     networth={portfolios[key]['networth']} 
                     change={portfolios[key]['change']} 
-                    updateSession={component.updateSession}/><br/><br/></div>)
+                    updateSession={component.updateSession}
+                    checkExists={component.checkExists}/>
+                    <br/><br/></div>)
             }
         });
     
@@ -101,14 +104,21 @@ class PortfolioBuilderPage extends React.Component {
     }
 
     updateSession = (name, basePortfolio, operation) => {
-        console.log(name)
-        console.log(operation)
         // Check if name exists in userPortfolios
             // If exists --> delete
             // If does not exist --> add
         let portfolios = this.state.userPortfolios
         let info = this.state.portfolioInfo
-        if (operation == 'delete') {
+        if (operation == 'rename') {
+            if (portfolios[name].length != 0) {
+                portfolios[basePortfolio] = portfolios[name]
+            } else {
+                portfolios[basePortfolio] = []
+            }
+            info[basePortfolio] = info[name]
+            delete info[name]
+            delete portfolios[name]
+        } else if (operation == 'delete') {
             delete portfolios[name]
             delete info[name]
         } else if (operation == 'add') {
@@ -131,6 +141,15 @@ class PortfolioBuilderPage extends React.Component {
         if (operation == 'add' && basePortfolio != 'None') {
             this.evalNetworth(portfolios[name], name)
         }
+    }
+
+    checkExists = (name) => {
+        let portfolios = this.state.userPortfolios
+
+        if (name in portfolios) {
+            return true
+        }
+        return false
     }
 
     updated() {
