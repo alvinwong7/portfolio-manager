@@ -58,10 +58,10 @@ WEEK 09:
 
 Matt and I linked the portfolio builder to a portfolio page. I changed the 
 portfolio page to be more general such that it can only accept a portfolio name 
-and display that portfolio. I added the adding and removing of portfolios in the 
-portfolio builder. I fixed issues with adding and removing stocks on the portfolio 
-page not updating the page. However, there is an issue where removing stock does not 
-remove the correct portfolio component whilst still functioning correctly which I spent 
-most of my week trying to debug.
+and display that portfolio. I implemented the adding and removing of portfolios 
+in the portfolio builder. I spent most of my time fixing an issue where removing 
+stock does not remove the correct portfolio component but the correct portfolio 
+is removed.
 
-I also refactored the portfolio builder page to use less api calls.
+I also refactored the portfolio builder page to use less api calls and 
+implemented a moving average filter on the stock graph to show a trendline.
