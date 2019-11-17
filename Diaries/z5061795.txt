@@ -51,11 +51,11 @@ Week 4:
     API to call
 
 Week 5:
-    As the others were wroking on calling the API I focused on setting up the base
+    As the others were working on calling the API I focused on setting up the base
     Website. This involved following and combining multiple online tutorials as well
-    as learing Javascript and React at the same time. After some work I pushed
+    as learning JavaScript and React at the same time. After some work I pushed
     understood the basics of such react one-page websites and pushed a working
-    Scafold to git for the others to add to
+    Scaffold to git for the others to add to
 
 Week 6:
     As Alvin couldn't get the stock component to display its information, I spent
@@ -66,7 +66,7 @@ Week 6:
     I tried updating all dependencies in case there was an error as well as
     attempting to forcing the element to be mounted in different ways.
 
-    In the end Nic figured out a way around it by re writing the Alvins work using
+    In the end Nic figured out a way around it by re writing the Alvin's work using
     a different module.
 
 Week 7:
@@ -114,3 +114,17 @@ Week 8:
     Unfortunately, some of this work was done twice as Alvin also connected the add stock
     from to the overview state but this was superseded by the state management systems i
     have introduced.
+
+Week 9:
+    This week I updated the watchlist page to incorporate the new state functionality
+    As well as restructured the layout of the Wishlist to uses tabs instead of
+    collapsing tables.
+
+    In addition I added buttons/Forms to add and remove stocks inside of watchlists
+    as well as entire watchlists.
+
+    Finally I added a NewUser Page which allows a person to create a new user
+    profile. The enter username and password is sent to the python server and
+    the credentials checked for a double up, and then a new
+    user file is created off a default one and returned. The new user is then Logged
+    in and sent to the home/portfolio page
