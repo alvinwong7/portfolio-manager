@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
+import { PortfolioPlot } from './PortfolioPlot'
 
 // Top level component of portfolio page
 class PortfolioOverview extends React.Component {
@@ -27,10 +28,11 @@ class PortfolioOverview extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-      this.evalNetworth()
+    this.evalNetworth()
   }
 
   render() {
+    console.log(this.props.userStocks)
     return (
       <Card>
       <Card.Header>Personal Portfolio Performance</Card.Header>
@@ -38,6 +40,7 @@ class PortfolioOverview extends React.Component {
         <Card.Text>
         {this.state.networth}
         </Card.Text>
+        <PortfolioPlot userStocks={this.state.userStocks} years={1}/>
       </Card.Body>
       </Card>
     )

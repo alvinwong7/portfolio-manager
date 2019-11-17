@@ -63,14 +63,14 @@ class PortfolioPage extends React.Component {
   }
 
     getInfo = () => {
-      // Access stock data from AlphaVantage API (5 calls per minute)
-      const apiKey = 'W6WD0B30SYK3T2QI';
+      // Access stock data from AlphaVantage API
+      const APIKey = '059YSIM0TS1VKHA0';
       let stocks = this.state.userStocks
       let component = this
       Object.keys(this.state.userStocks).forEach(function(key) {
         let stockName = key
         let url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + stockName +
-                  '&apikey=' + apiKey;
+                  '&apikey=' + APIKey;
         //console.log(url)
         axios
           .get(url)

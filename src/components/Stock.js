@@ -21,12 +21,10 @@ class Stock extends React.Component{
             HistLow: [],
         };
 
-        // Access stock data from AlphaVantage API (5 calls per minute)
-        const key1 = 'W6WD0B30SYK3T2QI';
-        const key2 = '8ITU7LH4G30XUCNF';
-        const key = key2;
+        // Access stock data from AlphaVantage API
+        const APIkey = '059YSIM0TS1VKHA0';
         const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol='
-                    + props.name + '&apikey=' + key;
+                    + props.name + '&apikey=' + APIkey;
 
         axios
             .get(url)
