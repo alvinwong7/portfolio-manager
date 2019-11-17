@@ -36,6 +36,14 @@ class PortfolioCard extends React.Component {
             alert(err)
         }
     }*/
+    
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            name : nextProps.name,
+            networth : nextProps.networth,
+            change : nextProps.change,
+        })
+    }
 
     render() {
         let changePercent = 0.00

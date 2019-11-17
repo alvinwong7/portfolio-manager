@@ -34,17 +34,8 @@ class PortfolioPage extends React.Component {
     function makeDict(value, index, array) {
         stockDict[value["code"]] = value
     }
-    //console.log(stockDict)
     let stock = stockDict
 
-    //let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120', 'weight' : '50.00' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120', 'weight' : '50.00' }, 'AMZN' : { 'buyPrice' : '50', 'units' : '120', 'weight' : '50.00' } }
-    //let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120' } }
-
-    this.updateSession = this.updateSession.bind(this)
-
-    this.calcWeight = this.calcWeight.bind(this);
-
-    //console.log(stock)
     this.state = {
       loaded : true,
       userStocks : stock,
@@ -53,6 +44,8 @@ class PortfolioPage extends React.Component {
       titleName :titleName
     }
 
+    this.updateSession = this.updateSession.bind(this)
+    this.calcWeight = this.calcWeight.bind(this);
     stock = this.calcWeight(stock);
 
     if(stockDict == {}){
@@ -78,6 +71,48 @@ class PortfolioPage extends React.Component {
     return stock
   }
 
+  componentWillReceiveProps(nextProps) {
+    let stocks = []
+    let titleName = 'My Portfolio'
+    let name = 'default'
+    if (nextProps.match.params.portfolioName != undefined) {
+      stocks = getSessionCookie()["portfolios"][nextProps.match.params.portfolioName]
+      titleName = nextProps.match.params.portfolioName
+      name = titleName
+    } else {
+      stocks = getSessionCookie()["portfolios"]
+      if(stocks){
+          stocks = stocks["default"]
+      }
+    }
+    //convetring to Dict
+    var stockDict = {};
+    if(stocks){
+        stocks.forEach(makeDict);
+    }
+    function makeDict(value, index, array) {
+        stockDict[value["code"]] = value
+    }
+    let stock = stockDict
+
+    this.setState({
+      loaded : true,
+      userStocks : stock,
+      session: stocks,
+      portfolioName : name,
+      titleName :titleName
+    })
+
+    stock = this.calcWeight(stock);
+
+    if(stockDict == {}){
+        this.setState({
+            loaded: true
+        });
+    }
+
+    this.getInfo();
+  }
 
 
   getInfo = () => {

@@ -43,8 +43,6 @@ class PortfolioBuilderPage extends React.Component {
         // Access stock data from AlphaVantage API (5 calls per minute)
         const apiKey = 'W6WD0B30SYK3T2QI'
         let component = this
-        console.log(name)
-        console.log(stocks)
         if (stocks.length == 0) {
             let info = this.state.portfolioInfo
             info[name]['updated'] = true
@@ -71,7 +69,6 @@ class PortfolioBuilderPage extends React.Component {
                 component.setState({
                     portfolioInfo : info
                 })
-                console.log("set state")
                 })
                 .catch( error => {
                 let info = component.state.portfolioInfo
@@ -90,9 +87,7 @@ class PortfolioBuilderPage extends React.Component {
 
         let portfolios = this.state.portfolioInfo
         let component = this
-        console.log("Creating cards")
         Object.keys(portfolios).forEach(function(key) {
-            console.log(key)
             if (key != 'default') {
                 children.push(<div><PortfolioCard name={key} 
                     networth={portfolios[key]['networth']} 
@@ -150,7 +145,6 @@ class PortfolioBuilderPage extends React.Component {
     }
 
     render() {
-        console.log(this.state.portfolioInfo)
         if (!this.updated()) {
             return (
                 <div>
