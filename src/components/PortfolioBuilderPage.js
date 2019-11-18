@@ -42,7 +42,7 @@ class PortfolioBuilderPage extends React.Component {
 
     evalNetworth = (stocks, name) => {
         // Access stock data from AlphaVantage API (5 calls per minute)
-        const apiKey = 'W6WD0B30SYK3T2QI'
+        const apiKey = '059YSIM0TS1VKHA0'
         let component = this
         if (stocks.length == 0) {
             let info = this.state.portfolioInfo

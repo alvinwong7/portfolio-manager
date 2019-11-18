@@ -44,31 +44,18 @@ class PortfolioPage extends React.Component {
       titleName :titleName
     }
 
+    this.calcWeight = this.calcWeight.bind(this)
+    this.getInfo = this.getInfo.bind(this)
+    this.getInfo()
+
     this.updateSession = this.updateSession.bind(this)
-    this.calcWeight = this.calcWeight.bind(this);
-    stock = this.calcWeight(stock);
+    
 
     if(stockDict == {}){
         this.setState({
             loaded: true
         });
     }
-
-    this.getInfo = this.getInfo.bind(this);
-    this.getInfo();
-  }
-
-  calcWeight = (stock) => {
-    let sum = 0
-    Object.keys(stock).forEach(function(key) {
-      sum += parseFloat(stock[key]['units'])
-    })
-
-    Object.keys(stock).forEach(function(key) {
-      stock[key]['weight'] = (100*(parseFloat(stock[key]['value'])/sum)).toFixed(2).toString()
-    })
-
-    return stock
   }
 
   componentWillReceiveProps(nextProps) {
@@ -85,7 +72,7 @@ class PortfolioPage extends React.Component {
           stocks = stocks["default"]
       }
     }
-    //convetring to Dict
+    //converting to Dict
     var stockDict = {};
     if(stocks){
         stocks.forEach(makeDict);
@@ -103,8 +90,6 @@ class PortfolioPage extends React.Component {
       titleName :titleName
     })
 
-    stock = this.calcWeight(stock);
-
     if(stockDict == {}){
         this.setState({
             loaded: true
@@ -117,7 +102,7 @@ class PortfolioPage extends React.Component {
 
   getInfo = () => {
     // Access stock data from AlphaVantage API (5 calls per minute)
-    const apiKey = 'W6WD0B30SYK3T2QI';
+    const apiKey = '059YSIM0TS1VKHA0';
     let stocks = this.state.userStocks
     let component = this
     Object.keys(this.state.userStocks).forEach(function(key) {
@@ -159,6 +144,7 @@ class PortfolioPage extends React.Component {
               component.setState({
                   loaded : true,
               })
+              component.calcWeight()
           }
         })
         .catch( error => {
@@ -185,6 +171,20 @@ class PortfolioPage extends React.Component {
     });
   }
 
+    calcWeight = () => {
+        let sum = 0
+        let stocks = this.state.userStocks
+        Object.keys(stocks).forEach(function(key) {
+            sum += parseFloat(stocks[key]['value'])
+        })
+        Object.keys(stocks).forEach(function(key) {
+            stocks[key]['weight'] = (100*(parseFloat(stocks[key]['value'])/sum)).toFixed(2).toString()
+        })
+        this.setState({
+            userStocks : stocks
+        })
+    }
+
   updateSession(name) {
 
       let stocks = getSessionCookie()['portfolios'][name]
@@ -203,10 +203,7 @@ class PortfolioPage extends React.Component {
             userStocks :  stock,
             portfolioName : name
       })
-      stock = this.calcWeight(stock);
       this._update = true
-      // this.getInfo();
-      //alert("request to update userStocks")
   }
 
   render() {
@@ -217,7 +214,7 @@ class PortfolioPage extends React.Component {
     }
     if(this._update == true){
         this._update = false
-        this.getInfo();
+        this.getInfo()
     }
     return (
       <div>

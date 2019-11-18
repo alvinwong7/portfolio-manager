@@ -25,7 +25,7 @@ class StockSummary extends React.Component {
 
     getInfo(){
         // Access stock data from AlphaVantage API (5 calls per minute)
-        const key = 'W6WD0B30SYK3T2QI';
+        const key = '059YSIM0TS1VKHA0';
         const url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + this.props.stockName +
                     '&apikey=' + key;
 
