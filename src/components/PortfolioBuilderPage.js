@@ -174,7 +174,7 @@ class PortfolioBuilderPage extends React.Component {
         // If the provided base portfolio exists i.e. not None, set portfolio 
         // information to be not updated and set the stocks to be the same as 
         // the base portfolio
-        if (basePortfolio !== 'None') {
+        if (basePortfolio !== '') {
             info[name] = info[basePortfolio]
             portfolios[name] = portfolios[basePortfolio]
         } else {
@@ -262,6 +262,7 @@ class PortfolioBuilderPage extends React.Component {
         let info = this.state.portfolioInfo
 
         // Iterate through each stock checking that it has been updated
+        console.log(info)
         Object.keys(info).forEach(function(key) {
             if (info[key]['updated'] === false) {
                 ret = false
@@ -270,11 +271,6 @@ class PortfolioBuilderPage extends React.Component {
         return ret
     }
 
-    /**
-     * Lifecycle method to render the page
-     * 
-     * @return {html} The portfolio builder page HTML code
-     */
     render = () => {
         // Does not render portfolio cards unless they have all been updated
         if (!this.updated()) {
