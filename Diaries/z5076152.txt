@@ -75,5 +75,7 @@ WEEK 10:
 
 I refactored portfolio page, portfolio overview, portfolio stock table and purchased 
 stock. I fixed the style and properly commented with JSDoc style for all files 
-related to portfolio builder and portfolio. I also fixed some of the style for 
+related to portfolio builder and portfolio. I fixed some of the style for 
 consistency in all other files.
+
+I resolved all warnings that occurred after compile time.
