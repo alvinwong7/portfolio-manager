@@ -62,7 +62,7 @@ and display that portfolio.
 
 I implemented the adding, removing and renaming of portfolios in the portfolio 
 builder. I spent most of my time fixing an issue where removing stock does not 
-remove the correct portfolio component but the correct portfolio is removed. \
+remove the correct portfolio component but the correct portfolio is removed. 
 This issue has been resolved.
 
 I fixed an issue where redirecting to the same portfolio page component would 
@@ -71,3 +71,9 @@ not update the page.
 I also refactored the portfolio builder page to use less api calls and 
 implemented a moving average filter on the stock graph to show a trendline.
 
+WEEK 10:
+
+I refactored portfolio page, portfolio overview, portfolio stock table and purchased 
+stock. I fixed the style and properly commented with JSDoc style for all files 
+related to portfolio builder and portfolio. I also fixed some of the style for 
+consistency in all other files.
