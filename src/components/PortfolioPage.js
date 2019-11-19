@@ -18,8 +18,8 @@ class PortfolioPage extends React.Component {
      * title name from the cookies
      * 
      * @constructor
-     * @param {object} props Contains the following important parameters:
-     * @param {string} props.match.params.portfolioName portfolio name from url
+     * @param {object} props Please @see getPortfolioDetailsFromCookies method 
+     * for information about what is used from the parameter
      */
     constructor(props) {
         super(props)
@@ -33,12 +33,13 @@ class PortfolioPage extends React.Component {
         let details = this.getPortfolioDetailsFromCookies(props)
         let stocks = details[0]
         let name = details[1]
-        let titleName = details[2]
 
         this.state = {
+            /** List of stocks that the portfolio contains */
             userStocks: stocks,
+            /** Name of the portfolio */
             portfolioName: name,
-            titleName: titleName,
+            /** Flag to tell component to update its stocks */
             update: false
         }
 
@@ -48,21 +49,20 @@ class PortfolioPage extends React.Component {
     /**
      * Lifecycle method for when the component receives props. This occurs
      * when you redirect from one portfolio to another i.e. portfolio from 
-     * the portfolio builder page to the users actual portfolio
+     * the portfolio builder page to the users actual portfolio.
      * 
-     * @param {object} nextProps Contains the same required parameters as the 
-     * constructor @see constructor for more detailed information
+     * It sets the state with the new props (the same as constructor)
+     * @see constructor for information regarding state variables
      */
     componentWillReceiveProps = (nextProps) => {
+        // Getting stocks, name and page title name from cookies
         let details = this.getPortfolioDetailsFromCookies(nextProps)
         let stocks = details[0]
         let name = details[1]
-        let titleName = details[2]
 
         this.setState({
             userStocks: stocks,
             portfolioName: name,
-            titleName: titleName,
             update: true
         })
 
@@ -72,27 +72,29 @@ class PortfolioPage extends React.Component {
      * Gets the required portfolio details from cookies
      * 
      * @param {object} props Argument from @see constructor and 
-     * @see componentWillReceiveProps Please see @see constructor for more details
-     * concerning this parameter
-     * @return {array} contains list of stocks, portfolio name and an appropriate 
-     * page title name
+     * @see componentWillReceiveProps It grabs the portfolio name 
+     * from routing url
+     * 
+     * @return {array} contains list of stocks and portfolio name
      */
     getPortfolioDetailsFromCookies = (props) => {
         let stocks = []
-        let titleName = 'My Portfolio'
         let name = 'default'
+
+        // Checks if there is no expected parameter (if not it is the home 
+        // page and should display the default portfolio)
         if (props.match.params.portfolioName !== undefined) {
             stocks = getSessionCookie()["portfolios"][props.match.params.portfolioName]
-            titleName = props.match.params.portfolioName
-            name = titleName
+            name = props.match.params.portfolioName
         } else {
-            stocks = getSessionCookie()["portfolios"]
-            if (stocks) {
-                stocks = stocks["default"]
+            stocks = getSessionCookie()["portfolios"]["default"]
+            name = 'My portfolio'
+            if (!stocks) {
+                stocks = []
             }
         }
 
-        return [stocks, name, titleName]
+        return [stocks, name]
     }
 
     /**
@@ -210,6 +212,11 @@ class PortfolioPage extends React.Component {
                 update: false
             })
             this.getInfo(this.state.userStocks)
+        }
+
+        let titleName = this.state.titleName
+        if (titleName === 'default') {
+            titleName = 'My Portfolio'
         }
 
         return (

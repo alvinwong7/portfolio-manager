@@ -29,12 +29,24 @@ class PurchasedStock extends React.Component {
         super(props)
 
         this.state = {
+            /** Code of the stock */
             name: this.props.stock['code'],
+            /** Current price of the stock */
             price: this.props.stock['price'],
-            profit: this.props.stock['profits/loss'],
+            /** Todays profit/loss */
+            profitLoss: this.props.stock['profits/loss'],
+            /** Units of the stock owned */
             units: this.props.stock['units'],
+            /** Todays percentage change */
             changePercent: this.props.stock['changePercent'],
+            /** 
+             * Total value of owned stocks calculted in @see PortfolioPage in 
+             * the function @see getInfo
+             */
             value: this.props.stock['value'],
+            /** The percentage amount that this stock makes up of the 
+             * portfolios total networth
+             */
             weight: this.props.stock['weight'],
         }
     }
@@ -42,16 +54,13 @@ class PurchasedStock extends React.Component {
     /**
      * Lifecycle method for when the component receives props. This occurs 
      * when a stock (row) on the stock table is deleted to update the position 
-     * all the rows
-     * 
-     * @param {object} props 
-     * @param {object} state 
+     * all the rows. @see constructor for details regarding state variables
      */
     componentWillReceiveProps = (nextProps) => {
         this.setState({
             name: nextProps.stock['code'],
             price: nextProps.stock['price'],
-            profit: nextProps.stock['profits/loss'],
+            profitLoss: nextProps.stock['profits/loss'],
             units: nextProps.stock['units'],
             changePercent: nextProps.stock['changePercent'],
             value: nextProps.stock['value'],
@@ -69,11 +78,6 @@ class PurchasedStock extends React.Component {
         this.props.updateSession(this.props.portfolioName)
     }
 
-    /**
-     * Lifecycle method to render the page
-     * 
-     * @return {html} A table row containing the required stock information
-     */
     render = () => {
         return (
             <tr>
@@ -81,7 +85,7 @@ class PurchasedStock extends React.Component {
                 <Nav.Link as={Link} to={"/stock/"+this.state.name}>{this.state.name}</Nav.Link>
                 </Nav></td>
                 <td>{this.state.price}</td>
-                <td>{this.state.profit}</td>
+                <td>{this.state.profitLoss}</td>
                 <td>{this.state.units}</td>
                 <td>{this.state.changePercent}</td>
                 <td>{this.state.value}</td>

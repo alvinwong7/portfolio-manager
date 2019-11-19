@@ -15,7 +15,6 @@ class NewPortfolioForm extends React.Component {
      * Constructs class and binds handleSubmit function
      * 
      * @constructor
-     * @param {object} props
      */
     constructor(props){
         super(props)
@@ -41,8 +40,6 @@ class NewPortfolioForm extends React.Component {
     /**
      * Handles the form submission which adds a portfolio with an option of 
      * basing it off another portfolio
-     * 
-     * @param {object} event 
      */
     handleSubmit = (event) => {
         try {
@@ -60,11 +57,6 @@ class NewPortfolioForm extends React.Component {
         }
     }
 
-    /**
-     * Lifecycle method to render the page
-     * 
-     * @return {html} The pages' HTML code
-     */
     render = () => {
         return (
         <Form id ="addPortfolioForm" name = "addPortfolioForm" onSubmit={ (e) => this.handleSubmit(e)}>
