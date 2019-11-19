@@ -69,7 +69,7 @@ class NewPortfolioForm extends React.Component {
             <Col>
                 <Form.Label>Base off current portfolio</Form.Label>
                     <Form.Control as="select" name="basePortfolio">
-                    <option defaultValue>None</option>
+                    <option defaultValue></option>
                     {this.createOptions()}
                     </Form.Control>
             </Col>
