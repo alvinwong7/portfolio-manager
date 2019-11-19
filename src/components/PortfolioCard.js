@@ -74,7 +74,7 @@ class PortfolioCard extends React.Component {
     /**
      * Handles editing of the portfolio name 
      * 
-     * @param {object} event 
+     * @param {object} event Object contains form submission details
      */
     handleEdit = (event) => {
         // Stops renaming to one that already exists
