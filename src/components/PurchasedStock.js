@@ -15,15 +15,6 @@ class PurchasedStock extends React.Component {
      * Initialises all the required information in the row
      * 
      * @constructor
-     * @param {object} props Contains the following parameters to be displayed:
-     * @param {string} name Code of the stock
-     * @param {string} price Current price of the stock
-     * @param {string} units Amount of units of stock owned
-     * @param {string} changePercent Todays percentage change in value
-     * @param {string} value Total networth of owned stock calculated in @see PortfolioPage
-     * in the function @see getInfo
-     * @param {string} weight The percentage amount that this stock makes up of the 
-     * portfolios total networth
      */
     constructor(props) {
         super(props)
