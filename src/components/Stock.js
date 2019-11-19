@@ -1,56 +1,54 @@
-import React from 'react';
-import axios from 'axios';
-import Plot from 'react-plotly.js';
-import './Stock.css';
-
-import { Table } from 'react-bootstrap'
+import React from 'react'
+import axios from 'axios'
+import Plot from 'react-plotly.js'
+import './Stock.css'
 
 class Stock extends React.Component{
 
     constructor(props){
-        super(props);
+        super(props)
 
         this.state = {
-            Name:  props.name,
-            Open:  '...',
+            Name: props.name,
+            Open: '...',
             Close: '...',
-            High:  '...',
-            Low:   '...',
+            High: '...',
+            Low:  '...',
             HistDate: [],
             HistHigh: [],
             HistLow: [],
-        };
+        }
 
         // Access stock data from AlphaVantage API (5 calls per minute)
-        const key = '059YSIM0TS1VKHA0';
+        const key = '059YSIM0TS1VKHA0'
         const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol='
-                    + props.name + '&apikey=' + key;
+                    + props.name + '&apikey=' + key
 
         axios
             .get(url)
             .then( response => {
 
                 // Collect stock identifying information
-                let name = response.data['Meta Data']['2. Symbol'];
+                let name = response.data['Meta Data']['2. Symbol']
 
                 // Collect stock price data
                 let TimeSeries = response.data['Time Series (Daily)']
-                let today = Object.keys(TimeSeries)[0];
+                let today = Object.keys(TimeSeries)[0]
 
                 this.setState({
-                    Name:  name,
-                    Open:  TimeSeries[today]['1. open'],
+                    Name: name,
+                    Open: TimeSeries[today]['1. open'],
                     Close: TimeSeries[today]['4. close'],
-                    High:  TimeSeries[today]['2. high'],
-                    Low:   TimeSeries[today]['3. low'],
-                });
+                    High: TimeSeries[today]['2. high'],
+                    Low:  TimeSeries[today]['3. low'],
+                })
 
                 // Collect historical stock data over previous three years
-                for (var i = 0; i < 3*365 && i < Object.keys(TimeSeries).length; i++){
+                for (let i = 0; i < 3*365 && i < Object.keys(TimeSeries).length; i++){
 
-                    let date = Object.keys(TimeSeries)[i];
-                    let high = parseFloat(TimeSeries[date]['2. high']);
-                    let low = parseFloat(TimeSeries[date]['3. low']);
+                    let date = Object.keys(TimeSeries)[i]
+                    let high = parseFloat(TimeSeries[date]['2. high'])
+                    let low = parseFloat(TimeSeries[date]['3. low'])
 
                     // Append historical high and low prices
                     this.setState({
@@ -62,12 +60,12 @@ class Stock extends React.Component{
 
             })
             .catch( error => {
-                console.log(error);
+                console.log(error)
             })
 
     }
 
-    render(){
+    render = () => {
         return(
             <div>
 
@@ -124,9 +122,9 @@ class Stock extends React.Component{
                 />
 
             </div>
-        );
+        )
     }
 
 }
 
-export { Stock };
+export { Stock }

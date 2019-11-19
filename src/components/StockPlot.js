@@ -1,14 +1,14 @@
-import React from 'react';
-import axios from 'axios';
-import Plot from 'react-plotly.js';
-import './Stock.css';
+import React from 'react'
+import Plot from 'react-plotly.js'
+import axios from 'axios'
 
-import { Table } from 'react-bootstrap'
+import './Stock.css'
+
 
 class StockPlot extends React.Component{
 
     constructor(props){
-        super(props);
+        super(props)
         const filterExtent = 20
         const filterTaps = 2 * filterExtent + 1
 
@@ -22,13 +22,13 @@ class StockPlot extends React.Component{
             HistLow: [],
             HistAvg: [],
             HistMovAvg: [],
-        };
+        }
 
 
         // Access stock data from AlphaVantage API (5 calls per minute)
-        const key = '8ITU7LH4G30XUCNF';
+        const key = '8ITU7LH4G30XUCNF'
         const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol='
-                    + this.state.Name + '&apikey=' + key;
+                    + this.state.Name + '&apikey=' + key
 
         axios
             .get(url)
@@ -38,11 +38,11 @@ class StockPlot extends React.Component{
                 let movAvg = 0
 
                 // Collect historical stock data over previous three years
-                for (var i = 0; i < this.state.Period*365 && i < Object.keys(TimeSeries).length; i++){
+                for (let i = 0; i < this.state.Period*365 && i < Object.keys(TimeSeries).length; i++){
 
-                    let date = Object.keys(TimeSeries)[i];
-                    let high = parseFloat(TimeSeries[date]['2. high']);
-                    let low = parseFloat(TimeSeries[date]['3. low']);
+                    let date = Object.keys(TimeSeries)[i]
+                    let high = parseFloat(TimeSeries[date]['2. high'])
+                    let low = parseFloat(TimeSeries[date]['3. low'])
                     let avg = 0.5 * (high + low)
 
                     // Append historical high and low prices
@@ -58,7 +58,7 @@ class StockPlot extends React.Component{
                     } else {
                         movAvg = movAvg - this.state.HistAvg[i-this.state.filterTaps] + avg
                         this.setState({
-                            HistMovAvg : this.state.HistMovAvg.concat(movAvg/filterTaps),
+                            HistMovAvg: this.state.HistMovAvg.concat(movAvg/filterTaps),
                         })
                     }
 
@@ -66,13 +66,13 @@ class StockPlot extends React.Component{
 
             })
             .catch( error => {
-                console.log(error);
+                console.log(error)
             })
         
     }
 
 
-    render(){
+    render = () => {
         return(
             <div>
                 <br/>
@@ -114,7 +114,7 @@ class StockPlot extends React.Component{
                 />
 
             </div>
-        );
+        )
     }
 
 }

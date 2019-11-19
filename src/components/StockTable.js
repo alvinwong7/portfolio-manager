@@ -4,24 +4,17 @@ import { Table } from 'react-bootstrap'
 import { StockSummary } from './StockSummary'
 
 class StockTable extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     createTable = () => {
         let table = []
 
-        let children = []
-
         for (let i = 0; i < this.props.stocks.length; i++) {
-            children.push(<StockSummary stockName={this.props.stocks[i]} key = {i}/>)
-
+            table.push(<StockSummary stockName={this.props.stocks[i]} key = {i}/>)
         }
-        table.push(children)
+
         return table
     }
 
-    render() {
+    render = () => {
         return (
             <Table>
                 <thead>

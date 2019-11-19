@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 import { Clock } from './Clock'
 
@@ -7,9 +7,9 @@ import { Navbar, Nav, Form, FormControl, Button, NavItem } from "react-bootstrap
 import { getSessionCookie } from './Session.js'
 
 class Navigation extends React.Component {
-    render() {
+    render = () => {
 
-        const session = getSessionCookie();
+        const session = getSessionCookie()
         if (session.username === undefined) {
             return(
             <div>
@@ -27,7 +27,7 @@ class Navigation extends React.Component {
                 <br />
                 <br />
             </div>
-            );
+            )
         }
 
         return(
@@ -63,21 +63,21 @@ class Navigation extends React.Component {
             <br />
             <br />
         </div>
-        );
+        )
     }
 
-    handleSubmit(event){
+    handleSubmit = (event) => {
         try{
-            event.preventDefault();
-            const searchTerm = event.target.elements.namedItem("searchTerm").value.toUpperCase();
-            //alert("searchterm = "+ searchTerm);
-            this.props.history.push("/stock/"+searchTerm);
-            event.target.reset();
+            event.preventDefault()
+            const searchTerm = event.target.elements.namedItem("searchTerm").value.toUpperCase()
+            //alert("searchterm = "+ searchTerm)
+            this.props.history.push("/stock/"+searchTerm)
+            event.target.reset()
 
         } catch(err){
-            alert(err);
+            alert(err)
         }
     }
 }
 
-export default withRouter(Navigation);
+export default withRouter(Navigation)

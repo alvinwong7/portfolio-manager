@@ -1,12 +1,9 @@
 import React from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
-import { Nav,} from "react-bootstrap"
-
 
 class StockSummary extends React.Component {
     constructor(props){
-        super(props);
+        super(props)
 
         this.state = {
             name: '?',
@@ -17,17 +14,17 @@ class StockSummary extends React.Component {
             volume: '?',
             change: '?',
             changePercent: '?',
-        };
+        }
 
-        this.getInfo = this.getInfo.bind(this);
-        this.getInfo();
+        this.getInfo = this.getInfo.bind(this)
+        this.getInfo()
     }
 
-    getInfo(){
+    getInfo = () => {
         // Access stock data from AlphaVantage API (5 calls per minute)
-        const key = '059YSIM0TS1VKHA0';
+        const key = '059YSIM0TS1VKHA0'
         const url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + this.props.stockName +
-                    '&apikey=' + key;
+                    '&apikey=' + key
 
         axios
             .get(url)
@@ -47,7 +44,7 @@ class StockSummary extends React.Component {
                     volume: data['06. volume'],
                     change: data['09. change'],
                     changePercent: data['10. change percent'],
-                });
+                })
             })
             .catch( error => {
 
@@ -60,20 +57,20 @@ class StockSummary extends React.Component {
                     volume: 'X',
                     change: 'X',
                     changePercent: 'X',
-                });
-                console.log(error);
+                })
+                console.log(error)
             })
 
     }
 
-    componentDidUpdate(prevProps){
+    componentDidUpdate = (prevProps) => {
         if (this.props.stockName !== prevProps.stockName) {
             this.getInfo()
         }
     }
 
 
-    render(){
+    render = () =>{
         return(
             <tr>
                 <td>{this.state.name}</td>
@@ -85,7 +82,7 @@ class StockSummary extends React.Component {
                 <td>{this.state.low}</td>
                 <td>{this.state.volume}</td>
             </tr>
-        );
+        )
     }
 
 

@@ -1,33 +1,30 @@
-import React, { useState, useContext } from 'react';
-import  Stocks  from './Stocks'
-import { Contact } from './Contact'
-import { NewStockForm } from './NewStockForm'
-import { StockPage } from './StockPage'
-import { PortfolioPage } from './PortfolioPage'
-import { PortfolioBuilderPage } from './PortfolioBuilderPage'
-import { WatchListPage } from './WatchListPage'
-import  LoginHandler from './LoginHandler'
-import  LogoutHandler from './LogoutHandler'
+import React, { useState, useContext } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { SessionContext, getSessionCookie } from "./Session";
 import useDeepCompareEffect from 'use-deep-compare-effect'
-import NewUser from './NewUser'
 
+import { Contact } from './Contact'
+import LoginHandler from './LoginHandler'
+import LogoutHandler from './LogoutHandler'
+import NewUser from './NewUser'
+import { NewStockForm } from './NewStockForm'
+import { PortfolioBuilderPage } from './PortfolioBuilderPage'
+import { PortfolioPage } from './PortfolioPage'
+import { SessionContext, getSessionCookie } from "./Session"
+import { StockPage } from './StockPage'
+import { WatchListPage } from './WatchListPage'
 
 const Routes = (props) => {
-    const [session, setSession] = useState(getSessionCookie());
+    const [session, setSession] = useState(getSessionCookie())
 
     useDeepCompareEffect( () => {
 
-        setSession(getSessionCookie());
-        //console.log("getting session Cookie with s= "+ JSON.stringify(session));
+        setSession(getSessionCookie())
         },
         [session]
-    );
+    )
 
     const forceSessionUpdate = () => {
-        setSession(getSessionCookie());
-        //console.log("FORCED:getting session Cookie with s= "+ JSON.stringify(session));
+        setSession(getSessionCookie())
     }
 
     return (
@@ -39,16 +36,14 @@ const Routes = (props) => {
             <Route path="*" component={ProtectedHandler} />
         </Switch>
     </SessionContext.Provider>
-    );
-
-
+    )
 }
 
 const ProtectedHandler = ({ history }) => {
-  const session = useContext(SessionContext);
+  const session = useContext(SessionContext)
   if (session.username === undefined) {
-    //alert("session username is underfined pushing /login");
-    history.push("/login");
+    //alert("session username is underfined pushing /login")
+    history.push("/login")
     }
   return (
       <Switch>
@@ -58,12 +53,11 @@ const ProtectedHandler = ({ history }) => {
       <Route path="/builder/:portfolioName" component={PortfolioPage}/>
       <Route path="/builder" component={PortfolioBuilderPage}/>
       <Route path="/watchlist" component={WatchListPage}/>
-      <Route path="/stocks" component={Stocks}/>
       <Route path="/stock/:stockName" component={StockPage}/>
       <Route path="/stocks/NewStockForm" component={NewStockForm}></Route>
       <Route path="/contact" component={Contact}/>
       </Switch>
-  );
-};
+  )
+}
 
-export { Routes };
+export { Routes }

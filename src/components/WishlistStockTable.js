@@ -12,22 +12,20 @@ class StockTable extends React.Component {
     createTable = (context) => {
         let table = []
 
-        let children = []
-
         for (let i = 0; i < this.props.stocks.length; i++) {
-            children.push(<StockSummary stockName={this.props.stocks[i]} key = {i} forceUpdate = {context.props.forceUpdate} delStock= {context.delStock}/>)
+            table.push(<StockSummary stockName={this.props.stocks[i]} key = {i} forceUpdate = {context.props.forceUpdate} delStock= {context.delStock}/>)
 
         }
-        table.push(children)
+        
         return table
     }
 
 
-    delStock(code){
+    delStock = (code) => {
         deleteWatchlistStock(this.props.name, code)
     }
 
-    render() {
+    render = () => {
         return (
             <Table>
                 <thead>

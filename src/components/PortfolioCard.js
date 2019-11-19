@@ -4,35 +4,90 @@ import { Nav, Button, ButtonToolbar, Card, Form } from "react-bootstrap"
 
 import { deletePortfolio, addPortfolio } from './UserData'
 
-
+/** 
+ * Class for portfolio cards containing networth, todays change and
+ * change percent of the given portfolio card
+ * 
+ * @class
+ * @exports PortfolioCard
+*/
 class PortfolioCard extends React.Component {
+    /**
+     * Creates a card that displays the following information: portfolio 
+     * name, total networth, change, and percent change. It contains an 
+     * edit and delete option.
+     * 
+     * @constructor
+     * @param {object} props Contains the following parameters:
+     * @param {string} name Name of the portfolio
+     * @param {float} networth Total networth calculated as the sum of each 
+     *                          stock price * units in @see PortfolioBuilderPage
+     *                          in @see evalNetworth
+     * @param {float} change Total change in todays networth
+     */
     constructor(props) {
         super(props)
         this.state = {
-            name : this.props.name,
-            networth : this.props.networth,
-            change : this.props.change,
-            edit : false
+            name: this.props.name,
+            networth: this.props.networth,
+            change: this.props.change,
+            edit: false
         }
     }
 
-    handleClick() {
-        deletePortfolio(this.state.name)
-        this.props.updateSession(this.state.name, 'nothing', 'delete')
-    }
-
-    handleClickEdit() {
+    /**
+     * Lifecycle method for when the component receives props. This occurs
+     * when a portfolio card is added or deleted.
+     * 
+     * @param {object} nextProps Contains the same parameters as the 
+     * constructor @see constructor for more detailed information
+     */
+    componentWillReceiveProps = (nextProps) => {
         this.setState({
-            edit : !this.state.edit
+            name: nextProps.name,
+            networth: nextProps.networth,
+            change: nextProps.change,
+            edit: false
         })
     }
 
+    /**
+     * Handles click operation of the delete button
+     */
+    handleClickDelete = () => {
+        // Delete portfolio from cookies
+        deletePortfolio(this.state.name)
+        // Deletes portfolio in the higher order page
+        this.props.deletePortfolio(this.state.name)
+    }
+
+    /**
+     * Handles click operation of the edit button by enabling edit variable 
+     * that is used to change the rendering of the card. @see render
+     */
+    handleClickEdit = () => {
+        this.setState({
+            edit: !this.state.edit
+        })
+    }
+    
+    /**
+     * Handles editing of the portfolio name 
+     * 
+     * @param {object} event 
+     */
     handleEdit = (event) => {
+        // Stops renaming to one that already exists
         try {
-            event.preventDefault();
+            // Grab entered name from form
+            event.preventDefault()
             const newName = event.target.elements.namedItem("newPortfolioName").value
+
             if (!this.props.checkExists(newName)) {
-                this.props.updateSession(this.state.name, newName, 'rename')
+                // rename the portfolio in the higher order page
+                this.props.renamePortfolio(this.state.name, newName)
+
+                // Add and delete portfolio from cookies
                 addPortfolio(newName, this.state.name)
                 deletePortfolio(this.state.name)
             } else {
@@ -43,26 +98,35 @@ class PortfolioCard extends React.Component {
         }
     }
     
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            name : nextProps.name,
-            networth : nextProps.networth,
-            change : nextProps.change,
-            edit : false
-        })
-    }
-
-    render() {
+    /**
+     * Lifecycle method to render the page
+     * 
+     * @return {html} The pages' HTML code
+     */
+    render = () => {
+        // Calculates the change in percentage
         let changePercent = 0.00
-        if (this.state.networth - this.state.change != 0) {
+        if (this.state.networth - this.state.change !== 0) {
+            // changePercent = 100 * (change / (networth - change))
             changePercent = 100 * this.state.change / (this.state.networth - this.state.change)
         }
 
+        // Changes whether the portfolio name is editable (either renders a 
+        // form or link to the portfolio page)
         let title
         if (this.state.edit) {
-            title = <Form onSubmit={ (e) => this.handleEdit(e)}><Form.Control name="newPortfolioName" type="text" placeholder={this.state.name}/></Form>
+            title = <Form onSubmit={ (e) => this.handleEdit(e)}>
+                    <Form.Control 
+                        name="newPortfolioName" 
+                        type="text" 
+                        placeholder={this.state.name}/>
+                    </Form>
         } else {
-            title = <Nav><Nav.Link as={Link} to={"/builder/"+this.state.name}>{this.state.name}</Nav.Link></Nav>
+            title = <Nav>
+                    <Nav.Link as={Link} to={"/builder/"+this.state.name}>
+                    {this.state.name}
+                    </Nav.Link>
+                    </Nav>
         }
 
         return (
@@ -82,11 +146,11 @@ class PortfolioCard extends React.Component {
                 <Card.Footer>
                     <ButtonToolbar>
                     <Button variant="outline-success" onClick={this.handleClickEdit.bind(this)} block>Edit</Button>
-                    <Button variant="outline-danger" onClick={this.handleClick.bind(this)} block>Delete</Button>
+                    <Button variant="outline-danger" onClick={this.handleClickDelete.bind(this)} block>Delete</Button>
                     </ButtonToolbar>
                 </Card.Footer>
             </Card>
-        );
+        )
     }
 }
 
