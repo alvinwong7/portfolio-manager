@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { deleteWatchlistStock } from './UserData'
-import { StockSummary } from './WishlistStockSummary'
+import { StockSummary } from './WatchlistStockSummary'
 
 class StockTable extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class StockTable extends React.Component {
             table.push(<StockSummary stockName={this.props.stocks[i]} key = {i} forceUpdate = {context.props.forceUpdate} delStock= {context.delStock}/>)
 
         }
-        
+
         return table
     }
 

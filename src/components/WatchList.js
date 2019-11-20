@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { StockTable } from './WishlistStockTable'
+
+import { StockTable } from './WatchlistStockTable'
 import { addWatchlistStock } from './UserData'
 import { Button, Collapse, Form } from 'react-bootstrap'
 
@@ -35,8 +36,13 @@ export default function WatchList(props) {
         alert(err)
     }
 }
-
-function handleSubmit(event,name,forceUpdate){
+/**
+ * Local function to handle submission of new Stock
+ * 
+ * @params {string} event
+ * @params {string} name
+ * @params {function} forceUpdate
+ */function handleSubmit(event,name,forceUpdate){
     event.preventDefault()
     addWatchlistStock(name, event.target.elements.namedItem("code").value)
     forceUpdate()

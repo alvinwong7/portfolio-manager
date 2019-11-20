@@ -1,13 +1,22 @@
 import React from "react"
 import * as Cookies from "js-cookie"
 
-export const setSessionCookie = (session: any): void => {
+/**
+ * Function to save session data into a cookie
+ * @params {Object} session
+ * @function
+ * @exports setSessionCookie
+ */export const setSessionCookie = (session: any): void => {
   Cookies.remove("session")
   Cookies.set("session", session, { expires: 14 })
-  //alert("setting session Cookie")
 }
 
-export const getSessionCookie: any = () => {
+/**
+ * Function to collect session data from cookie
+ * @params {Object} session
+ * @function
+ * @exports getSessionCookie
+ */export const getSessionCookie: any = () => {
   const sessionCookie = Cookies.get("session")
   //alert("getting session Cookie")
   if (sessionCookie === undefined) {

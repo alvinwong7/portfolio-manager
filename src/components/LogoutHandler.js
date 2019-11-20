@@ -5,8 +5,19 @@ import axios from 'axios'
 
 import { getSessionCookie } from "./Session"
 
-class LogoutHandler extends React.Component{
-      render = () => {
+/**
+ * class that handles the logout page and sending of session data
+ *
+ * @class
+ * @exports LogoutHandler
+ *
+ */class LogoutHandler extends React.Component{
+
+      /**
+      *
+      * @return {html} returns the html for the logout success page
+      *
+      */render = () => {
           const data = JSON.stringify(getSessionCookie())
           const url = "http://127.0.0.1:5000/logout-"+data
           axios
