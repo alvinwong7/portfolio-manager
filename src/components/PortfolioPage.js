@@ -6,24 +6,24 @@ import { PortfolioStockTable } from './PortfolioStockTable'
 import { getSessionCookie } from "./Session"
 import { NewStockFormButton } from './NewStockFormButton'
 
-/** 
+/**
  * Class for the users portfolio page
- * 
+ *
  * @class
  * @exports PortfolioPage
 */
 class PortfolioPage extends React.Component {
     /**
-     * Initialises the portfolios list of stocks, its name and appropriate page 
+     * Initialises the portfolios list of stocks, its name and appropriate page
      * title name from the cookies
-     * 
+     *
      * @constructor
-     * @param {object} props Please @see getPortfolioDetailsFromCookies method 
+     * @param {object} props Please @see getPortfolioDetailsFromCookies method
      * for information about what is used from the parameter
      */
     constructor(props) {
         super(props)
-        
+
         this.calcWeight = this.calcWeight.bind(this)
         this.getInfo = this.getInfo.bind(this)
         this.getPortfolioDetailsFromCookies = this.getPortfolioDetailsFromCookies.bind(this)
@@ -51,9 +51,9 @@ class PortfolioPage extends React.Component {
 
     /**
      * Lifecycle method for when the component receives props. This occurs
-     * when you redirect from one portfolio to another i.e. portfolio from 
+     * when you redirect from one portfolio to another i.e. portfolio from
      * the portfolio builder page to the users actual portfolio.
-     * 
+     *
      * It sets the state with the new props (the same as constructor)
      * @see constructor for information regarding state variables
      */
@@ -75,11 +75,11 @@ class PortfolioPage extends React.Component {
 
     /**
      * Gets the required portfolio details from cookies
-     * 
-     * @param {object} props Argument from @see constructor and 
-     * @see componentWillReceiveProps It grabs the portfolio name 
+     *
+     * @param {object} props Argument from @see constructor and
+     * @see componentWillReceiveProps It grabs the portfolio name
      * from routing url
-     * 
+     *
      * @return {array} contains list of stocks and portfolio name
      */
     getPortfolioDetailsFromCookies = (props) => {
@@ -87,7 +87,7 @@ class PortfolioPage extends React.Component {
         let titleName = 'My Portfolio'
         let name = 'default'
 
-        // Checks if there is no expected parameter (if not it is the home 
+        // Checks if there is no expected parameter (if not it is the home
         // page and should display the default portfolio)
         if (props.match.params.portfolioName !== undefined) {
             stocks = getSessionCookie()["portfolios"][props.match.params.portfolioName]
@@ -104,16 +104,16 @@ class PortfolioPage extends React.Component {
     }
 
     /**
-     * Calls Alphavantage API for details concerning the stocks belonging in the 
-     * portfolio. For each stock it includes: profit/loss, value, price, high, 
-     * low, volume, change and percentage change. 
-     * 
+     * Calls Alphavantage API for details concerning the stocks belonging in the
+     * portfolio. For each stock it includes: profit/loss, value, price, high,
+     * low, volume, change and percentage change.
+     *
      * @param {array} stocks List of stocks in the portfolio
      */
     getInfo = (stocks) => {
         const apiKey = '059YSIM0TS1VKHA0'
         let component = this
-        console.log(stocks)
+        //console.log(stocks)
         // Iterate through each stock to call the API and set the mentioned details
         for (let i = 0; i < stocks.length; i++) {
             let stockName = stocks[i]['code']
@@ -148,7 +148,7 @@ class PortfolioPage extends React.Component {
                     userStocks: stocks,
                 })
 
-                // Calculates the networth weight of each stock once all the 
+                // Calculates the networth weight of each stock once all the
                 // stock information for the portfolio is set
                 if (i === stocks.length - 1) {
                     component.calcWeight()
@@ -172,12 +172,12 @@ class PortfolioPage extends React.Component {
     }
 
     /**
-     * Calculates the networth weighting of each stock 
+     * Calculates the networth weighting of each stock
      */
     calcWeight = () => {
         let sum = 0
         let stocks = this.state.userStocks
-        
+
         // Calculates the total networth of the portfolio
         for (let i = 0; i < stocks.length; i++) {
             sum += parseFloat(stocks[i]['value'])
@@ -209,7 +209,7 @@ class PortfolioPage extends React.Component {
 
     /**
      * Lifecycle method to render the page
-     * 
+     *
      * @return {html} The portfolio page HTML code
      */
     render = () => {
@@ -226,12 +226,12 @@ class PortfolioPage extends React.Component {
                 <h1>{this.state.titleName}</h1>
                 <PortfolioOverview userStocks={this.state.userStocks}/>
                 <br/>
-                <PortfolioStockTable 
-                    userStocks={this.state.userStocks} 
-                    portfolioName={this.state.portfolioName} 
+                <PortfolioStockTable
+                    userStocks={this.state.userStocks}
+                    portfolioName={this.state.portfolioName}
                     updateSession={this.updateSession}/>
-                <NewStockFormButton 
-                    updateSession={this.updateSession} 
+                <NewStockFormButton
+                    updateSession={this.updateSession}
                     portfolioName={this.state.portfolioName}/>
             </div>
         )
