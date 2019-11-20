@@ -18,29 +18,28 @@ class PortfolioCard extends React.Component {
      * edit and delete option.
      * 
      * @constructor
-     * @param {object} props Contains the following parameters:
-     * @param {string} name Name of the portfolio
-     * @param {float} networth Total networth calculated as the sum of each 
-     *                          stock price * units in @see PortfolioBuilderPage
-     *                          in @see evalNetworth
-     * @param {float} change Total change in todays networth
      */
     constructor(props) {
         super(props)
         this.state = {
+            /** Name of the portfolio */
             name: this.props.name,
+            /** 
+             * Total networth calculated as the sum of each stock price * units 
+             * in @see PortfolioBuilderPage in @see evalNetworth 
+             */
             networth: this.props.networth,
+            /** Total change in todays networth */
             change: this.props.change,
+            /** Enabling/disabling rendering portfolio name as a form for editing */
             edit: false
         }
     }
 
     /**
      * Lifecycle method for when the component receives props. This occurs
-     * when a portfolio card is added or deleted.
-     * 
-     * @param {object} nextProps Contains the same parameters as the 
-     * constructor @see constructor for more detailed information
+     * when a portfolio card is added or deleted. @see constructor for 
+     * information regarding state variables
      */
     componentWillReceiveProps = (nextProps) => {
         this.setState({
@@ -73,8 +72,6 @@ class PortfolioCard extends React.Component {
     
     /**
      * Handles editing of the portfolio name 
-     * 
-     * @param {object} event Object contains form submission details
      */
     handleEdit = (event) => {
         // Stops renaming to one that already exists
@@ -98,11 +95,6 @@ class PortfolioCard extends React.Component {
         }
     }
     
-    /**
-     * Lifecycle method to render the page
-     * 
-     * @return {html} The pages' HTML code
-     */
     render = () => {
         // Calculates the change in percentage
         let changePercent = 0.00

@@ -16,8 +16,6 @@ class PortfolioStockTable extends React.Component {
      * edit and delete option.
      * 
      * @constructor
-     * @param {object} props Contains the following parameters:
-     * @param {dictionary} userStocks
      */
     constructor(props) {
         super(props)
@@ -25,6 +23,7 @@ class PortfolioStockTable extends React.Component {
         this.createTable = this.createTable.bind(this)
 
         this.state = {
+            /** List of stocks contained in the portfolio this component is in */
             userStocks: this.props.userStocks,
         }
     }
@@ -50,11 +49,6 @@ class PortfolioStockTable extends React.Component {
         return table
     }
 
-    /**
-     * Lifecycle method to render the page
-     * 
-     * @return {html} Table containing personalised stock information
-     */
     render = () => {
         return (
             <Table>

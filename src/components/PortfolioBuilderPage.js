@@ -33,7 +33,20 @@ class PortfolioBuilderPage extends React.Component {
         })
 
         this.state = {
+            /** 
+             * Dictionary of user portfolios excluding their actual portfolio 
+             * containing a list of stocks
+             */
             userPortfolios: portfolios,
+            /** 
+             * Dictionary of user portfolios containing information for display, 
+             * namely, networth, change, and updated.
+             * 
+             * networth:    total value of portfolio
+             * change:      total change in networth today
+             * updated:     flag to check that networth and change calculations 
+             *              have been completed
+             */
             portfolioInfo: info
         }
 
@@ -95,7 +108,8 @@ class PortfolioBuilderPage extends React.Component {
                 // portfolio change += stock change * units owned
                 info[name]['change'] += parseFloat(data['09. change']) * parseFloat(stocks[i]['units'])
 
-                // Sets updated to true to indicate 
+                // Sets updated to true to indicate the portfolio has been 
+                // updated with the required information
                 if (i === stocks.length - 1) {
                     info[name]['updated'] = true
                 }
@@ -160,7 +174,7 @@ class PortfolioBuilderPage extends React.Component {
         // If the provided base portfolio exists i.e. not None, set portfolio 
         // information to be not updated and set the stocks to be the same as 
         // the base portfolio
-        if (basePortfolio !== 'None') {
+        if (basePortfolio !== '') {
             info[name] = info[basePortfolio]
             portfolios[name] = portfolios[basePortfolio]
         } else {
@@ -248,6 +262,7 @@ class PortfolioBuilderPage extends React.Component {
         let info = this.state.portfolioInfo
 
         // Iterate through each stock checking that it has been updated
+        console.log(info)
         Object.keys(info).forEach(function(key) {
             if (info[key]['updated'] === false) {
                 ret = false
@@ -256,11 +271,6 @@ class PortfolioBuilderPage extends React.Component {
         return ret
     }
 
-    /**
-     * Lifecycle method to render the page
-     * 
-     * @return {html} The portfolio builder page HTML code
-     */
     render = () => {
         // Does not render portfolio cards unless they have all been updated
         if (!this.updated()) {

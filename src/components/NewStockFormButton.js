@@ -9,8 +9,8 @@ import { NewStockForm } from './NewStockForm'
  * @exports NewStockFormButton
  * @param {object} props Contains the following important parameters to be 
  * passed to @see NewStockForm
- * @param {function} updateSession Function to force an update on the portfolio page
- * @param {string} portfolioName Name of the portfolio
+ * @param {function} props.updateSession Function to force an update on the portfolio page
+ * @param {string} props.portfolioName Name of the portfolio
  */
 function NewStockFormButton(props) {
     const [open, setOpen] = useState(false)

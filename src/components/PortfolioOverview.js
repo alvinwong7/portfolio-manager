@@ -12,13 +12,13 @@ class PortfolioOverview extends React.Component {
      * Initialises the list of portfolio stocks
      * 
      * @constructor
-     * @param {object} props Contains the following important parameters:
-     * @param {array} userStocks List of stocks in the portfolio 
      */
 	constructor(props) {
 		super(props)
 		this.state = {
+			/** List of stocks belonging to the portfolio the component is in */
 			userStocks: this.props.userStocks,
+			/** Total value of the portfolio */
 			networth: '0',
 		}
 	}
@@ -31,9 +31,12 @@ class PortfolioOverview extends React.Component {
 	evalNetworth() {
 		let value = 0
 		let stocks = this.props.userStocks
+
+		// Calculates sum of the value of each stock in the portfolio
 		for (let i = 0; i < stocks.length; i++) {
 			value += parseFloat(stocks[i]['value'])
 		}
+
 		this.setState({
 			networth: value.toFixed(2).toString()
 		})
@@ -55,11 +58,6 @@ class PortfolioOverview extends React.Component {
 		this.evalNetworth()
 	}
 
-	/**
-     * Lifecycle method to render the page
-     * 
-     * @return {html} The portfolio overview component card HTML
-     */
 	render() {
 		return (
 		<Card>
