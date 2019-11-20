@@ -55,6 +55,7 @@ import { WatchListPage } from './WatchListPage'
   if (session.username === undefined) {
     //alert("session username is underfined pushing /login")
     history.push("/login")
+    return(<div> you shouldn't be here </div>)
     }
   return (
       <Switch>
