@@ -5,8 +5,21 @@ import { getSessionCookie } from './Session'
 import { deleteWatchlist, addWatchlist } from './UserData'
 import WatchList from './WatchList'
 
-class WatchListPage extends React.Component {
-    constructor(props) {
+
+/**
+ * Parent Class for all watchlists
+ *
+ * @class
+ */class WatchListPage extends React.Component {
+
+
+ /**
+  * Initialises the users selected watchlists from stored cookies
+  * binds the update finction to this class
+  *
+  * @constructor
+  */
+  constructor(props) {
         super(props)
         let watchLists = getSessionCookie()["watchlists"]
         this.updateState = this.updateState.bind(this)
@@ -17,7 +30,11 @@ class WatchListPage extends React.Component {
         }
     }
 
-    updateState = () => {
+    /**
+     * Function to force state update, called from child compoenets
+     *
+     * @constructor
+     */updateState = () => {
         let watchLists = getSessionCookie()["watchlists"]
         this.setState({
             open: false,
@@ -31,7 +48,6 @@ class WatchListPage extends React.Component {
 
         let wl = this.state.watchlists
         Object.keys(wl).forEach(function(key) {
-            //console.log(wl[key])
             table.push(<Tab eventKey={key} title={key}>
                 <WatchList name={key} key={key} watchlist={wl[key]} forceUpdate={context.updateState}/>
                 </Tab>)

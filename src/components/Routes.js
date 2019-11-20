@@ -13,7 +13,14 @@ import { SessionContext, getSessionCookie } from "./Session"
 import { StockPage } from './StockPage'
 import { WatchListPage } from './WatchListPage'
 
-const Routes = (props) => {
+
+/**
+ * Routes const that handles the dynamic routing to login/out/newuser and to
+ * secure urls
+ *
+ * @const
+ * @exports Routes
+ */const Routes = (props) => {
     const [session, setSession] = useState(getSessionCookie())
 
     useDeepCompareEffect( () => {
@@ -39,11 +46,16 @@ const Routes = (props) => {
     )
 }
 
-const ProtectedHandler = ({ history }) => {
+/**
+ * Constant for checking the user login state and protecting certain routes
+ *
+ * @const
+ */const ProtectedHandler = ({ history }) => {
   const session = useContext(SessionContext)
   if (session.username === undefined) {
     //alert("session username is underfined pushing /login")
     history.push("/login")
+    return(<div> you shouldn't be here </div>)
     }
   return (
       <Switch>

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { deleteWatchlistStock } from './UserData'
-import { StockSummary } from './WishlistStockSummary'
+import { WatchListStockSummary } from './WatchlistStockSummary'
 
-class StockTable extends React.Component {
+class WatchListStockTable extends React.Component {
     constructor(props) {
         super(props);
         this.delStock = this.delStock.bind(this)
@@ -13,10 +13,14 @@ class StockTable extends React.Component {
         let table = []
 
         for (let i = 0; i < this.props.stocks.length; i++) {
-            table.push(<StockSummary stockName={this.props.stocks[i]} key = {i} forceUpdate = {context.props.forceUpdate} delStock= {context.delStock}/>)
+            table.push(<WatchListStockSummary stockName={this.props.stocks[i]}
+                key = {i} forceUpdate = {context.props.forceUpdate}
+                delStock= {context.delStock}
+                />
+            )
 
         }
-        
+
         return table
     }
 
@@ -48,4 +52,4 @@ class StockTable extends React.Component {
     }
 }
 
-export { StockTable }
+export { WatchListStockTable }

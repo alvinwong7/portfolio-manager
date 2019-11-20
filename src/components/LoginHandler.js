@@ -5,7 +5,14 @@ import {withRouter, Link} from 'react-router-dom'
 import { setSessionCookie } from './Session'
 import { Nav, Form, Button } from 'react-bootstrap'
 
-const LoginHandler = (props) => {
+
+/**
+ * Function that hanles the login page and verification
+ *
+ * @function
+ * @exports LoginHandler
+ * @return {html} returns the html for the login page
+ */const LoginHandler = (props) => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
@@ -14,8 +21,6 @@ const LoginHandler = (props) => {
 
         e.preventDefault()
         setLoading(true)
-        // NOTE request to api login here instead of this fake promise
-        //await new Promise(r => setTimeout(r(), 1000))
 
         const url = "http://127.0.0.1:5000/login-" + username + "-" + password
 

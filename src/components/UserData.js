@@ -2,7 +2,7 @@ import { getSessionCookie, setSessionCookie } from "./Session"
 
 /**
  * Add a new portfolio to cookies
- * 
+ *
  * @param {string} portfolioName New portfolio name
  * @param {string} basePortfolio Portfolio to copy stocks from
  */
@@ -29,8 +29,8 @@ export function addPortfolio(portfolioName, basePortfolio) {
 
 /**
  * Deletes a portfolio from the cookies
- * 
- * @param {string} portfolioName 
+ *
+ * @param {string} portfolioName
  */
 export function deletePortfolio(portfolioName) {
     let session = getSessionCookie()
@@ -40,7 +40,7 @@ export function deletePortfolio(portfolioName) {
 
 /**
  * Add a stock to a portfolio
- * 
+ *
  * @param {string} portfolioName Name of the portfolio to add the stock
  * @param {string} assetType Asset type of the stock
  * @param {string} code Stocks code
@@ -62,7 +62,7 @@ export function addPortfolioStock(portfolioName, assetType, code, units, date, p
 
 /**
  * Delete stock from a portfolio
- * 
+ *
  * @param {string} portfolioName Name of the portfolio to remove the stock
  * @param {string} code Code of the stock to be removed
  */
@@ -77,7 +77,7 @@ export function deletePortfolioStock(portfolioName, code) {
 
 /**
  * Add stock to watchlist
- * 
+ *
  * @param {string} watchlistName Name of the watchlist
  * @param {string} code Code of the stock to be added
  */
@@ -91,7 +91,7 @@ export function addWatchlistStock(watchlistName, code) {
 
 /**
  * Delete stock from watchlist
- * 
+ *
  * @param {string} watchlistName Name of the watchlist
  * @param {string} code Code of the stock to be removed
  */
@@ -108,7 +108,7 @@ export function deleteWatchlistStock(watchlistName, code) {
 
 /**
  * Add a new watchlist for the user
- * 
+ *
  * @param {string} watchlistName Name of the watchlist
  */
 export function addWatchlist(watchlistName) {
@@ -133,7 +133,7 @@ export function addWatchlist(watchlistName) {
 
 /**
  * Delete a watchlist
- * 
+ *
  * @param {string} watchlistName Name of the watchlist
  */
 export function deleteWatchlist(watchlistName) {
