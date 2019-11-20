@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Nav, Button} from "react-bootstrap"
 
 
-class StockSummary extends React.Component {
+class WatchListStockSummary extends React.Component {
     constructor(props){
         super(props)
 
@@ -100,4 +100,4 @@ class StockSummary extends React.Component {
 
 }
 
-export { StockSummary }
+export { WatchListStockSummary }

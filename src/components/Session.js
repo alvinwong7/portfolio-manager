@@ -3,7 +3,8 @@ import * as Cookies from "js-cookie"
 
 /**
  * Function to save session data into a cookie
- * @params {Object} session
+ *
+ * @param {Object} session a json string or json object
  * @function
  * @exports setSessionCookie
  */export const setSessionCookie = (session: any): void => {
@@ -13,7 +14,8 @@ import * as Cookies from "js-cookie"
 
 /**
  * Function to collect session data from cookie
- * @params {Object} session
+ *
+ * @returns {JSON Object} sessionCookie
  * @function
  * @exports getSessionCookie
  */export const getSessionCookie: any = () => {
