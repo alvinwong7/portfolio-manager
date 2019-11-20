@@ -221,7 +221,6 @@ class PortfolioPage extends React.Component {
             this.getInfo(this.state.userStocks)
         }
 
-        console.log(this.state)
         return (
             <div>
                 <h1>{this.state.titleName}</h1>

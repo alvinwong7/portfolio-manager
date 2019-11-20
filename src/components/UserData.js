@@ -67,7 +67,6 @@ export function addPortfolioStock(portfolioName, assetType, code, units, date, p
  * @param {string} code Code of the stock to be removed
  */
 export function deletePortfolioStock(portfolioName, code) {
-    console.log(portfolioName)
     let session = getSessionCookie()
     let index = session['portfolios'][portfolioName].findIndex(item => item['code'] === code)
     if (index !== -1) {
