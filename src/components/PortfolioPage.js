@@ -33,12 +33,15 @@ class PortfolioPage extends React.Component {
         let details = this.getPortfolioDetailsFromCookies(props)
         let stocks = details[0]
         let name = details[1]
+        let titleName = details[2]
 
         this.state = {
             /** List of stocks that the portfolio contains */
             userStocks: stocks,
             /** Name of the portfolio */
             portfolioName: name,
+            /** Title name */
+            titleName: titleName,
             /** Flag to tell component to update its stocks */
             update: false
         }
@@ -59,10 +62,12 @@ class PortfolioPage extends React.Component {
         let details = this.getPortfolioDetailsFromCookies(nextProps)
         let stocks = details[0]
         let name = details[1]
+        let titleName = details[2]
 
         this.setState({
             userStocks: stocks,
             portfolioName: name,
+            titleName: titleName,
             update: true
         })
 
@@ -79,22 +84,23 @@ class PortfolioPage extends React.Component {
      */
     getPortfolioDetailsFromCookies = (props) => {
         let stocks = []
+        let titleName = 'My Portfolio'
         let name = 'default'
 
         // Checks if there is no expected parameter (if not it is the home 
         // page and should display the default portfolio)
         if (props.match.params.portfolioName !== undefined) {
             stocks = getSessionCookie()["portfolios"][props.match.params.portfolioName]
-            name = props.match.params.portfolioName
+            titleName = props.match.params.portfolioName
+            name = titleName
         } else {
             stocks = getSessionCookie()["portfolios"]["default"]
-            name = 'My portfolio'
             if (!stocks) {
                 stocks = []
             }
         }
 
-        return [stocks, name]
+        return [stocks, name, titleName]
     }
 
     /**
@@ -107,6 +113,7 @@ class PortfolioPage extends React.Component {
     getInfo = (stocks) => {
         const apiKey = '059YSIM0TS1VKHA0'
         let component = this
+        console.log(stocks)
         // Iterate through each stock to call the API and set the mentioned details
         for (let i = 0; i < stocks.length; i++) {
             let stockName = stocks[i]['code']
@@ -214,11 +221,7 @@ class PortfolioPage extends React.Component {
             this.getInfo(this.state.userStocks)
         }
 
-        let titleName = this.state.titleName
-        if (titleName === 'default') {
-            titleName = 'My Portfolio'
-        }
-
+        console.log(this.state)
         return (
             <div>
                 <h1>{this.state.titleName}</h1>
