@@ -23,7 +23,7 @@ import { getSessionCookie } from "./Session"
           axios
               .get(url)
               .then( response => {
-                  console.log(response)
+                  //console.log(response)
                   let data = response.data
                   if (data["msg"] === "Success"){
                       Cookies.remove("session")
