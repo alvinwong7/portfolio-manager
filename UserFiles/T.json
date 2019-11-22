@@ -1,0 +1,16 @@
+{
+    "username": "T",
+    "password": "T",
+    "portfolios": {
+        "default": [
+            {
+                "assetType": "Stock",
+                "code": "TLS",
+                "units": "20",
+                "date": "2019-10-29",
+                "buyPrice": "200"
+            }
+        ]
+    },
+    "watchlists": {}
+}
