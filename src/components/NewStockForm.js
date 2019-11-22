@@ -3,16 +3,16 @@ import { Form, Button, Row, Col } from "react-bootstrap"
 
 import { addPortfolioStock } from './UserData'
 
-/** 
+/**
  * Class for a form that adds stock a given portfolio
- * 
+ *
  * @class
  * @exports NewStockForm
 */
 class NewStockForm extends React.Component {
     /**
      * Initialise with props and bind the requred functions
-     * 
+     *
      * @constructor
      */
     constructor(props){
@@ -36,7 +36,7 @@ class NewStockForm extends React.Component {
 
         event.target.reset()
 
-        // Add new stock to cookies and tell the portfolio page to update itself 
+        // Add new stock to cookies and tell the portfolio page to update itself
         // with the new stock
         addPortfolioStock(this.props.portfolioName, assetType, code, units, date, price)
         this.props.updateSession(this.props.portfolioName)
@@ -44,7 +44,7 @@ class NewStockForm extends React.Component {
 
     /**
      * Lifecycle method to render the form
-     * 
+     *
      * @return {html} Stock form HTML
      */
     render = () => {
@@ -53,11 +53,11 @@ class NewStockForm extends React.Component {
         <b>Add Asset</b>
         <Row>
             <Col>
-                <Form.Label>Asset Catagory</Form.Label>
+                <Form.Label>Asset Category</Form.Label>
                     <Form.Control as="select" name = "assetType">
                     <option defaultValue >Stock</option>
-                    <option>Crypto</option>
-                    <option>Gold</option>
+                    <option>Cryptocurrency</option>
+                    <option>Commodities</option>
                     </Form.Control>
             </Col>
             <Col>
