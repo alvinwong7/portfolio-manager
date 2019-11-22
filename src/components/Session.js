@@ -7,7 +7,8 @@ import * as Cookies from "js-cookie"
  * @param {Object} session a json string or json object
  * @function
  * @exports setSessionCookie
- */export const setSessionCookie = (session: any): void => {
+ */
+export const setSessionCookie = (session: any): void => {
   Cookies.remove("session")
   Cookies.set("session", session, { expires: 14 })
 }
@@ -18,7 +19,8 @@ import * as Cookies from "js-cookie"
  * @returns {JSON Object} sessionCookie
  * @function
  * @exports getSessionCookie
- */export const getSessionCookie: any = () => {
+ */
+export const getSessionCookie: any = () => {
   const sessionCookie = Cookies.get("session")
   //alert("getting session Cookie")
   if (sessionCookie === undefined) {

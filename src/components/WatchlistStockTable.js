@@ -8,7 +8,8 @@ import { WatchListStockSummary } from './WatchlistStockSummary'
  * @param {string} props.name Name of the watchlist used for deleting
  * @param {function} forceUpdate function for forcing state refresh in parent
  * @class
- */class WatchListStockTable extends React.Component {
+ */
+class WatchListStockTable extends React.Component {
     constructor(props) {
         super(props);
         this.delStock = this.delStock.bind(this)

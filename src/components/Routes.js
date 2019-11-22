@@ -20,7 +20,8 @@ import { WatchListPage } from './WatchListPage'
  *
  * @const
  * @exports Routes
- */const Routes = (props) => {
+ */
+const Routes = (props) => {
     const [session, setSession] = useState(getSessionCookie())
 
     useDeepCompareEffect( () => {
@@ -50,7 +51,8 @@ import { WatchListPage } from './WatchListPage'
  * Constant for checking the user login state and protecting certain routes
  *
  * @const
- */const ProtectedHandler = ({ history }) => {
+ */
+const ProtectedHandler = ({ history }) => {
   const session = useContext(SessionContext)
   if (session.username === undefined) {
     //alert("session username is underfined pushing /login")

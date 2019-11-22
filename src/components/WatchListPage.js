@@ -10,7 +10,8 @@ import WatchList from './WatchList'
  * Parent Class for all watchlists
  *
  * @class
- */class WatchListPage extends React.Component {
+ */
+class WatchListPage extends React.Component {
 
 
  /**

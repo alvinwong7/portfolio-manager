@@ -6,10 +6,16 @@ import { Link, withRouter } from 'react-router-dom'
 import { Navbar, Nav, Form, FormControl, Button, NavItem } from "react-bootstrap"
 import { getSessionCookie } from './Session.js'
 
+/** 
+ * Class for navigation toolbar
+ * 
+ * @class
+ * @exports Navigation
+*/
 class Navigation extends React.Component {
     render = () => {
-
         const session = getSessionCookie()
+        // Change toolbar options based on whether an account is logged in
         if (session.username === undefined) {
             return(
             <div>
@@ -66,17 +72,14 @@ class Navigation extends React.Component {
         )
     }
 
+    /**
+     * Handles stock search bar submit
+     */
     handleSubmit = (event) => {
-        try{
-            event.preventDefault()
-            const searchTerm = event.target.elements.namedItem("searchTerm").value.toUpperCase()
-            //alert("searchterm = "+ searchTerm)
-            this.props.history.push("/stock/"+searchTerm)
-            event.target.reset()
-
-        } catch(err){
-            alert(err)
-        }
+        event.preventDefault()
+        const searchTerm = event.target.elements.namedItem("searchTerm").value.toUpperCase()
+        this.props.history.push("/stock/"+searchTerm)
+        event.target.reset()
     }
 }
 
