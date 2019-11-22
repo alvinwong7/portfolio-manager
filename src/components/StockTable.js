@@ -3,17 +3,8 @@ import { Table } from 'react-bootstrap'
 
 import { StockSummary } from './StockSummary'
 
+
 class StockTable extends React.Component {
-    createTable = () => {
-        let table = []
-
-        for (let i = 0; i < this.props.stocks.length; i++) {
-            table.push(<StockSummary stockName={this.props.stocks[i]} key = {i}/>)
-        }
-
-        return table
-    }
-
     render = () => {
         return (
             <Table>
@@ -30,7 +21,7 @@ class StockTable extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.createTable()}
+                    {<StockSummary stockName={this.props.stockName}/>}
                 </tbody>
             </Table>
         )
