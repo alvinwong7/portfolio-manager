@@ -62,11 +62,10 @@ export default function WatchList(props) {
 /**
  * Local function to handle submission of new Stock
  *
- * @params {string} event
- * @params {string} name
- * @params {function} forceUpdate
+ * @param {string} name Name of stock
+ * @param {function} forceUpdate Update watch list page
  */
-function handleSubmit(event,name,forceUpdate){
+function handleSubmit(event, name, forceUpdate){
     event.preventDefault()
     addWatchlistStock(name, event.target.elements.namedItem("code").value)
     forceUpdate()

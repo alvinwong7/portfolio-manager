@@ -1,7 +1,18 @@
 import React from 'react'
 import axios from 'axios'
 
+/** 
+ * Class for a table row summary of stock information
+ * 
+ * @class
+ * @exports StockSummary
+*/
 class StockSummary extends React.Component {
+    /**
+     * Initialises row information
+     * 
+     * @constructor
+     */
     constructor(props){
         super(props)
 
@@ -20,6 +31,9 @@ class StockSummary extends React.Component {
         this.getInfo()
     }
 
+    /**
+     * Retrieves information about the stock from AlphaVantage API
+     */
     getInfo = () => {
         // Access stock data from AlphaVantage API (5 calls per minute)
         const key = '059YSIM0TS1VKHA0'
@@ -63,12 +77,14 @@ class StockSummary extends React.Component {
 
     }
 
+    /**
+     * Lifecycle method to deal with table updates
+     */
     componentDidUpdate = (prevProps) => {
         if (this.props.stockName !== prevProps.stockName) {
             this.getInfo()
         }
     }
-
 
     render = () =>{
         return(
@@ -84,8 +100,6 @@ class StockSummary extends React.Component {
             </tr>
         )
     }
-
-
 }
 
 export { StockSummary }
