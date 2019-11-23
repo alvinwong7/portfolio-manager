@@ -46,7 +46,7 @@ class Logout(Resource):
 
         #else return json info
         with open(filePath, "w+") as f:
-            f.write(data)
+            f.write(json.dumps(jsonData, indent = 4))
             return ({"msg":"Success"});
 
 class AddUser(Resource):
@@ -54,12 +54,21 @@ class AddUser(Resource):
         #Find file with name = Username
         filePath = "../UserFiles/"+username.upper()+".json"
 
-        #if(os.path.exists(filePath)):
-        #    return ("User Already Exists");
+        #if user already exists  return nothing
+        if( os.path.exists(filePath)):
+            return ({"msg":"Existing User"});
+
+
+        with open("../UserFiles/default.json", "r") as f:
+            basedata = json.loads(f.read())
+
+        basedata["username"] = username
+        basedata["password"] = password
 
         with open(filePath, "w+") as f:
-            f.write(json.dumps({'username': username, 'password': password}))
-            return ({"msg":"success"});
+            f.write(json.dumps(basedata, indent = 4))
+
+            return (basedata)
 
 
 api.add_resource(Login, '/login-<string:username>-<string:password>')

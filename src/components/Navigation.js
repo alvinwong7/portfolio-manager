@@ -53,6 +53,7 @@ class Navigation extends React.Component {
                 <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
             </NavItem>
             </Nav>
+            <Navbar.Text className="mr-sm-2" >Logged in as: {session.username}</Navbar.Text>
                 <Form inline onSubmit={ (e) => this.handleSubmit(e)}>
                     <FormControl type="text" placeholder="Stock Search" name="searchTerm" className="mr-sm-2" />
                     <Button variant="outline-info" type = "submit">Search</Button>

@@ -19,7 +19,7 @@ class PortfolioOverview extends React.Component {
       value += parseFloat(stocks[key]['value'])
     });
     this.setState({
-      networth : value.toString()
+      networth : value.toFixed(2).toString()
     })
   }
 
@@ -32,15 +32,16 @@ class PortfolioOverview extends React.Component {
   }
 
   render() {
+    console.log("RENDER PORTFOLIO OVERVIEW");
     console.log(this.props.userStocks)
     return (
       <Card>
       <Card.Header>Personal Portfolio Performance</Card.Header>
       <Card.Body>
         <Card.Text>
-        {this.state.networth}
+        ${this.state.networth}
         </Card.Text>
-        <PortfolioPlot userStocks={this.state.userStocks} years={1}/>
+        <PortfolioPlot userStocks={this.props.userStocks} years={1}/>
       </Card.Body>
       </Card>
     )

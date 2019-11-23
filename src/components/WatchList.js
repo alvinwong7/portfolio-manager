@@ -1,29 +1,46 @@
 import React, { useState } from 'react'
-import { StockTable } from './StockTable'
-
-import { Button, Collapse } from 'react-bootstrap'
+import { StockTable } from './WishlistStockTable'
+import { addWatchlistStock } from './UserData'
+import { Button, Collapse, Form } from 'react-bootstrap'
 
 export default function WatchList(props) {
   const [open, setOpen] = useState(false);
+  const name = props.name
 
-  return (
-    <>
-    <Button
-      onClick={() => setOpen(!open)}
-      aria-controls="example-collapse-text"
-      aria-expanded={open}
-    >
-      {props.name}
-    </Button>
-    <Collapse in={open}>
-      <div id="example-collapse-text">
-        <br />
-      <StockTable stocks={props.watchlist}/>
-      </div>
-    </Collapse>
-    <br/>
-    <br/>
+  try{
+      return (
+        <div>
+          <StockTable name= {props.name} stocks={props.watchlist} forceUpdate = {props.forceUpdate}/>
+          <Button
+            onClick={() => setOpen(!open)}
+            aria-controls="example-collapse-text"
+            aria-expanded={open}
+            variant="success"
+          >
+            Add Asset
+          </Button>
+          <br/>
+          <Collapse in={open}>
+              <Form id ="addWatchlistStockForm" name = "addWatchlistStockForm" onSubmit={(e) => handleSubmit(e,name,props.forceUpdate)}>
+                  <Form.Label>Code</Form.Label>
+                      <Form.Control name="code"  required={true} placeholder="Enter Asset Code Here" />
+                  <Button variant="primary" type = "submit" >
+                      Submit
+                  </Button>
+              </Form>
+          </Collapse>
+        </div>
+      )
+    } catch(err){
+        console.log(err)
+    }
+}
 
-    </>
-  )
+function handleSubmit(event,name,forceUpdate){
+    event.preventDefault();
+    addWatchlistStock(name, event.target.elements.namedItem("code").value)
+    forceUpdate();
+    event.target.reset();
+    //console.log(event.target.elements)
+
 }

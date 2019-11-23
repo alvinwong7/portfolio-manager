@@ -1,28 +1,21 @@
 {
-    "username": "A",
-    "password": "B",
+    "username": "C",
+    "password": "C",
     "portfolios": {
         "default": [
             {
                 "assetType": "Stock",
-                "code": "AAPL",
-                "units": "100",
-                "date": "2001-01-01",
-                "buyPrice": "100"
+                "code": "AMZN",
+                "units": "20",
+                "date": "2019-10-31",
+                "buyPrice": "200"
             },
             {
                 "assetType": "Stock",
-                "code": "A",
-                "units": "1",
-                "date": "0001-01-01",
-                "buyPrice": "1"
-            },
-            {
-                "assetType": "Stock",
-                "code": "GOOGL",
-                "units": "1111",
-                "date": "2019-01-01",
-                "buyPrice": "1"
+                "code": "MSFT",
+                "units": "20",
+                "date": "2019-10-29",
+                "buyPrice": "200"
             }
         ],
         "one": [
@@ -39,26 +32,19 @@
                 "units": "20",
                 "date": "2019-10-29",
                 "buyPrice": "200"
-            },
-            {
-                "assetType": "Stock",
-                "code": "A",
-                "units": "20",
-                "date": "2019-11-01",
-                "buyPrice": "200"
             }
         ],
         "two": [
             {
                 "assetType": "Stock",
-                "code": "AMZN",
+                "code": "MSFT",
                 "units": "20",
                 "date": "2019-10-31",
                 "buyPrice": "200"
             },
             {
                 "assetType": "Stock",
-                "code": "MSFT",
+                "code": "GOOGL",
                 "units": "20",
                 "date": "2019-10-29",
                 "buyPrice": "200"
@@ -66,14 +52,11 @@
         ]
     },
     "watchlists": {
-        "Gold": [
-            "Gold"
-        ],
-        "IT": [
-            "GOOGL",
-            "AMZN",
-            "AAPL",
-            "MSFT"
+        "Blue Chips": [
+            "CBA",
+            "WBC",
+            "NAB",
+            "ANZ"
         ]
     }
 }

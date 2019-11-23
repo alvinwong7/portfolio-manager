@@ -46,3 +46,22 @@ WEEK 07:
 I set up each page according to our UI discussion on Monday. I created a 
 table drop down for user watchlists and created the Portfolio page with the 
 overview and table component.
+
+WEEK 08: 
+
+I added the add stock drop down menu onto the portfolio page so the user 
+is now able to add stocks to their current porftolio. I started working on 
+the portfolio builder page, allowing it to grab the current potential portfolios 
+for the user and display each portfolios networth, change and change percent.
+
+WEEK 09:
+
+Matt and I linked the portfolio builder to a portfolio page. I changed the 
+portfolio page to be more general such that it can only accept a portfolio name 
+and display that portfolio. I implemented the adding and removing of portfolios 
+in the portfolio builder. I spent most of my time fixing an issue where removing 
+stock does not remove the correct portfolio component but the correct portfolio 
+is removed.
+
+I also refactored the portfolio builder page to use less api calls and 
+implemented a moving average filter on the stock graph to show a trendline.
