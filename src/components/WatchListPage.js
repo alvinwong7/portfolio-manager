@@ -1,64 +1,76 @@
-import React, { useState, setState }  from 'react'
-import WatchList from './WatchList'
-import { getSessionCookie } from './Session'
+import React from 'react'
 import {Tabs, Tab, Form, Button, Collapse, Row, Container, Col } from 'react-bootstrap'
-import { deleteWatchlist, addWatchlist } from './UserData'
 
+import { getSessionCookie } from './Session'
+import { deleteWatchlist, addWatchlist } from './UserData'
+import WatchList from './WatchList'
+
+
+/**
+ * Parent Class for all watchlists
+ *
+ * @class
+ */
 class WatchListPage extends React.Component {
-    constructor(props) {
+
+
+ /**
+  * Initialises the users selected watchlists from stored cookies
+  * binds the update finction to this class
+  *
+  * @constructor
+  */
+  constructor(props) {
         super(props)
         let watchLists = getSessionCookie()["watchlists"]
         this.updateState = this.updateState.bind(this)
         this.state = {
-            open : false,
-            //watchlists : { 'List 1' : ['MSFT', 'AMZN', 'GOOGL'], 'List 2' : ['CBA', 'VAF', 'VAS'] },
+            open: false,
             watchlists: watchLists,
             key: Object.keys(watchLists)[0]
         }
     }
 
-    updateState(){
+    /**
+     * Function to force state update, called from child compoenets
+     *
+     * @constructor
+     */updateState = () => {
         let watchLists = getSessionCookie()["watchlists"]
         this.setState({
-            open : false,
+            open: false,
             watchlists: watchLists,
 
         })
     }
 
-    componentWillUpdate(){
-
-    }
-
     createTable = (context) => {
         let table = []
 
-        let children = []
         let wl = this.state.watchlists
         Object.keys(wl).forEach(function(key) {
-            //console.log(wl[key])
-            children.push(<Tab eventKey={key} title={key}>
-                <WatchList name={key} key = {key} watchlist={wl[key]} forceUpdate = {context.updateState}/>
+            table.push(<Tab eventKey={key} title={key}>
+                <WatchList name={key} key={key} watchlist={wl[key]} forceUpdate={context.updateState}/>
                 </Tab>)
-        });
-        table.push(children)
+        })
+
         return table
     }
 
-    handleSubmit=(event)=>{
+    handleSubmit = (event) =>{
 
-        event.preventDefault();
-        const name = event.target.elements.namedItem("name").value;
+        event.preventDefault()
+        const name = event.target.elements.namedItem("name").value
         addWatchlist(name)
         this.updateState()
-        event.target.reset();
+        event.target.reset()
 
     }
 
-    handleDel=(event)=>{
+    handleDel = (event) =>{
 
         //alert("Del-ing watchlist = "+(this.state.key))
-        //const name = event.target.elements.namedItem("name").value;
+        //const name = event.target.elements.namedItem("name").value
         deleteWatchlist(this.state.key)
         this.updateState()
 
@@ -66,7 +78,7 @@ class WatchListPage extends React.Component {
 
 
 
-    render() {
+    render = () => {
 
         return (
             <>

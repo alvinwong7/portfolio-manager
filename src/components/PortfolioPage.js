@@ -1,197 +1,241 @@
 import React from 'react'
 import axios from 'axios'
-import { getSessionCookie } from "./Session";
+
 import { PortfolioOverview } from './PortfolioOverview'
 import { PortfolioStockTable } from './PortfolioStockTable'
-import StockForm from './StockForm'
+import { getSessionCookie } from "./Session"
+import { NewStockFormButton } from './NewStockFormButton'
 
+/**
+ * Class for the users portfolio page
+ *
+ * @class
+ * @exports PortfolioPage
+*/
 class PortfolioPage extends React.Component {
-    _update = false
+    /**
+     * Initialises the portfolios list of stocks, its name and appropriate page
+     * title name from the cookies
+     *
+     * @constructor
+     * @param {object} props Please @see getPortfolioDetailsFromCookies method
+     * for information about what is used from the parameter
+     */
+    constructor(props) {
+        super(props)
 
-  constructor(props) {
-    super(props)
+        this.calcWeight = this.calcWeight.bind(this)
+        this.getInfo = this.getInfo.bind(this)
+        this.getPortfolioDetailsFromCookies = this.getPortfolioDetailsFromCookies.bind(this)
+        this.updateSession = this.updateSession.bind(this)
 
-    //getting the stocks form state in cookie
-    let stocks = []
-    let titleName = 'My Portfolio'
-    let name = 'default'
-    if (props.match.params.portfolioName != undefined) {
-      stocks = getSessionCookie()["portfolios"][props.match.params.portfolioName]
-      titleName = props.match.params.portfolioName
-      name = titleName
-    } else {
-      stocks = getSessionCookie()["portfolios"]
-      if(stocks){
-          stocks = stocks["default"]
-      }
+        // Getting stocks, name and page title name from cookies
+        let details = this.getPortfolioDetailsFromCookies(props)
+        let stocks = details[0]
+        let name = details[1]
+        let titleName = details[2]
+
+        this.state = {
+            /** List of stocks that the portfolio contains */
+            userStocks: stocks,
+            /** Name of the portfolio */
+            portfolioName: name,
+            /** Title name */
+            titleName: titleName,
+            /** Flag to tell component to update its stocks */
+            update: false
+        }
+
+        this.getInfo(this.state.userStocks)
     }
 
-    //convetring to Dict
-    var stockDict = {};
-    if(stocks){
-        stocks.forEach(makeDict);
-    }
-    function makeDict(value, index, array) {
-        stockDict[value["code"]] = value
-    }
-    //console.log(stockDict)
-    let stock = stockDict
+    /**
+     * Lifecycle method for when the component receives props. This occurs
+     * when you redirect from one portfolio to another i.e. portfolio from
+     * the portfolio builder page to the users actual portfolio.
+     *
+     * It sets the state with the new props (the same as constructor)
+     * @see constructor for information regarding state variables
+     */
+    componentWillReceiveProps = (nextProps) => {
+        // Getting stocks, name and page title name from cookies
+        let details = this.getPortfolioDetailsFromCookies(nextProps)
+        let stocks = details[0]
+        let name = details[1]
+        let titleName = details[2]
 
-    //let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120', 'weight' : '50.00' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120', 'weight' : '50.00' }, 'AMZN' : { 'buyPrice' : '50', 'units' : '120', 'weight' : '50.00' } }
-    //let stock = { 'MSFT' : { 'buyPrice' : '40', 'units' : '120' }, 'GOOGL' : { 'buyPrice' : '50', 'units' : '120' } }
-
-    this.updateSession = this.updateSession.bind(this)
-
-    this.calcWeight = this.calcWeight.bind(this);
-
-    //console.log(stock)
-    this.state = {
-      loaded : true,
-      userStocks : stock,
-      session: stocks,
-      portfolioName : name,
-      titleName :titleName
-    }
-
-    stock = this.calcWeight(stock);
-
-    if(stockDict == {}){
         this.setState({
-            loaded: true
-        });
-    }
-
-    this.getInfo = this.getInfo.bind(this);
-    this.getInfo();
-  }
-
-  calcWeight = (stock) => {
-    let sum = 0
-    Object.keys(stock).forEach(function(key) {
-      sum += parseFloat(stock[key]['units'])
-    })
-
-    Object.keys(stock).forEach(function(key) {
-      stock[key]['weight'] = (100*(parseFloat(stock[key]['value'])/sum)).toFixed(2).toString()
-    })
-
-    return stock
-  }
-
-  getInfo = () => {
-    // Access stock data from AlphaVantage API
-    const apiKey = '059YSIM0TS1VKHA0';
-    let stocks = this.state.userStocks
-    let component = this
-    Object.keys(this.state.userStocks).forEach(function(key) {
-      let stockName = key
-      let url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + stockName +
-                '&apikey=' + apiKey;
-      //console.log(url)
-      axios
-        .get(url)
-        .then( response => {
-          // Collect stock identifying information
-          let data = response.data['Global Quote']
-
-          // Collect stock price data
-          let name = data['01. symbol']
-          let price = data['05. price']
-          let open = data['02. open']
-          let high = data['03. high']
-          let low = data['04. low']
-          let volume = data['06. volume']
-          let change = data['09. change']
-          let changePercent = data['10. change percent']
-          let profits = parseFloat(change) * parseFloat(stocks[name]['units'])
-          let value = parseFloat(price) * parseFloat(stocks[name]['units'])
-          stocks[stockName]['profits/loss'] = profits.toFixed(2).toString()
-          stocks[stockName]['value'] = value.toFixed(2).toString()
-          stocks[stockName]['price'] = parseFloat(price).toFixed(2).toString()
-          stocks[stockName]['high'] = high
-          stocks[stockName]['low'] = low
-          stocks[stockName]['volume'] = volume
-          stocks[stockName]['change'] = change
-          stocks[stockName]['changePercent'] = changePercent
-
-          component.setState({
-              userStocks : stocks,
-          });
-          let names = Object.keys(stocks);
-          if (stockName == names[names.length-1]) {
-              component.setState({
-                  loaded : true,
-              })
-          }
+            userStocks: stocks,
+            portfolioName: name,
+            titleName: titleName,
+            update: true
         })
-        .catch( error => {
-          stocks[stockName]['profits/loss'] = 'X'
-          stocks[stockName]['value'] = 'X'
-          stocks[stockName]['price'] = 'X'
-          stocks[stockName]['high'] = 'X'
-          stocks[stockName]['low'] = 'X'
-          stocks[stockName]['volume'] = 'X'
-          stocks[stockName]['change'] = 'X'
-          stocks[stockName]['changePercent'] = 'X'
 
-          component.setState({
-              userStocks : stocks,
-          });
-          let names = Object.keys(stocks);
-          if (stockName == names[names.length-1]) {
-              component.setState({
-                  loaded : true,
-              })
-          }
-          console.log(error);
+    }
+
+    /**
+     * Gets the required portfolio details from cookies
+     *
+     * @param {object} props Argument from @see constructor and
+     * @see componentWillReceiveProps It grabs the portfolio name
+     * from routing url
+     *
+     * @return {array} contains list of stocks and portfolio name
+     */
+    getPortfolioDetailsFromCookies = (props) => {
+        let stocks = []
+        let titleName = 'My Portfolio'
+        let name = 'default'
+
+        // Checks if there is no expected parameter (if not it is the home
+        // page and should display the default portfolio)
+        if (props.match.params.portfolioName !== undefined) {
+            stocks = getSessionCookie()["portfolios"][props.match.params.portfolioName]
+            titleName = props.match.params.portfolioName
+            name = titleName
+        } else {
+            stocks = getSessionCookie()["portfolios"]["default"]
+            if (!stocks) {
+                stocks = []
+            }
+        }
+
+        return [stocks, name, titleName]
+    }
+
+    /**
+     * Calls Alphavantage API for details concerning the stocks belonging in the
+     * portfolio. For each stock it includes: profit/loss, value, price, high,
+     * low, volume, change and percentage change.
+     *
+     * @param {array} stocks List of stocks in the portfolio
+     */
+    getInfo = (stocks) => {
+        const apiKey = '059YSIM0TS1VKHA0'
+        let component = this
+        //console.log(stocks)
+        // Iterate through each stock to call the API and set the mentioned details
+        for (let i = 0; i < stocks.length; i++) {
+            let stockName = stocks[i]['code']
+            let url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + stockName +
+                        '&apikey=' + apiKey
+
+            axios.get(url).then(response => {
+                // Collect stock identifying information
+                let data = response.data['Global Quote']
+
+                // Collect stock price data
+                let price = data['05. price']
+                let high = data['03. high']
+                let low = data['04. low']
+                let volume = data['06. volume']
+                let change = data['09. change']
+                let changePercent = data['10. change percent']
+                // profit/loss = change * units owned
+                let profitLoss = parseFloat(change) * parseFloat(stocks[i]['units'])
+                // total value of stock = price * units owned
+                let value = parseFloat(price) * parseFloat(stocks[i]['units'])
+                stocks[i]['profits/loss'] = profitLoss.toFixed(2).toString()
+                stocks[i]['value'] = value.toFixed(2).toString()
+                stocks[i]['price'] = parseFloat(price).toFixed(2).toString()
+                stocks[i]['high'] = high
+                stocks[i]['low'] = low
+                stocks[i]['volume'] = volume
+                stocks[i]['change'] = change
+                stocks[i]['changePercent'] = changePercent
+
+                component.setState({
+                    userStocks: stocks,
+                })
+
+                // Calculates the networth weight of each stock once all the
+                // stock information for the portfolio is set
+                if (i === stocks.length - 1) {
+                    component.calcWeight()
+                }
+            }).catch(error => {
+                stocks[i]['profits/loss'] = 'X'
+                stocks[i]['value'] = 'X'
+                stocks[i]['price'] = 'X'
+                stocks[i]['high'] = 'X'
+                stocks[i]['low'] = 'X'
+                stocks[i]['volume'] = 'X'
+                stocks[i]['change'] = 'X'
+                stocks[i]['changePercent'] = 'X'
+
+                component.setState({
+                    userStocks: stocks,
+                })
+                console.log(error)
+            })
+        }
+    }
+
+    /**
+     * Calculates the networth weighting of each stock
+     */
+    calcWeight = () => {
+        let sum = 0
+        let stocks = this.state.userStocks
+
+        // Calculates the total networth of the portfolio
+        for (let i = 0; i < stocks.length; i++) {
+            sum += parseFloat(stocks[i]['value'])
+        }
+
+        // Calculates stock weight
+        // individual stock weight = 100 * (stock individual value/sum)
+        for (let i = 0; i < stocks.length; i++) {
+            stocks[i]['weight'] = (100*(parseFloat(stocks[i]['value'])/sum)).toFixed(2).toString()
+        }
+
+        this.setState({
+            userStocks: stocks
         })
-    });
-  }
-
-  updateSession(name) {
-
-      let stocks = getSessionCookie()['portfolios'][name]
-
-      //converting to Dict
-      var stockDict = {};
-      if(stocks){
-          stocks.forEach(makeDict);
-      }
-      function makeDict(value, index, array) {
-          stockDict[value["code"]] = value
-      }
-      let stock = stockDict
-
-      this.setState({
-            userStocks :  stock,
-            portfolioName : name
-      })
-      stock = this.calcWeight(stock);
-      this._update = true
-      // this.getInfo();
-      //alert("request to update userStocks")
-  }
-
-  render() {
-    if (this.state.loaded != true) {
-      return (
-        <div />
-      )
     }
-    if(this._update == true){
-        this._update = false
-        this.getInfo();
+
+    /**
+     * Updates the page when there is a change to the portfolio i.e. adding a stock
+     */
+    updateSession = () => {
+        let stocks = getSessionCookie()['portfolios'][this.state.portfolioName]
+
+        this.setState({
+            userStocks: stocks,
+            portfolioName: this.state.portfolioName,
+            update: true
+        })
     }
-    return (
-      <div>
-        <h1>{this.state.titleName}</h1>
-        <PortfolioOverview userStocks={this.state.userStocks}/>
-        <br/>
-        <PortfolioStockTable userStocks={this.state.userStocks} portfolioName={this.state.portfolioName} updateSession = {this.updateSession}/>
-        <StockForm updateSession = {this.updateSession} portfolioName = {this.state.portfolioName} />
-      </div>
-    );
-  }
+
+    /**
+     * Lifecycle method to render the page
+     *
+     * @return {html} The portfolio page HTML code
+     */
+    render = () => {
+        // Checks if there state needs to be updated with the required information
+        if (this.state.update === true) {
+            this.setState({
+                update: false
+            })
+            this.getInfo(this.state.userStocks)
+        }
+
+        return (
+            <div>
+                <h1>{this.state.titleName}</h1>
+                <PortfolioOverview userStocks={this.state.userStocks}/>
+                <br/>
+                <PortfolioStockTable
+                    userStocks={this.state.userStocks}
+                    portfolioName={this.state.portfolioName}
+                    updateSession={this.updateSession}/>
+                <NewStockFormButton
+                    updateSession={this.updateSession}
+                    portfolioName={this.state.portfolioName}/>
+            </div>
+        )
+    }
 }
 
 export { PortfolioPage }

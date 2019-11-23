@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 import { Clock } from './Clock'
 
@@ -6,10 +6,16 @@ import { Link, withRouter } from 'react-router-dom'
 import { Navbar, Nav, Form, FormControl, Button, NavItem } from "react-bootstrap"
 import { getSessionCookie } from './Session.js'
 
+/** 
+ * Class for navigation toolbar
+ * 
+ * @class
+ * @exports Navigation
+*/
 class Navigation extends React.Component {
-    render() {
-
-        const session = getSessionCookie();
+    render = () => {
+        const session = getSessionCookie()
+        // Change toolbar options based on whether an account is logged in
         if (session.username === undefined) {
             return(
             <div>
@@ -27,7 +33,7 @@ class Navigation extends React.Component {
                 <br />
                 <br />
             </div>
-            );
+            )
         }
 
         return(
@@ -63,21 +69,18 @@ class Navigation extends React.Component {
             <br />
             <br />
         </div>
-        );
+        )
     }
 
-    handleSubmit(event){
-        try{
-            event.preventDefault();
-            const searchTerm = event.target.elements.namedItem("searchTerm").value.toUpperCase();
-            //alert("searchterm = "+ searchTerm);
-            this.props.history.push("/stock/"+searchTerm);
-            event.target.reset();
-
-        } catch(err){
-            alert(err);
-        }
+    /**
+     * Handles stock search bar submit
+     */
+    handleSubmit = (event) => {
+        event.preventDefault()
+        const searchTerm = event.target.elements.namedItem("searchTerm").value.toUpperCase()
+        this.props.history.push("/stock/"+searchTerm)
+        event.target.reset()
     }
 }
 
-export default withRouter(Navigation);
+export default withRouter(Navigation)

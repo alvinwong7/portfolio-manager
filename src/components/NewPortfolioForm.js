@@ -1,28 +1,63 @@
-import React from 'react';
-import { Form, Button, Row, Col } from "react-bootstrap";
+import React from 'react'
+import { Form, Button, Row, Col } from "react-bootstrap"
+
 import { getSessionCookie } from './Session'
 import { addPortfolio } from './UserData'
-import { PortfolioOptions } from './PortfolioOptions'
 
+/**
+ * Class for a form that adds portfolios to the portfolio builder page
+ * 
+ * @class
+ * @exports NewPortfolioForm
+ */
 class NewPortfolioForm extends React.Component {
+    /**
+     * Constructs class and binds handleSubmit function
+     * 
+     * @constructor
+     */
     constructor(props){
         super(props)
 
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    /**
+     * Creates drop down options of potential portfolios
+     * 
+     * @return {html} html options of portfolios for the drop down menu in 
+     * @see render
+     */
     createOptions = () => {
-        let table = []
-        let children = []
+        let options = []
         let portfolios = getSessionCookie()['portfolios']
         Object.keys(portfolios).forEach(function(key) {
-            children.push(<PortfolioOptions name={key}/>)
+            options.push(<option>{key}</option>)
         })
-        table.push(children)
-        return table
+        return options
     }
 
-    render() {
+    /**
+     * Handles the form submission which adds a portfolio with an option of 
+     * basing it off another portfolio
+     */
+    handleSubmit = (event) => {
+        try {
+            // Grab the submitted portfolio name and base portfolio from form
+            event.preventDefault()
+            const portfolioName = event.target.elements.namedItem("portfolioName").value
+            const basePortfolio = event.target.elements.namedItem("basePortfolio").value
+            event.target.reset()
+
+            // Adds portfolio to the portfolio builder page and cookies
+            this.props.addPortfolio(portfolioName, basePortfolio)
+            addPortfolio(portfolioName, basePortfolio)
+        } catch(err) {
+            alert(err)
+        }
+    }
+
+    render = () => {
         return (
         <Form id ="addPortfolioForm" name = "addPortfolioForm" onSubmit={ (e) => this.handleSubmit(e)}>
         <b>Add Portfolio</b>
@@ -34,7 +69,7 @@ class NewPortfolioForm extends React.Component {
             <Col>
                 <Form.Label>Base off current portfolio</Form.Label>
                     <Form.Control as="select" name="basePortfolio">
-                    <option defaultValue>None</option>
+                    <option defaultValue></option>
                     {this.createOptions()}
                     </Form.Control>
             </Col>
@@ -44,22 +79,6 @@ class NewPortfolioForm extends React.Component {
         </Form>
         )
     }
-
-    handleSubmit = (event) => {
-        try {
-            event.preventDefault();
-            let component = this
-
-            const portfolioName = event.target.elements.namedItem("portfolioName").value
-            const basePortfolio = event.target.elements.namedItem("basePortfolio").value
-
-            addPortfolio(portfolioName, basePortfolio)
-            event.target.reset()
-            component.props.updateSession(portfolioName, basePortfolio, 'add')
-        } catch(err) {
-            alert(err);
-        }
-    }
 }
 
-export { NewPortfolioForm };
+export { NewPortfolioForm }

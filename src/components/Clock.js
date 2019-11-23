@@ -1,35 +1,54 @@
-import React from 'react';
+import React from 'react'
 
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {date: new Date()};
+/**
+ * Clock component used in Nav Bar
+ *
+ * @class
+ */class Clock extends React.Component {
+
+ /**
+  * Initialise with props and set the state to current time
+  *
+  * @constructor
+  */constructor(props) {
+    super(props)
+    this.state = {date: new Date()}
   }
 
-  componentDidMount() {
+  /**
+   * Lifecycle method to start the tick interval
+   *
+   */componentDidMount = () => {
     this.timerID = setInterval(
       () => this.tick(),
       1000
-    );
+    )
   }
 
-  componentWillUnmount() {
-    clearInterval(this.timerID);
+  /**
+   * Lifecycle method to stop the clock
+   *
+   */componentWillUnmount = () => {
+    clearInterval(this.timerID)
   }
 
-  tick() {
+  tick = () => {
     this.setState({
       date: new Date()
-    });
+    })
   }
 
-  render() {
+  /**
+   * Lifecycle method to stop the clock
+   *
+   * @returns {html} converts time to string and returns html text
+   */render = () => {
     return (
       <div>
         {this.state.date.toLocaleTimeString()}
       </div>
-    );
+    )
   }
 }
 
-export { Clock };
+export { Clock }

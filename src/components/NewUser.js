@@ -1,10 +1,9 @@
-import React, { useState} from "react";
-import Cookies from "js-cookie";
-import {withRouter, Link} from 'react-router-dom'
-import { SessionContext, getSessionCookie, setSessionCookie } from "./Session";
+import React from "react"
+import { Form, Button} from "react-bootstrap"
+import { withRouter } from 'react-router-dom'
 import axios from 'axios'
-import { Form, Nav , Button} from "react-bootstrap"
 
+import { setSessionCookie } from "./Session"
 
 class NewUser extends React.Component {
 
@@ -12,11 +11,11 @@ class NewUser extends React.Component {
         super(props)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.state = {
-            errorMsg : ""
+            errorMsg: ""
         }
     }
 
-    render(){
+    render = () => {
         return(
             <div>
                 <p><b>Create a New User Profile Here</b></p>
@@ -41,8 +40,8 @@ class NewUser extends React.Component {
 
     }
 
-    handleSubmit(event){
-        event.preventDefault();
+    handleSubmit = (event) => {
+        event.preventDefault()
 
         const username = event.target.elements[0].value
         const password = event.target.elements[1].value
@@ -57,17 +56,17 @@ class NewUser extends React.Component {
                 console.log(response)
                 let data = response.data
                 if( !data["msg"]){
-                    setSessionCookie(data);
-                    this.props.forceSessionUpdate();
-                    this.props.history.push("/");
+                    setSessionCookie(data)
+                    this.props.forceSessionUpdate()
+                    this.props.history.push("/")
                 } else{
                     this.setState({
-                        errorMsg : "That UserName is taken, Please enter another"
+                        errorMsg: "That UserName is taken, Please enter another"
                     })
                 }
             })
 
-        event.target.reset();
+        event.target.reset()
     }
 
 

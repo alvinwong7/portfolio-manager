@@ -1,50 +1,82 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Nav, Button } from "react-bootstrap"
+
 import { deletePortfolioStock } from './UserData'
 
-
-// Rows for portfolio table stock summary
+/** 
+ * Class for the stock row that is a part of the table on the portfolio page
+ * 
+ * @class
+ * @exports PurchasedStock
+*/
 class PurchasedStock extends React.Component {
+    /**
+     * Initialises all the required information in the row
+     * 
+     * @constructor
+     */
     constructor(props) {
         super(props)
 
         this.state = {
-            name : this.props.name,
-            price : this.props.userStocks['price'],
-            profit : this.props.userStocks['profits/loss'],
-            units : this.props.userStocks['units'],
-            changePercent : this.props.userStocks['changePercent'],
-            value : this.props.userStocks['value'],
-            weight : this.props.userStocks['weight'],
+            /** Code of the stock */
+            name: this.props.stock['code'],
+            /** Current price of the stock */
+            price: this.props.stock['price'],
+            /** Todays profit/loss */
+            profitLoss: this.props.stock['profits/loss'],
+            /** Units of the stock owned */
+            units: this.props.stock['units'],
+            /** Todays percentage change */
+            changePercent: this.props.stock['changePercent'],
+            /** 
+             * Total value of owned stocks calculted in @see PortfolioPage in 
+             * the function @see getInfo
+             */
+            value: this.props.stock['value'],
+            /** The percentage amount that this stock makes up of the 
+             * portfolios total networth
+             */
+            weight: this.props.stock['weight'],
         }
     }
 
-    static getDerivedStateFromProps(props, state){
-        return {
-            name : props.name,
-            price : props.userStocks['price'],
-            profit : props.userStocks['profits/loss'],
-            units : props.userStocks['units'],
-            changePercent : props.userStocks['changePercent'],
-            value : props.userStocks['value'],
-            weight : props.userStocks['weight'],
-        }
+    /**
+     * Lifecycle method for when the component receives props. This occurs 
+     * when a stock (row) on the stock table is deleted to update the position 
+     * all the rows. @see constructor for details regarding state variables
+     */
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({
+            name: nextProps.stock['code'],
+            price: nextProps.stock['price'],
+            profitLoss: nextProps.stock['profits/loss'],
+            units: nextProps.stock['units'],
+            changePercent: nextProps.stock['changePercent'],
+            value: nextProps.stock['value'],
+            weight: nextProps.stock['weight'],
+        })
     }
 
-    handleClick(){
+    /**
+     * Handles delete stock button click
+     */
+    handleClick = () => {
+        // Deletes stock in specified portfolio in cookies and then tells the 
+        // portfolio page to update
         deletePortfolioStock(this.props.portfolioName, this.state.name)
         this.props.updateSession(this.props.portfolioName)
     }
 
-    render() {
+    render = () => {
         return (
             <tr>
                 <td><Nav>
                 <Nav.Link as={Link} to={"/stock/"+this.state.name}>{this.state.name}</Nav.Link>
                 </Nav></td>
                 <td>{this.state.price}</td>
-                <td>{this.state.profit}</td>
+                <td>{this.state.profitLoss}</td>
                 <td>{this.state.units}</td>
                 <td>{this.state.changePercent}</td>
                 <td>{this.state.value}</td>

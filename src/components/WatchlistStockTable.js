@@ -1,33 +1,44 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { deleteWatchlistStock } from './UserData'
-import { StockSummary } from './WishlistStockSummary'
+import { WatchListStockSummary } from './WatchlistStockSummary'
 
-class StockTable extends React.Component {
+/**
+ * Class for a single WatcList's Table
+ * @param {string} props.name Name of the watchlist used for deleting
+ * @param {function} forceUpdate function for forcing state refresh in parent
+ * @class
+ */
+class WatchListStockTable extends React.Component {
     constructor(props) {
         super(props);
         this.delStock = this.delStock.bind(this)
     }
 
+    //helper function to create table of children stocks
     createTable = (context) => {
         let table = []
 
-        let children = []
-
         for (let i = 0; i < this.props.stocks.length; i++) {
-            children.push(<StockSummary stockName={this.props.stocks[i]} key = {i} forceUpdate = {context.props.forceUpdate} delStock= {context.delStock}/>)
+            table.push(<WatchListStockSummary stockName={this.props.stocks[i]}
+                key = {i} forceUpdate = {context.props.forceUpdate}
+                delStock= {context.delStock}
+                />
+            )
 
         }
-        table.push(children)
+
         return table
     }
 
-
-    delStock(code){
+    //function for handling stokc deletion in child
+    //needs to be here as child does not know name of watchlist it is part of
+    delStock = (code) => {
         deleteWatchlistStock(this.props.name, code)
     }
 
-    render() {
+    //returns JSX Table structure and creates tabke of children
+    render = () => {
         return (
             <Table>
                 <thead>
@@ -50,4 +61,4 @@ class StockTable extends React.Component {
     }
 }
 
-export { StockTable }
+export { WatchListStockTable }
