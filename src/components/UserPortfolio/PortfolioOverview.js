@@ -67,7 +67,7 @@ class PortfolioOverview extends React.Component {
 		<Card.Header>Personal Portfolio Performance</Card.Header>
 		<Card.Body>
 			<Card.Text>
-			${this.state.networth}
+			<b>Total portfolio networth:</b> ${this.state.networth}
 			</Card.Text>
 			<PortfolioPlot userStocks={this.props.userStocks} years={1}/>
 		</Card.Body>

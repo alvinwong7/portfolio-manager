@@ -29,6 +29,7 @@ class StockPlot extends React.Component{
             filterExtent: filterExtent,
             /** Moving average filter coefficient */
             filterTaps: filterTaps,
+            /** Standard deviation of stock */
             std: 0,
             /** Historical dates */
             histDate: [],
@@ -44,7 +45,7 @@ class StockPlot extends React.Component{
             update: true,
         }
         
-        this.getInfo()
+        this.getInfo(this.state.name)
     }
 
     /**
@@ -54,20 +55,25 @@ class StockPlot extends React.Component{
         this.setState({
             name: nextProps.stockName,
             period: nextProps.years,
+            std: 0,
+            histDate: [],
+            histHigh: [],
+            histLow: [],
+            histAvg: [],
+            histMovAvg: [],
             update: true
         })
-        this.getInfo()
+        this.getInfo(nextProps.stockName)
     }
 
     /**
      * Collects historical data from Alphavantage API
      */
-    getInfo = () => {
+    getInfo = (name) => {
         // Access stock data from AlphaVantage API (5 calls per minute)
         const key = '059YSIM0TS1VKHA0'
         const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol='
-                    + this.state.name + '&apikey=' + key
-
+                    + name + '&apikey=' + key
 
         axios.get(url).then( response => {
             let timeSeries = response.data['Time Series (Daily)']
@@ -92,7 +98,8 @@ class StockPlot extends React.Component{
                 histLow.push(low)
                 histAvg.push(avg)
 
-                // 
+                // Set up moving average if less than filter taps or start 
+                // applying the moving average filter
                 if (i < this.state.filterTaps) {
                     movAvg += avg
                 } else {
@@ -116,21 +123,33 @@ class StockPlot extends React.Component{
 
     /** Calculates standard deviation for the past (len) days */
     calcRisk = () => {
-        const len = 30
+        const len = 365
         let histAvgLen = this.state.histAvg.length
         let window = this.state.histAvg.slice(histAvgLen-len, histAvgLen)
         let avg = 0
+        let std = 0
+        let max = 0
+
         for (let i = 0; i < window.length; i++) {
+            if (window[i] > max) {
+                max = window[i]
+            }
+        }
+
+        // Calculates average in the selected window
+        for (let i = 0; i < window.length; i++) {
+            window[i] = window[i]/max
             avg += window[i]
         }
         avg /= len
         
-        let std = 0
+        // Calculates numerator of standard deviation formula i.e.
+        // sum(x_i - x_mean) from i = 0 to i = N
         for (let i = 0; i < window.length; i++) {
             std += (window[i] - avg) * (window[i] - avg)
         }
-        std /= len - 1
-        std = Math.sqrt(std).toFixed(2)
+        std /= len - 1                  // sum / (N-1)
+        std = Math.sqrt(std).toFixed(2) // std = sqrt(sum / (N-1))
         this.setState({
             std: std
         })
@@ -140,6 +159,7 @@ class StockPlot extends React.Component{
         if (this.state.update === true) {
             return (
                 <div>
+                <b>Volatility:</b>
                 <Plot 
                     layout={
                         {
@@ -151,10 +171,17 @@ class StockPlot extends React.Component{
                 </div>
             )
         }
+        let risk
+        if (this.state.std < 0.05) {
+            risk = 'LOW'
+        } else if (this.state.std < 0.12) {
+            risk = 'MEDIUM'
+        } else {
+            risk = 'HIGH'
+        }
         return (
             <div>
-                {this.state.std}
-                <br/>
+                <b>Volatility:</b> {risk} ({this.state.std})
                 <Plot
                     data={[
                         {

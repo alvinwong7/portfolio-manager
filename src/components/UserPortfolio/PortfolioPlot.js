@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import Plot from 'react-plotly.js'
 import equal from 'fast-deep-equal'
+import { create, all } from 'mathjs'
 
 /**
  * Class for historical portfolio value graph
@@ -9,7 +10,7 @@ import equal from 'fast-deep-equal'
  * @class
  * @exports PortfolioPlot
  */
-class PortfolioPlot extends React.Component{
+class PortfolioPlot extends React.Component {
     /**
      * Initialises portfolio stocks, years on graphs and gathers information
      * 
@@ -18,16 +19,26 @@ class PortfolioPlot extends React.Component{
     constructor(props) {
         super(props);
 
+        let userStocks = this.props.userStocks
+        /* let std = []
+        for (let i = 0; i < userStocks.length; i++) {
+            let name = userStocks[i]['code']
+            std[name] = 0.00
+        }*/
+
         this.state = {
             /** List of the portfolios stocks */
-            userStocks: this.props.userStocks,
+            userStocks: userStocks,
             /** Time period on graph */
             period:     this.props.years,
             /** Portfolio networth history */
             history:    {},
+            //risk:       0.00,
+            //std:        std
         };
         
         this.getInfo = this.getInfo.bind(this)
+        this.calcRisk = this.calcRisk.bind(this)
         this.getInfo(this.state.userStocks)
     }
 
@@ -92,7 +103,7 @@ class PortfolioPlot extends React.Component{
 
                 // Calculate standard deviation of stock
                 /*let duration = Object.keys(timeSeries).length
-                const len = component.state.riskPeriod
+                const len = 61
                 let avg = 0
                 let window = []
                 for (let i = duration - len; i < duration; i++) {
@@ -102,58 +113,18 @@ class PortfolioPlot extends React.Component{
                     avg += price
                 }
                 avg /= len
+                console.log(avg)
+                console.log(window)
                 
                 let std = component.state.std
                 for (let i = 0; i < window.length; i++) {
                     std[name] += (window[i] - avg) * (window[i] - avg)
                 }
                 std[name] /= len - 1
-                std[name] = Math.sqrt(std)
+                std[name] = Math.sqrt(std[name])
+                console.log(std)
 
-                // Check that all std for all stocks have been found
-                let check = true
-                Object.keys(std).forEach(function(key){
-                    if (std[key] === 0) {
-                        check = false
-                    }
-                })
-
-                // Matrix multiplication of weight vector * std matrix * weight vector
-                let risk = 0.00
-                if (check) {
-                    // Form weight vector
-                    const config = { }
-                    const math = create(all, config)
-                    const weight = math.matrix()
-                    let names = []
-                    for (let i = 0; i < component.state.userStocks.length; i++) {
-                        let w = component.state.userStocks[i]['weight']
-                        if (isNaN(w)) {
-                            w = 0
-                        }
-                        weight.subset(math.index(i), w)
-                    }
-
-                    // Form std matrix
-                    const risk_std = math.matrix()
-                    for (let i = 0; i < component.state.userStocks.length; i++) {
-                        let w1 = component.state.userStocks[i]['weight']
-                        if (isNaN(w1)) {
-                            w1 = 0
-                        }
-                        for (let j = 0; j < component.state.userStocks.length; j++) {
-                            let w2 = component.state.userStocks[i]['weight']
-                            if (isNaN(w2)) {
-                                w2 = 0
-                            }
-                            risk_std.subset(math.index(i,j), w1 * w2)
-                        }
-                    }
-
-                    // Multiply for variance
-                    let tmp = math.multiply(weight, risk_std)
-                    risk = math.multiply(tmp, weight)
-                }
+                let risk = component.calcRisk(std, component)
                 */
 
                 // Replace old history with new history dictionary
@@ -170,10 +141,58 @@ class PortfolioPlot extends React.Component{
         });
     }
 
+    calcRisk = (std, component) => {
+        // Check that all std for all stocks have been found
+        let check = true
+        Object.keys(std).forEach(function(key){
+            if (std[key] === 0) {
+                check = false
+            }
+        })
+        console.log(check)
+        // Matrix multiplication of weight vector * std matrix * weight vector
+        let risk = 0.00
+        if (check) {
+            // Form weight vector
+            const config = { }
+            const math = create(all, config)
+            const weight = math.matrix()
+            for (let i = 0; i < component.state.userStocks.length; i++) {
+                let w = component.state.userStocks[i]['weight']
+                if (isNaN(w)) {
+                    w = 0
+                }
+                weight.subset(math.index(i), w)
+            }
+
+            // Form std matrix
+            const risk_std = math.matrix()
+            for (let i = 0; i < component.state.userStocks.length; i++) {
+                let n1 = component.state.userStocks[i]['code']
+                let w1 = std[n1]
+                if (isNaN(w1)) {
+                    w1 = 0
+                }
+                for (let j = 0; j < component.state.userStocks.length; j++) {
+                    let n2 = component.state.userStocks[j]['code']
+                    let w2 = std[n2]
+                    if (isNaN(w2)) {
+                        w2 = 0
+                    }
+                    risk_std.subset(math.index(i,j), w1 * w2)
+                }
+            }
+
+            // Multiply for variance
+            let tmp = math.multiply(weight, risk_std)
+            risk = math.multiply(tmp, weight)
+        }
+        return risk
+    }
+
     render = () => {
         return(
             <div>
-                <br/>
                 <Plot
                     data={[
                         {
