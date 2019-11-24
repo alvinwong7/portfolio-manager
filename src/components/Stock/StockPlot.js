@@ -43,7 +43,7 @@ class StockPlot extends React.Component{
 
 
         axios.get(url).then( response => {
-            let TimeSeries = response.data['Time Series (Daily)']
+            let timeSeries = response.data['Time Series (Daily)']
             let movAvg = 0
 
             let histDate = []
@@ -52,11 +52,11 @@ class StockPlot extends React.Component{
             let histAvg = []
             let histMovAvg = []
             // Collect historical stock data over previous three years
-            for (let i = 0; i < this.state.period*365 && i < Object.keys(TimeSeries).length; i++) {
+            for (let i = 0; i < this.state.period*365 && i < Object.keys(timeSeries).length; i++) {
 
-                let date = Object.keys(TimeSeries)[i]
-                let high = parseFloat(TimeSeries[date]['2. high'])
-                let low = parseFloat(TimeSeries[date]['3. low'])
+                let date = Object.keys(timeSeries)[i]
+                let high = parseFloat(timeSeries[date]['2. high'])
+                let low = parseFloat(timeSeries[date]['3. low'])
                 let avg = 0.5 * (high + low)
                 // Append historical high and low prices
                 histDate.push(date)

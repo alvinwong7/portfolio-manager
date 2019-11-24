@@ -35,7 +35,8 @@ class PurchasedStock extends React.Component {
              * the function @see getInfo
              */
             value: this.props.stock['value'],
-            /** The percentage amount that this stock makes up of the 
+            /** 
+             * The percentage amount that this stock makes up of the 
              * portfolios total networth
              */
             weight: this.props.stock['weight'],

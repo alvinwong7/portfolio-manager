@@ -70,7 +70,6 @@ class PortfolioPage extends React.Component {
             titleName: titleName,
             update: true
         })
-
     }
 
     /**
@@ -98,6 +97,10 @@ class PortfolioPage extends React.Component {
             if (!stocks) {
                 stocks = []
             }
+        }
+
+        for (let i = 0; i < stocks.length; i++) {
+            stocks[i]['updated'] = false
         }
 
         return [stocks, name, titleName]
@@ -143,14 +146,20 @@ class PortfolioPage extends React.Component {
                 stocks[i]['volume'] = volume
                 stocks[i]['change'] = change
                 stocks[i]['changePercent'] = changePercent
+                stocks[i]['updated'] = true
 
                 component.setState({
                     userStocks: stocks,
                 })
 
-                // Calculates the networth weight of each stock once all the
-                // stock information for the portfolio is set
-                if (i === stocks.length - 1) {
+                let allUpdated = true
+                for (let j = 0; j < stocks.length; j++) {
+                    if (!stocks[i]['updated']) {
+                        allUpdated = false
+                    }
+                }
+
+                if (allUpdated) {
                     component.calcWeight()
                 }
             }).catch(error => {
@@ -188,9 +197,9 @@ class PortfolioPage extends React.Component {
         for (let i = 0; i < stocks.length; i++) {
             stocks[i]['weight'] = (100*(parseFloat(stocks[i]['value'])/sum)).toFixed(2).toString()
         }
-
+    
         this.setState({
-            userStocks: stocks
+            userStocks: stocks,
         })
     }
 
@@ -213,9 +222,7 @@ class PortfolioPage extends React.Component {
      * @return {html} The portfolio page HTML code
      */
     render = () => {
-        console.log(this.state)
-        // Checks if there state needs to be updated with the required information
-        if (this.state.update === true) {
+        if (this.state.update) {
             this.setState({
                 update: false
             })

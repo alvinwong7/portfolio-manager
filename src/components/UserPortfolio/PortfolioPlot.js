@@ -9,15 +9,25 @@ class PortfolioPlot extends React.Component{
         super(props);
 
         this.state = {
-            UserStocks: this.props.userStocks,
-            Period:     this.props.years,
-            History:    {},
+            userStocks: this.props.userStocks,
+            period:     this.props.years,
+            history:    {},
         };
         
-        let stocks = this.state.UserStocks;
-        let component = this;
+        this.getInfo = this.getInfo.bind(this)
+        this.getInfo(this.state.userStocks)
+    }
 
+    componentDidUpdate(prevProps){
+        if (!equal(this.props.userStocks, prevProps.userStocks)) {
+            let stocks = this.props.userStocks;
+            this.getInfo(stocks)
+        }
+    }
+
+    getInfo = (stocks) => {
         // For all stocks in portfolio, retrieve time series price data
+        let component = this
         Object.keys(stocks).forEach(function(key) {
 
             let name = stocks[key]['code'];
@@ -29,38 +39,36 @@ class PortfolioPlot extends React.Component{
             const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol='
                         + name + '&apikey=' + APIkey;
             
-            axios
-            .get(url)
-            .then( response => {
+            axios.get(url).then( response => {
 
-                let TimeSeries = response.data['Time Series (Daily)']
+                let timeSeries = response.data['Time Series (Daily)']
 
                 // Duplicate dictionary of previous historical data
-                let Hist = JSON.parse(JSON.stringify(component.state.History));
+                let hist = JSON.parse(JSON.stringify(component.state.history));
 
                 // Collect historical stock data over supplied time period
-                for (var i = 0; i < props.years*365 && i < Object.keys(TimeSeries).length; i++){
+                for (var i = 0; i < component.props.years*365 && i < Object.keys(timeSeries).length; i++){
 
-                    let iDate = Object.keys(TimeSeries)[i];
-                    let price = parseFloat(TimeSeries[iDate]['4. close']);
+                    let iDate = Object.keys(timeSeries)[i];
+                    let price = parseFloat(timeSeries[iDate]['4. close']);
 
                     // Stop data collection for dates earlier than time of stock aquisition
                     let currentDate = new Date(iDate);
-                    if(currentDate.getTime() < startDate.getTime()){
+                    if (currentDate.getTime() < startDate.getTime()) {
                         break;
                     }
                     
                     // Add price to portfolio history
-                    if(iDate in component.state.History){
-                        Hist[iDate] += units*price;
+                    if (iDate in component.state.history) {
+                        hist[iDate] += units*price;
                     } else {
-                        Hist[iDate] = units*price;
+                        hist[iDate] = units*price;
                     }
                 }
 
                 // Replace old history with new history dictionary
                 component.setState({
-                        History: Hist,
+                        history: hist,
                 })
 
             })
@@ -68,84 +76,17 @@ class PortfolioPlot extends React.Component{
                 console.log(error);
             })
         });
-        
-    }
-
-    componentDidUpdate(prevProps){
-        console.log("DID UPDATE");
-        console.log(this.props.userStocks);
-        if(!equal(this.props.userStocks, prevProps.userStocks)){
-            console.log("UPDATE");
-
-            let stocks = this.props.userStocks;
-            let component = this;
-    
-            // For all stocks in portfolio, retrieve time series price data
-            Object.keys(stocks).forEach(function(key) {
-    
-                let name = stocks[key]['code'];
-                let startDate = new Date(stocks[key]['date']);
-                let units = stocks[key]['units'];
-    
-                // Access stock data from AlphaVantage API
-                const APIkey = '059YSIM0TS1VKHA0';
-                const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol='
-                            + name + '&apikey=' + APIkey;
-                
-                axios
-                .get(url)
-                .then( response => {
-    
-                    let TimeSeries = response.data['Time Series (Daily)']
-    
-                    // Duplicate dictionary of previous historical data
-                    let Hist = JSON.parse(JSON.stringify(component.state.History));
-    
-                    // Collect historical stock data over supplied time period
-                    for (var i = 0; i < component.props.years*365 && i < Object.keys(TimeSeries).length; i++){
-    
-                        let iDate = Object.keys(TimeSeries)[i];
-                        let price = parseFloat(TimeSeries[iDate]['4. close']);
-    
-                        // Stop data collection for dates earlier than time of stock aquisition
-                        let currentDate = new Date(iDate);
-                        if(currentDate.getTime() < startDate.getTime()){
-                            break;
-                        }
-                        
-                        // Add price to portfolio history
-                        if(iDate in component.state.History){
-                            Hist[iDate] += units*price;
-                        } else {
-                            Hist[iDate] = units*price;
-                        }
-                    }
-    
-                    // Replace old history with new history dictionary
-                    component.setState({
-                            History: Hist,
-                    })
-    
-                })
-                .catch( error => {
-                    console.log(error);
-                })
-            });
-        }
     }
 
     render(){
-
-        console.log("RENDER PORTFOLIO PLOT");
-
         return(
             <div>
                 <br/>
                 <Plot
                     data={[
                         {
-                            x: Object.keys(this.state.History),
-                            y: Object.values(this.state.History),
+                            x: Object.keys(this.state.history),
+                            y: Object.values(this.state.history),
                             type: 'scatter',
                             mode: 'lines',
                             name: 'High ($)',
@@ -161,7 +102,6 @@ class PortfolioPlot extends React.Component{
                         }
                     }
                 />
-
             </div>
         );
     }
