@@ -44,7 +44,7 @@ const LoginHandler = (props) => {
     }
 
     let errorMsg = ""
-    if(incorrect){
+    if (incorrect) {
         errorMsg = "Please enter a correct Username and Password"
     }
 
@@ -68,6 +68,7 @@ const LoginHandler = (props) => {
             value={password}
             onChange={e => setPassword(e.target.value)}
             />
+            <br/>
             <Button type="submit" >Login</Button>
         </Form>
         <font  color="red">{errorMsg}</font>

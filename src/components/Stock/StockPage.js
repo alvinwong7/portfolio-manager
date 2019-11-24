@@ -36,7 +36,7 @@ class StockPage extends React.Component {
             <div>
                 <h1>{this.state.stockName}</h1>
                 <StockTable stockName={[this.state.stockName]}/>
-                <StockPlot stockName={this.state.stockName} years={3}/>
+                <StockPlot stockName={this.state.stockName} years={2.5}/>
             </div>
         )
     }

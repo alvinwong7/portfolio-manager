@@ -34,17 +34,16 @@ export default function WatchList(props) {
             >
                 Add Asset
             </Button>
-            <br/>
+            <br/><br/>
             <Collapse in={open}>
                 <Form id="addWatchlistStockForm"
                     name="addWatchlistStockForm"
                     onSubmit={(e) => handleSubmit(e,name,props.forceUpdate)}
                     >
-                    <Form.Label>Code</Form.Label>
                         <Form.Control name="code"
                         required={true}
                         placeholder="Enter Asset Code Here"
-                    />
+                    /><br/>
                     <Button variant="primary" 
                         type="submit"
                     >

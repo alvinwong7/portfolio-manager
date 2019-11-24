@@ -15,7 +15,7 @@ class NewStockForm extends React.Component {
      *
      * @constructor
      */
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.handleSubmit = this.handleSubmit.bind(this)

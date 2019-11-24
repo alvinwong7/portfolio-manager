@@ -29,7 +29,7 @@ class PortfolioOverview extends React.Component {
 	 * value of each stock. @see PortfolioPage in the function @see getInfo for 
 	 * more information on the calculation of value
 	 */
-	evalNetworth() {
+	evalNetworth = () => {
 		let value = 0
 		let stocks = this.props.userStocks
 
@@ -47,21 +47,21 @@ class PortfolioOverview extends React.Component {
 	 * Lifecycle method to evaluate the networth of the given stocks 
 	 * once the component is mounted
 	 */
-	componentDidMount() {
+	componentDidMount = () => {
 		this.evalNetworth()
 	}
 
 	/**
 	 * Lifecycle method to evaluate the netwroth on props change
 	 */
-	componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps = (nextProps) => {
 		this.setState({
 			userStocks: nextProps.userStocks
 		})
 		this.evalNetworth()
 	}
 
-	render() {
+	render = () => {
 		return (
 		<Card>
 		<Card.Header>Personal Portfolio Performance</Card.Header>

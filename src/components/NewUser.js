@@ -7,7 +7,7 @@ import { setSessionCookie } from "./Session"
 
 class NewUser extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.state = {
@@ -26,12 +26,14 @@ class NewUser extends React.Component {
                     required = {true}
                     placeholder="Enter Username"
                   />
+                  <br/>
                   <b> Password </b> <br />
                   <Form.Control
                     type="password"
                     required = {true}
                     placeholder="Enter Password"
                   />
+                  <br/>
                   <Button type="submit" >Join</Button>
                 </Form>
                 <font  color="red">{this.state.errorMsg}</font>

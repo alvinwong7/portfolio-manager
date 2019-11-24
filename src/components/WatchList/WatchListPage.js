@@ -95,10 +95,12 @@ class WatchListPage extends React.Component {
                       Add WatchList
                     </Button>
                     <br/>
+                    <br/>
                     <Collapse in={this.state.open}>
                         <Form id ="addWatchlistForm" name = "addWatchlistForm" onSubmit={ (e) => this.handleSubmit(e)}>
                             <Form.Label>Name</Form.Label>
                                 <Form.Control name="name"  required={true} placeholder="Enter Name Here" />
+                            <br/>
                             <Button variant="primary" type = "submit" >
                                 Submit
                             </Button>
@@ -111,7 +113,6 @@ class WatchListPage extends React.Component {
                 </Row>
             </Container>
             <br/>
-
 
             <Tabs defaultActiveKey={Object.keys(this.state.watchlists)[0]} activeKey={this.state.key} onSelect={k => this.setState({"key":k})} id="controlled-tab-example">
                 {this.createTabs(this)}

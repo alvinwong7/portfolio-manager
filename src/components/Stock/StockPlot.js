@@ -2,31 +2,55 @@ import React from 'react'
 import Plot from 'react-plotly.js'
 import axios from 'axios'
 
+/**
+ * Class for stock price graph
+ */
 class StockPlot extends React.Component{
-    constructor(props){
+    /**
+     * Initialises data and gets stock price data
+     * 
+     * @constructor
+     */
+    constructor(props) {
         super(props)
         /** Moving average filter settings */
         const filterExtent = 20
         const filterTaps = 2 * filterExtent + 1
 
+        this.getInfo = this.getInfo.bind(this)
+        this.calcRisk = this.calcRisk.bind(this)
+
         this.state = {
+            /** Name of stock */
             name: props.stockName,
+            /** Period of graph */
             period: props.years,
+            /** Moving average filter extent */
             filterExtent: filterExtent,
+            /** Moving average filter coefficient */
             filterTaps: filterTaps,
+            std: 0,
+            /** Historical dates */
             histDate: [],
+            /** Historical high at dates */
             histHigh: [],
+            /** Historical low at dates */
             histLow: [],
+            /** Average of high and low at dates */
             histAvg: [],
+            /** Average of high and low filtered by a moving average filter */
             histMovAvg: [],
+            /** Update flag to handle API */
             update: true,
         }
         
-        this.getInfo = this.getInfo.bind(this)
         this.getInfo()
     }
 
-    UNSAFE_componentWillReceiveProps = (nextProps) => {
+    /**
+     * Lifecycle method to deal with component updates
+     */
+    componentWillReceiveProps = (nextProps) => {
         this.setState({
             name: nextProps.stockName,
             period: nextProps.years,
@@ -35,6 +59,9 @@ class StockPlot extends React.Component{
         this.getInfo()
     }
 
+    /**
+     * Collects historical data from Alphavantage API
+     */
     getInfo = () => {
         // Access stock data from AlphaVantage API (5 calls per minute)
         const key = '059YSIM0TS1VKHA0'
@@ -58,12 +85,14 @@ class StockPlot extends React.Component{
                 let high = parseFloat(timeSeries[date]['2. high'])
                 let low = parseFloat(timeSeries[date]['3. low'])
                 let avg = 0.5 * (high + low)
-                // Append historical high and low prices
+
+                // Append historical date, high, low and average prices
                 histDate.push(date)
                 histHigh.push(high)
                 histLow.push(low)
                 histAvg.push(avg)
 
+                // 
                 if (i < this.state.filterTaps) {
                     movAvg += avg
                 } else {
@@ -79,23 +108,53 @@ class StockPlot extends React.Component{
                 histMovAvg: histMovAvg,
                 update: false
             })
+            this.calcRisk()
             }).catch( error => {
                 console.log(error)
             })
     }
 
+    /** Calculates standard deviation for the past (len) days */
+    calcRisk = () => {
+        const len = 30
+        let histAvgLen = this.state.histAvg.length
+        let window = this.state.histAvg.slice(histAvgLen-len, histAvgLen)
+        let avg = 0
+        for (let i = 0; i < window.length; i++) {
+            avg += window[i]
+        }
+        avg /= len
+        
+        let std = 0
+        for (let i = 0; i < window.length; i++) {
+            std += (window[i] - avg) * (window[i] - avg)
+        }
+        std /= len - 1
+        std = Math.sqrt(std).toFixed(2)
+        this.setState({
+            std: std
+        })
+    }
 
     render = () => {
-        console.log(this.state)
         if (this.state.update === true) {
             return (
-                <div></div>
+                <div>
+                <Plot 
+                    layout={
+                        {
+                            width: 900,
+                            height: 450,
+                            title: 'Price history',
+                        }
+                    }/>
+                </div>
             )
         }
         return (
             <div>
+                {this.state.std}
                 <br/>
-
                 <Plot
                     data={[
                         {
@@ -131,7 +190,6 @@ class StockPlot extends React.Component{
                         }
                     }
                 />
-
             </div>
         )
     }

@@ -15,7 +15,7 @@ class StockSummary extends React.Component {
      * 
      * @constructor
      */
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.state = {
