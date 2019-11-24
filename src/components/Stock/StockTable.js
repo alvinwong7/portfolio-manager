@@ -21,7 +21,7 @@ class StockTable extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {<StockSummary stockName={this.props.stockName}/>}
+                    {<StockSummary stockName={this.props.stockName} isWatchList={false}/>}
                 </tbody>
             </Table>
         )

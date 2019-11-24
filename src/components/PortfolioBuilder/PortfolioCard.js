@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Nav, Button, ButtonToolbar, Card, Form } from "react-bootstrap"
 
-import { deletePortfolio, addPortfolio } from './UserData'
+import { deletePortfolio, addPortfolio } from '../UserData'
 
 /** 
  * Class for portfolio cards containing networth, todays change and

@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-
 import { CardDeck } from 'react-bootstrap'
-import { getSessionCookie } from './Session'
+
+import { getSessionCookie } from '../Session'
 import { PortfolioCard } from './PortfolioCard'
 import { NewPortfolioForm } from './NewPortfolioForm'
 

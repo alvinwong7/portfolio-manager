@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, Button, Row, Col } from "react-bootstrap"
 
-import { addPortfolioStock } from './UserData'
+import { addPortfolioStock } from '../UserData'
 
 /**
  * Class for a form that adds stock a given portfolio

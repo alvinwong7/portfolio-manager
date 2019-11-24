@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
-import { deleteWatchlistStock } from './UserData'
-import { WatchListStockSummary } from './WatchlistStockSummary'
+import { deleteWatchlistStock } from '../UserData'
+import { StockSummary } from '../Stock/StockSummary'
 
 /**
  * Class for a single WatcList's Table
@@ -10,34 +10,47 @@ import { WatchListStockSummary } from './WatchlistStockSummary'
  * @class
  */
 class WatchListStockTable extends React.Component {
+    /**
+     * @constructor
+     * 
+     * @param {object} props Contains the following required parameters:
+     * @param {string} props.name Name of the watchlist
+     * @param {function} props.forceUpdate Updates the watchlist page
+     */
     constructor(props) {
         super(props);
         this.delStock = this.delStock.bind(this)
     }
 
-    //helper function to create table of children stocks
+    /**
+     * Helper function to create table of children stocks
+     * 
+     * @param context Refers to (this) object
+     */
     createTable = (context) => {
         let table = []
 
         for (let i = 0; i < this.props.stocks.length; i++) {
-            table.push(<WatchListStockSummary stockName={this.props.stocks[i]}
-                key = {i} forceUpdate = {context.props.forceUpdate}
-                delStock= {context.delStock}
+            table.push(<StockSummary stockName={this.props.stocks[i]}
+                key={i} forceUpdate={context.props.forceUpdate}
+                delStock={context.delStock} isWatchlist={true}
                 />
             )
-
         }
 
         return table
     }
 
-    //function for handling stokc deletion in child
-    //needs to be here as child does not know name of watchlist it is part of
+    /**
+     * Handling stock deletion in child. Needs to be here as child 
+     * does not know name of its parent watchlist
+     * 
+     * @param code Name of stock to delete in watchlist
+     */
     delStock = (code) => {
         deleteWatchlistStock(this.props.name, code)
     }
 
-    //returns JSX Table structure and creates tabke of children
     render = () => {
         return (
             <Table>

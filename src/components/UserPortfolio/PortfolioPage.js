@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { PortfolioOverview } from './PortfolioOverview'
 import { PortfolioStockTable } from './PortfolioStockTable'
-import { getSessionCookie } from "./Session"
+import { getSessionCookie } from "../Session"
 import { NewStockFormButton } from './NewStockFormButton'
 
 /**
@@ -213,6 +213,7 @@ class PortfolioPage extends React.Component {
      * @return {html} The portfolio page HTML code
      */
     render = () => {
+        console.log(this.state)
         // Checks if there state needs to be updated with the required information
         if (this.state.update === true) {
             this.setState({

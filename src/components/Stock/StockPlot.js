@@ -2,12 +2,10 @@ import React from 'react'
 import Plot from 'react-plotly.js'
 import axios from 'axios'
 
-import './Stock.css'
-
 class StockPlot extends React.Component{
-
     constructor(props){
         super(props)
+        /** Moving average filter settings */
         const filterExtent = 20
         const filterTaps = 2 * filterExtent + 1
 

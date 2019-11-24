@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { WatchListStockTable } from './WatchlistStockTable'
-import { addWatchlistStock } from './UserData'
+import { addWatchlistStock } from '../UserData'
 import { Button, Collapse, Form } from 'react-bootstrap'
 
 /**

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Form, Button, Row, Col } from "react-bootstrap"
 
-import { getSessionCookie } from './Session'
-import { addPortfolio } from './UserData'
+import { getSessionCookie } from '../Session'
+import { addPortfolio } from '../UserData'
 
 /**
  * Class for a form that adds portfolios to the portfolio builder page

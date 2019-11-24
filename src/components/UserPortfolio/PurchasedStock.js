@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Nav, Button } from "react-bootstrap"
 
-import { deletePortfolioStock } from './UserData'
+import { deletePortfolioStock } from '../UserData'
 
 /** 
  * Class for the stock row that is a part of the table on the portfolio page

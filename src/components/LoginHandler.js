@@ -12,7 +12,8 @@ import { Nav, Form, Button } from 'react-bootstrap'
  * @function
  * @exports LoginHandler
  * @return {html} returns the html for the login page
- */const LoginHandler = (props) => {
+ */
+const LoginHandler = (props) => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
