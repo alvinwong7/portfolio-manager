@@ -6,9 +6,9 @@ import { getSessionCookie } from '../Session'
 import { PortfolioCard } from './PortfolioCard'
 import { NewPortfolioForm } from './NewPortfolioForm'
 
-/** 
- * Class page for the portfolio builder 
- * 
+/**
+ * Class page for the portfolio builder
+ *
  * @class
  * @exports PortfolioBuilderPage
 */
@@ -17,7 +17,7 @@ class PortfolioBuilderPage extends React.Component {
      * Initialises the users selected potential portfolios and
      * important information for displaying i.e. networth and change.
      * Binds methods to this component
-     * 
+     *
      * @constructor
      */
     constructor() {
@@ -33,18 +33,18 @@ class PortfolioBuilderPage extends React.Component {
         })
 
         this.state = {
-            /** 
-             * Dictionary of user portfolios excluding their actual portfolio 
+            /**
+             * Dictionary of user portfolios excluding their actual portfolio
              * containing a list of stocks
              */
             userPortfolios: portfolios,
-            /** 
-             * Dictionary of user portfolios containing information for display, 
+            /**
+             * Dictionary of user portfolios containing information for display,
              * namely, networth, change, and updated.
-             * 
+             *
              * networth:    total value of portfolio
              * change:      total change in networth today
-             * updated:     flag to check that networth and change calculations 
+             * updated:     flag to check that networth and change calculations
              *              have been completed
              */
             portfolioInfo: info
@@ -59,9 +59,9 @@ class PortfolioBuilderPage extends React.Component {
     }
 
     /**
-     * Lifecycle method to calculate information for display 
+     * Lifecycle method to calculate information for display
      * upon component mount
-     * 
+     *
      * @see evalNetworth for more details
      */
     componentDidMount = () => {
@@ -74,7 +74,7 @@ class PortfolioBuilderPage extends React.Component {
 
     /**
      * Evaluates the total networth and todays change of the portfolio
-     * 
+     *
      * @param {string} name Name of the portfolio
      * @param {dictionary} stocks list of stocks in the portfolio
      */
@@ -91,12 +91,12 @@ class PortfolioBuilderPage extends React.Component {
             })
         }
 
-        // Iterates through each stock and queries the api for their price and 
+        // Iterates through each stock and queries the api for their price and
         // change to calculate the total networth and change of the portfolio
         let component = this
         for (let i = 0; i < stocks.length; i++) {
             let stockName = stocks[i]['code']
-            let url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' 
+            let url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='
                         + stockName + '&apikey=' + apiKey
 
             axios.get(url).then( response => {
@@ -108,7 +108,7 @@ class PortfolioBuilderPage extends React.Component {
                 // portfolio change += stock change * units owned
                 info[name]['change'] += parseFloat(data['09. change']) * parseFloat(stocks[i]['units'])
 
-                // Sets updated to true to indicate the portfolio has been 
+                // Sets updated to true to indicate the portfolio has been
                 // updated with the required information
                 if (i === stocks.length - 1) {
                     info[name]['updated'] = true
@@ -132,7 +132,7 @@ class PortfolioBuilderPage extends React.Component {
 
     /**
      * Creates cards for each portfolio
-     * 
+     *
      * @return {html} html for cards in the render function
      */
     createCards = () => {
@@ -145,9 +145,9 @@ class PortfolioBuilderPage extends React.Component {
         Object.keys(portfolios).forEach(function(key) {
             if (key !== 'default') {
                 cardDeck.push(<div style={{"width":235}}>
-                            <PortfolioCard name={key} 
-                            networth={portfolios[key]['networth']} 
-                            change={portfolios[key]['change']} 
+                            <PortfolioCard name={key}
+                            networth={portfolios[key]['networth']}
+                            change={portfolios[key]['change']}
                             renamePortfolio={component.renamePortfolio}
                             deletePortfolio={component.deletePortfolio}
                             checkExists={component.checkExists}/>
@@ -161,9 +161,9 @@ class PortfolioBuilderPage extends React.Component {
     /**
      * Adds a portfolio to userPortfolios to be rendered as a card on this
      * page
-     * 
+     *
      * @param {string} name Name of the portfolio to add
-     * @param {string} basePortfolio Name of the portfolio that the new 
+     * @param {string} basePortfolio Name of the portfolio that the new
      * portfolio is based on (default to None) @see NewPortfolioForm
      */
     addPortfolio = (name, basePortfolio) => {
@@ -171,8 +171,8 @@ class PortfolioBuilderPage extends React.Component {
         let info = this.state.portfolioInfo
         info[name] = []
 
-        // If the provided base portfolio exists i.e. not None, set portfolio 
-        // information to be not updated and set the stocks to be the same as 
+        // If the provided base portfolio exists i.e. not None, set portfolio
+        // information to be not updated and set the stocks to be the same as
         // the base portfolio
         if (basePortfolio !== '') {
             info[name] = info[basePortfolio]
@@ -192,7 +192,7 @@ class PortfolioBuilderPage extends React.Component {
 
     /**
      * Deletes a specified portfolio resulting in its card being removed
-     * 
+     *
      * @param {string} name Name of the portfolio to delete
      */
     deletePortfolio = (name) => {
@@ -211,7 +211,7 @@ class PortfolioBuilderPage extends React.Component {
     /**
      * Renames a portfolio by copying it and adding it under a new name
      * and removes the portfolio under the previous name
-     * 
+     *
      * @param {string} name Name of the current portfolio to be renamed
      * @param {string} newName The new name of the portfolio specified by name
      */
@@ -238,7 +238,7 @@ class PortfolioBuilderPage extends React.Component {
     }
 
     /**
-     * Checks if portfolio name already exists. This is used in @see PortfolioCard 
+     * Checks if portfolio name already exists. This is used in @see PortfolioCard
      * to check if a portfolio already exists
      */
     checkExists = (name) => {
@@ -251,10 +251,10 @@ class PortfolioBuilderPage extends React.Component {
     }
 
     /**
-     * Checks if all the portfolios have been updated with the required information 
-     * from @see evalNetworth When they are all 'updated' it allows for a rerender in 
+     * Checks if all the portfolios have been updated with the required information
+     * from @see evalNetworth When they are all 'updated' it allows for a rerender in
      * @see render
-     * 
+     *
      * @return {bool} If all portfolios have been updated with the required information
      */
     updated = () => {
