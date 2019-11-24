@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { WatchListStockTable } from './WatchlistStockTable'
-import { addWatchlistStock } from './UserData'
+import { addWatchlistStock } from '../UserData'
 import { Button, Collapse, Form } from 'react-bootstrap'
 
 /**
@@ -13,7 +13,8 @@ import { Button, Collapse, Form } from 'react-bootstrap'
  * @param {Object} props.watchlist array containing all the stocks to be rendered
  * @returns {html} returns the table of stocks with a collapsable form at
  * bottom to add stocks
- */export default function WatchList(props) {
+ */
+export default function WatchList(props) {
     const [open, setOpen] = useState(false)
     const name = props.name
 
@@ -61,10 +62,10 @@ import { Button, Collapse, Form } from 'react-bootstrap'
 /**
  * Local function to handle submission of new Stock
  *
- * @params {string} event
- * @params {string} name
- * @params {function} forceUpdate
- */function handleSubmit(event,name,forceUpdate){
+ * @param {string} name Name of stock
+ * @param {function} forceUpdate Update watch list page
+ */
+function handleSubmit(event, name, forceUpdate){
     event.preventDefault()
     addWatchlistStock(name, event.target.elements.namedItem("code").value)
     forceUpdate()

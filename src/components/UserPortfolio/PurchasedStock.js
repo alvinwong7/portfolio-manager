@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Nav, Button } from "react-bootstrap"
 
-import { deletePortfolioStock } from './UserData'
+import { deletePortfolioStock } from '../UserData'
 
 /** 
  * Class for the stock row that is a part of the table on the portfolio page
@@ -35,7 +35,8 @@ class PurchasedStock extends React.Component {
              * the function @see getInfo
              */
             value: this.props.stock['value'],
-            /** The percentage amount that this stock makes up of the 
+            /** 
+             * The percentage amount that this stock makes up of the 
              * portfolios total networth
              */
             weight: this.props.stock['weight'],

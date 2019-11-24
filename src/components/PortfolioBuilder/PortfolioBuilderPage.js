@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-
 import { CardDeck } from 'react-bootstrap'
-import { getSessionCookie } from './Session'
+
+import { getSessionCookie } from '../Session'
 import { PortfolioCard } from './PortfolioCard'
 import { NewPortfolioForm } from './NewPortfolioForm'
 
@@ -262,7 +262,6 @@ class PortfolioBuilderPage extends React.Component {
         let info = this.state.portfolioInfo
 
         // Iterate through each stock checking that it has been updated
-        //console.log(info)
         Object.keys(info).forEach(function(key) {
             if (info[key]['updated'] === false) {
                 ret = false

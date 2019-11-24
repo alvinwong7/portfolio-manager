@@ -5,17 +5,24 @@
         "default": [
             {
                 "assetType": "Stock",
-                "code": "AMZN",
-                "units": "20",
-                "date": "2019-10-31",
-                "buyPrice": "200"
+                "code": "AAPL",
+                "units": "100",
+                "date": "2001-01-01",
+                "buyPrice": "100"
             },
             {
                 "assetType": "Stock",
-                "code": "MSFT",
-                "units": "20",
-                "date": "2019-10-29",
-                "buyPrice": "200"
+                "code": "A",
+                "units": "1",
+                "date": "0001-01-01",
+                "buyPrice": "1"
+            },
+            {
+                "assetType": "Stock",
+                "code": "GOOGL",
+                "units": "1111",
+                "date": "2019-01-01",
+                "buyPrice": "1"
             }
         ],
         "one": [

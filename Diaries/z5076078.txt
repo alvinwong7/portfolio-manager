@@ -44,3 +44,17 @@ WEEK 07:
 - This week I implemented a graphing feature from the PlotLy library to show
 the historical high and low price for a particular stock over the previous
 three years.
+
+WEEK 08:
+
+- Due to unavoidable deadlines this week, I was unable to contribute very much code
+to the repository, However, as Scrum Master I updated the Trello board during
+the week to reflect the team's new progress in adding a server and login feature.
+
+WEEK 09:
+
+- This week I developed a portfolio overview component. This component receives
+data about a user's stock and then produces a plot of the historical value of
+their total portoflio using PlotLy. Additionally, I purchased a premium API
+key that provides us with significantly more allowable calls to our stock API.
+Thi resolves a common problem of exceeding the limit of 5 calls per minute.

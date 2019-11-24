@@ -1,8 +1,8 @@
 import React from 'react'
 import {Tabs, Tab, Form, Button, Collapse, Row, Container, Col } from 'react-bootstrap'
 
-import { getSessionCookie } from './Session'
-import { deleteWatchlist, addWatchlist } from './UserData'
+import { getSessionCookie } from '../Session'
+import { deleteWatchlist, addWatchlist } from '../UserData'
 import WatchList from './WatchList'
 
 
@@ -10,9 +10,8 @@ import WatchList from './WatchList'
  * Parent Class for all watchlists
  *
  * @class
- */class WatchListPage extends React.Component {
-
-
+ */
+class WatchListPage extends React.Component {
  /**
   * Initialises the users selected watchlists from stored cookies
   * binds the update finction to this class
@@ -32,9 +31,8 @@ import WatchList from './WatchList'
 
     /**
      * Function to force state update, called from child compoenets
-     *
-     * @constructor
-     */updateState = () => {
+     */
+    updateState = () => {
         let watchLists = getSessionCookie()["watchlists"]
         this.setState({
             open: false,
@@ -43,21 +41,29 @@ import WatchList from './WatchList'
         })
     }
 
-    createTable = (context) => {
-        let table = []
+    /**
+     * Creates watch list tabs
+     * 
+     * @param {object} context Refers to (this) object
+     * @returns {html} List of watch list html tabs
+     */
+    createTabs = (context) => {
+        let tabs = []
 
         let wl = this.state.watchlists
         Object.keys(wl).forEach(function(key) {
-            table.push(<Tab eventKey={key} title={key}>
+            tabs.push(<Tab eventKey={key} title={key}>
                 <WatchList name={key} key={key} watchlist={wl[key]} forceUpdate={context.updateState}/>
                 </Tab>)
         })
 
-        return table
+        return tabs
     }
 
+    /**
+     * Handles adding of new watch list
+     */
     handleSubmit = (event) =>{
-
         event.preventDefault()
         const name = event.target.elements.namedItem("name").value
         addWatchlist(name)
@@ -66,19 +72,15 @@ import WatchList from './WatchList'
 
     }
 
+    /**
+     * Handles deleting of watch list
+     */
     handleDel = (event) =>{
-
-        //alert("Del-ing watchlist = "+(this.state.key))
-        //const name = event.target.elements.namedItem("name").value
         deleteWatchlist(this.state.key)
         this.updateState()
-
     }
 
-
-
     render = () => {
-
         return (
             <>
             <Container>
@@ -112,7 +114,7 @@ import WatchList from './WatchList'
 
 
             <Tabs defaultActiveKey={Object.keys(this.state.watchlists)[0]} activeKey={this.state.key} onSelect={k => this.setState({"key":k})} id="controlled-tab-example">
-                {this.createTable(this)}
+                {this.createTabs(this)}
             </Tabs>
             <br/>
 

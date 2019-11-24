@@ -3,8 +3,18 @@ import React from 'react'
 import { StockTable } from './StockTable'
 import { StockPlot } from './StockPlot'
 
-// Stock page
+/** 
+ * Class for the individual stock page
+ * 
+ * @class
+ * @exports StockPage
+*/
 class StockPage extends React.Component {
+    /**
+     * Initialises the queried stock name in state
+     * 
+     * @constructor 
+     */
     constructor(props) {
         super(props)
         this.state = {
@@ -12,6 +22,9 @@ class StockPage extends React.Component {
         }
     }
 
+    /**
+     * Lifecycle method to handle reroutes to the same component
+     */
     static getDerivedStateFromProps(props, state){
         return {
             stockName: props.match.params.stockName,

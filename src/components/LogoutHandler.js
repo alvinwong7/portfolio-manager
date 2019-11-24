@@ -11,7 +11,8 @@ import { getSessionCookie } from "./Session"
  * @class
  * @exports LogoutHandler
  *
- */class LogoutHandler extends React.Component{
+ */
+class LogoutHandler extends React.Component{
 
       /**
       *
