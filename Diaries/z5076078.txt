@@ -58,3 +58,16 @@ data about a user's stock and then produces a plot of the historical value of
 their total portoflio using PlotLy. Additionally, I purchased a premium API
 key that provides us with significantly more allowable calls to our stock API.
 Thi resolves a common problem of exceeding the limit of 5 calls per minute.
+
+
+WEEK 10:
+
+- During the final week of the project, I updated the master branch to include
+portfolio performance history plot I had been developing with Plotly. The plot was
+adjusted to show only one year of previous history for faster laoding. Additionally,
+with Alvin's help we improved its efficiency by reducing the number of setState()
+calls when updating the data.
+
+-  I also planned and the introduction section of our presentation, which gave
+a contextual overview of the project, the key features we had implemented and a
+summary of the technology stack.
