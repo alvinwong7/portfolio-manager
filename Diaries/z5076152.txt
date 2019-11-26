@@ -79,3 +79,9 @@ related to portfolio builder and portfolio. I fixed some of the style for
 consistency in all other files.
 
 I resolved all warnings that occurred after compile time.
+
+I commented everything involved with the portfolio builder and portfolio page as 
+well as some of the watchlist page.
+
+I implemented risk calculation for stocks and fixed purchase dates in the future 
+being valid.
