@@ -128,3 +128,9 @@ Week 9:
     the credentials checked for a double up, and then a new
     user file is created off a default one and returned. The new user is then Logged
     in and sent to the home/portfolio page
+
+Week 10:
+    In the final week of the project I worked on preparing the code for Submission
+    Including adding comments and re-writing defunct sections.
+
+    I also helped prepare the presentation and contributed to the report.

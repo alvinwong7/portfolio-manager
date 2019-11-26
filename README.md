@@ -1,10 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## First install dependant JS packages:
 
-### 'npm install'
-
-## Setup the Virtualenv
+## First Setup the Virtualenv
 
 ### 'virtualenv Env'
 
@@ -16,9 +13,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### 'pip install -r requirements.txt'
 
-## Next start the python Server and JS server
+## Next move to the PythonServer folder and  start the python Server
 
-### 'Python PythonServer/api.py' and 'npm start'
+### 'Python api.py'
+
+## Next install dependant JS packages:
+
+### 'npm install'
+
+## Finally Start the React Webapp:
+
+### 'npm start'
 
 ## Available Scripts
 
