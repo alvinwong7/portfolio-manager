@@ -25,21 +25,31 @@ class NewStockForm extends React.Component {
      * Handles submission of the new stock form
      */
     handleSubmit = (event) => {
-        event.preventDefault()
+        try {
+            event.preventDefault()
 
-        // Collecting information from the form submission
-        const assetType = event.target.elements.namedItem("assetType").value
-        const code = event.target.elements.namedItem("code").value
-        const units = event.target.elements.namedItem("units").value
-        const date = event.target.elements.namedItem("date").value
-        const price = event.target.elements.namedItem("price").value
+            // Collecting information from the form submission
+            const assetType = event.target.elements.namedItem("assetType").value
+            const code = event.target.elements.namedItem("code").value
+            const units = event.target.elements.namedItem("units").value
+            const date = event.target.elements.namedItem("date").value
+            const price = event.target.elements.namedItem("price").value
+    
+            let selDate = new Date(date)
+            let curDate = new Date()
+            if (curDate.getTime() < selDate.getTime()) {
+                throw("Cannot select date in the future")
+            }
 
-        event.target.reset()
+            event.target.reset()
+            // Add new stock to cookies and tell the portfolio page to update itself
+            // with the new stock
+            addPortfolioStock(this.props.portfolioName, assetType, code, units, date, price)
+            this.props.updateSession(this.props.portfolioName)
+        } catch(err) {
+            alert(err)
+        }
 
-        // Add new stock to cookies and tell the portfolio page to update itself
-        // with the new stock
-        addPortfolioStock(this.props.portfolioName, assetType, code, units, date, price)
-        this.props.updateSession(this.props.portfolioName)
     }
 
     /**
@@ -56,8 +66,6 @@ class NewStockForm extends React.Component {
                 <Form.Label>Asset Category</Form.Label>
                     <Form.Control as="select" name = "assetType">
                     <option defaultValue >Stock</option>
-                    <option>Cryptocurrency</option>
-                    <option>Commodities</option>
                     </Form.Control>
             </Col>
             <Col>
