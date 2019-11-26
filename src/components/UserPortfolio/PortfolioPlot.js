@@ -20,11 +20,6 @@ class PortfolioPlot extends React.Component {
         super(props);
 
         let userStocks = this.props.userStocks
-        /* let std = []
-        for (let i = 0; i < userStocks.length; i++) {
-            let name = userStocks[i]['code']
-            std[name] = 0.00
-        }*/
 
         this.state = {
             /** List of the portfolios stocks */
@@ -33,8 +28,6 @@ class PortfolioPlot extends React.Component {
             period:     this.props.years,
             /** Portfolio networth history */
             history:    {},
-            //risk:       0.00,
-            //std:        std
         };
         
         this.getInfo = this.getInfo.bind(this)
@@ -101,37 +94,9 @@ class PortfolioPlot extends React.Component {
                     }
                 }
 
-                // Calculate standard deviation of stock
-                /*let duration = Object.keys(timeSeries).length
-                const len = 61
-                let avg = 0
-                let window = []
-                for (let i = duration - len; i < duration; i++) {
-                    key = Object.keys(timeSeries)[i]
-                    let price = parseFloat(timeSeries[key]['4. close'])
-                    window[i - (duration - len)] = price
-                    avg += price
-                }
-                avg /= len
-                console.log(avg)
-                console.log(window)
-                
-                let std = component.state.std
-                for (let i = 0; i < window.length; i++) {
-                    std[name] += (window[i] - avg) * (window[i] - avg)
-                }
-                std[name] /= len - 1
-                std[name] = Math.sqrt(std[name])
-                console.log(std)
-
-                let risk = component.calcRisk(std, component)
-                */
-
                 // Replace old history with new history dictionary
                 component.setState({
                     history: hist,
-                    //std: std,
-                    //risk: risk
                 })
 
             })
@@ -141,6 +106,39 @@ class PortfolioPlot extends React.Component {
         });
     }
 
+    /**
+     * Calculates standard deviation
+     * 
+     * @deprecated The functionality this code is used for has not been 
+     * verified for correctness
+     */
+    calcStd = (std, timeSeries) => {
+        // Calculate standard deviation of stock
+        let duration = Object.keys(timeSeries).length
+        const len = 61
+        let avg = 0
+        let window = []
+        for (let i = duration - len; i < duration; i++) {
+            key = Object.keys(timeSeries)[i]
+            let price = parseFloat(timeSeries[key]['4. close'])
+            window[i - (duration - len)] = price
+            avg += price
+        }
+        avg /= len
+        
+        let std = component.state.std
+        for (let i = 0; i < window.length; i++) {
+            std[name] += (window[i] - avg) * (window[i] - avg)
+        }
+        std[name] /= len - 1
+        std[name] = Math.sqrt(std[name])
+    }
+
+    /**
+     * Calculates portfolio risk
+     * 
+     * @deprecated Has not been verified if it is correct
+     */
     calcRisk = (std, component) => {
         // Check that all std for all stocks have been found
         let check = true
