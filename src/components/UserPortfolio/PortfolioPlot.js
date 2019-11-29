@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import Plot from 'react-plotly.js'
 import equal from 'fast-deep-equal'
-import { create, all } from 'mathjs'
 
 /**
  * Class for historical portfolio value graph
@@ -31,7 +30,6 @@ class PortfolioPlot extends React.Component {
         };
         
         this.getInfo = this.getInfo.bind(this)
-        this.calcRisk = this.calcRisk.bind(this)
         this.getInfo(this.state.userStocks)
     }
 
@@ -104,88 +102,6 @@ class PortfolioPlot extends React.Component {
                 console.log(error);
             })
         });
-    }
-
-    /**
-     * Calculates standard deviation
-     * 
-     * @deprecated The functionality this code is used for has not been 
-     * verified for correctness
-     */
-    calcStd = (std, timeSeries) => {
-        // Calculate standard deviation of stock
-        let duration = Object.keys(timeSeries).length
-        const len = 61
-        let avg = 0
-        let window = []
-        for (let i = duration - len; i < duration; i++) {
-            key = Object.keys(timeSeries)[i]
-            let price = parseFloat(timeSeries[key]['4. close'])
-            window[i - (duration - len)] = price
-            avg += price
-        }
-        avg /= len
-        
-        let std = component.state.std
-        for (let i = 0; i < window.length; i++) {
-            std[name] += (window[i] - avg) * (window[i] - avg)
-        }
-        std[name] /= len - 1
-        std[name] = Math.sqrt(std[name])
-    }
-
-    /**
-     * Calculates portfolio risk
-     * 
-     * @deprecated Has not been verified if it is correct
-     */
-    calcRisk = (std, component) => {
-        // Check that all std for all stocks have been found
-        let check = true
-        Object.keys(std).forEach(function(key){
-            if (std[key] === 0) {
-                check = false
-            }
-        })
-        console.log(check)
-        // Matrix multiplication of weight vector * std matrix * weight vector
-        let risk = 0.00
-        if (check) {
-            // Form weight vector
-            const config = { }
-            const math = create(all, config)
-            const weight = math.matrix()
-            for (let i = 0; i < component.state.userStocks.length; i++) {
-                let w = component.state.userStocks[i]['weight']
-                if (isNaN(w)) {
-                    w = 0
-                }
-                weight.subset(math.index(i), w)
-            }
-
-            // Form std matrix
-            const risk_std = math.matrix()
-            for (let i = 0; i < component.state.userStocks.length; i++) {
-                let n1 = component.state.userStocks[i]['code']
-                let w1 = std[n1]
-                if (isNaN(w1)) {
-                    w1 = 0
-                }
-                for (let j = 0; j < component.state.userStocks.length; j++) {
-                    let n2 = component.state.userStocks[j]['code']
-                    let w2 = std[n2]
-                    if (isNaN(w2)) {
-                        w2 = 0
-                    }
-                    risk_std.subset(math.index(i,j), w1 * w2)
-                }
-            }
-
-            // Multiply for variance
-            let tmp = math.multiply(weight, risk_std)
-            risk = math.multiply(tmp, weight)
-        }
-        return risk
     }
 
     render = () => {

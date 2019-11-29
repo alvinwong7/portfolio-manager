@@ -38,7 +38,8 @@ class NewStockForm extends React.Component {
             let selDate = new Date(date)
             let curDate = new Date()
             if (curDate.getTime() < selDate.getTime()) {
-                throw("Cannot select date in the future")
+                let errorMessage = { code : 401, message : "Cannot select date in the future" }
+                throw errorMessage
             }
 
             event.target.reset()
